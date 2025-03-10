@@ -2,6 +2,8 @@
     $params = ['image' => 'public/images/hero-bg.jpg'];
     require dirname(__FILE__) . '/../layout/hero_section.php';
     include dirname(__FILE__) . '/../layout/headersection.php';
+    include dirname(__FILE__) . '/../layout/slider.php';
+
     ?>
 
     </div>
