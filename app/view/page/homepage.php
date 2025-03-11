@@ -4,17 +4,20 @@
     include dirname(__FILE__) . '/../layout/headersection.php';
     include dirname(__FILE__) . '/../layout/slider.php';
 
+
     ?>
 
     </div>
+
     <section class="offer_section layout_padding-bottom">
         <div class="offer_container">
+
             <div class="container ">
                 <div class="row">
                     <div class="col-md-6  ">
                         <div class="box ">
                             <div class="img-box">
-                                <img src="public/images/o1.jpg" alt="">
+                                <img src="/public/images/o1.jpg" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
