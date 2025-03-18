@@ -12,7 +12,7 @@ include dirname(__FILE__) . '/../layout/headersection.php';
           <div class="row">
               <div class="col-md-6 ">
                   <div class="img-box">
-                      <img src="images/about-img.png" alt="">
+                      <img src="public/images/about-img.png" alt="">
                   </div>
               </div>
               <div class="col-md-6">
