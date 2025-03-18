@@ -14,6 +14,7 @@ class UserController {
     public function get(){
 
     }
+    
 }
 
 

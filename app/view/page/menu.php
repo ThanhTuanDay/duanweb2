@@ -28,7 +28,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f1.png" alt="">
+                                <img src="public/images/f1.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
