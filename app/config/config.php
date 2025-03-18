@@ -1,8 +1,12 @@
 <?php
-define("DB_HOST", "fast-food-shop-nguyenhoanghiep478-9317.j.aivencloud.com");
-define("DB_USER", "avnadmin");
-define("DB_PASS", "AVNS_DJvTceg3EafMDgXGR-A");
-define("DB_NAME", "defaultdb");
-define('DB_PORT', "23769");
-define('GMAIL_USERNAME', "nguyenhoanghiep478@gmail.com");
-define('GMAIL_PASSWORD', "gqifrbhuteavupgh");
+require_once (dirname(__DIR__)."../../vendor/autoload.php");
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__) . '/app/config', '.env');
+$dotenv->safeLoad(); 
+define("DB_HOST", $_ENV['DB_HOST']);
+define("DB_USER", $_ENV['DB_USER']);
+define("DB_PASS", $_ENV['DB_PASS']);
+define("DB_NAME", $_ENV['DB_NAME']);
+define('DB_PORT', $_ENV['DB_PORT']);
+define('GMAIL_USERNAME',$_ENV['GMAIL_USERNAME']);
+define('GMAIL_PASSWORD',$_ENV['GMAIL_PASSWORD']);
