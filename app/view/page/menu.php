@@ -28,7 +28,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f1.png" alt="">
+                                <img src="public/images/f1.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -104,7 +104,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f2.png" alt="">
+                                <img src="public/images/f2.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -180,7 +180,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f3.png" alt="">
+                                <img src="public/images/f3.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -256,7 +256,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f4.png" alt="">
+                                <img src="public/images/f4.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -332,7 +332,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f5.png" alt="">
+                                <img src="public/images/f5.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -408,7 +408,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f6.png" alt="">
+                                <img src="public/images/f6.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -484,7 +484,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f7.png" alt="">
+                                <img src="public/images/f7.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -560,7 +560,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f8.png" alt="">
+                                <img src="public/images/f8.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
@@ -636,7 +636,7 @@ include dirname(__FILE__) . '/../layout/slider.php';
                     <div class="box">
                         <div>
                             <div class="img-box">
-                                <img src="images/f9.png" alt="">
+                                <img src="public/images/f9.png" alt="">
                             </div>
                             <div class="detail-box">
                                 <h5>
