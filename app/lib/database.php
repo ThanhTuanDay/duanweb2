@@ -6,6 +6,7 @@
         public $user = DB_USER;
         public $pass = DB_PASS;
         public $dbname = DB_NAME;
+        public $port = DB_PORT;
 
         public $link;
         public $error;
@@ -17,7 +18,7 @@
 
         public function  connectDB()
         {
-            $this->link = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
+            $this->link = new mysqli($this->host, $this->user, $this->pass, $this->dbname,$this->port);
             if ($this->link->connect_errno) {
                 $this->error = 'connection fail' . $this->link->connect_error;
                 return false;
