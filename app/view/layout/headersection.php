@@ -1,3 +1,4 @@
+
 <header class="header_section">
     <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -7,7 +8,8 @@
                 </span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class=""> </span>
             </button>
 
@@ -27,12 +29,20 @@
                     </li>
                 </ul>
                 <div class="user_option">
-                    <a href="login" class="user_link">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                    </a>
+                    <?php if (Session::get('name')): ?>
+                        <a href="logout" class="user_link" style="color: red;">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                        </a>
+                    <?php else: ?>
+                        <a href="login" class="user_link">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                    <?php endif; ?>
                     <p></p>
                     <a class="cart_link" href="#">
-                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029"
+                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                             <g>
                                 <g>
                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248

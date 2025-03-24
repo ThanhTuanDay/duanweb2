@@ -1,5 +1,5 @@
 <?php
-require(dirname(__File__) . "./app/lib/session.php");
+require(dirname(__File__) . "/app/lib/session.php");
 Session::init();
 $page = isset($_GET['page']) ? $_GET['page'] : 'homepage';
 

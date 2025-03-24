@@ -16,6 +16,10 @@
             $this->connectDB();
         }
 
+        public function getConnection(){
+            return $this->link;
+        }
+
         public function  connectDB()
         {
             $this->link = new mysqli($this->host, $this->user, $this->pass, $this->dbname,$this->port);

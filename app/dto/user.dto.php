@@ -12,6 +12,10 @@ class UserDto {
     private ?string $role;
     private ?string $created_at;
 
+    private ?string $verifyToken;
+
+    private ?int $isVerified;
+
     public function __construct(
         ?int $id=null,
        ?string $name=null,
@@ -20,7 +24,9 @@ class UserDto {
         ?string $address = null,
         string $password,
         ?string $role = null,
-        ?string $created_at = null
+        ?string $created_at = null,
+        ?string $verifyToken = null,
+        ?bool $isVerified = null
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -30,6 +36,8 @@ class UserDto {
         $this->password = $password; // Không hash mật khẩu
         $this->role = $role;
         $this->created_at = $created_at;
+        $this->verifyToken = $verifyToken;
+        $this->isVerified  = $isVerified ?? 0;
     }
 
     // Getters
@@ -64,6 +72,14 @@ class UserDto {
         return $this->password;
     }
 
+    public function getVerifyToken(): ?string {
+        return $this->verifyToken;
+    }
+
+    public function isVerified(): bool {
+        return $this->isVerified;
+    }
+
     // Setters
     public function setId(int $id): void {
         $this->id = $id;
@@ -95,6 +111,14 @@ class UserDto {
 
     public function setPassword(string $password): void {
         $this->password = $password;
+    }
+
+    public function setVerifyToken(?string $verify_token): void {
+        $this->verifyToken = $verify_token;
+    }
+
+    public function setIsVerified(bool $is_verified): void {
+        $this->isVerified = $is_verified;
     }
 }
 

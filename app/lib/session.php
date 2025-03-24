@@ -47,14 +47,24 @@ class Session
         return self::get("adminlogin") == true;
     }
 
-    public static function destroy()
+    public static function destroy($isLogout=false)
     {
-        session_destroy();
-        echo '<script>alert("Your session has expired. Please log in again.")
-                                 window.location.href = "/app/view/Auth/login.php"
+        if ($isLogout) {
+            $redirectPage ="homepage" ;
+            $alert = "bạn đã đăng xuất";
+        } else {
+            $redirectPage = "login";
+            $alert =  "bạn đã hết phiên làm việc";
+        }
 
-                </script>
-                
-                ';
+        session_start();
+        $_SESSION = [];
+        session_destroy();
+    
+        echo "<script>
+                alert('$alert')
+                window.location.href = '$redirectPage';
+              </script>";
+        exit();
     }
 }

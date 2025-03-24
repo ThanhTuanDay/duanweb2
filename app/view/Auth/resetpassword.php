@@ -1,38 +1,37 @@
 <?php
 require(dirname(__DIR__) . "../../controller/auth.controller.php");
-require(dirname(__DIR__) . "../../lib/session.php");
-Session::init();
+$authController = new AuthController();
 
-$Controller_register = new AuthController();
-
-if (Session::get('name')) {
-    header("Location: /duanweb2/homepage");
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$email = $_GET['email'] ?? null;
+$token = $_GET['token'] ?? null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $newPassword = $_POST['password'] ?? '';
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm-password'];
-    $name = $_POST['name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
+    $token = $_POST['token'] ?? null;
 
-
-    if ($password !== $confirm_password) {
-        $error = "Mật khẩu xác nhận không khớp!";
-    } else {
-        $result = $Controller_register->registerUser($email, $password, $confirm_password, $name, $phone, $address);
-
-        if ($result === true) {
-            header("Location: /duanweb2/login");
-            exit();
-        } else {
-            $error = $result;
-        }
+    if (!$email || !$token) {
+        die("Thiếu thông tin reset password.");
     }
+
+    $result = $authController->resetPassword($email, $token, $newPassword);
+
+    if ($result) {
+        echo "<script>
+            alert('Đổi mật khẩu thành công!');
+            window.location.href = 'login';
+          </script>";
+        exit();
+    } else {
+        echo "<script>
+            alert('$result');
+          </script>";
+    }
+
 }
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feane - Register</title>
+    <title>Feane - Reset Password</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
@@ -147,6 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .auth-header p {
             color: #999;
             font-size: 14px;
+            line-height: 1.5;
         }
 
         .form-group {
@@ -173,29 +173,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             outline: 2px solid #ffbe33;
         }
 
-        .terms {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin: 20px 0;
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #999;
         }
 
-        .terms input {
+        .strength-meter {
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
             margin-top: 5px;
+            overflow: hidden;
         }
 
-        .terms label {
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        .terms a {
-            color: #ffbe33;
-            text-decoration: none;
-        }
-
-        .terms a:hover {
-            text-decoration: underline;
+        .strength-meter-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #ffbe33;
+            transition: width 0.3s;
         }
 
         .btn-submit {
@@ -209,6 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
         .btn-submit:hover {
@@ -230,6 +227,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .auth-footer a:hover {
             text-decoration: underline;
+        }
+
+        .icon-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .icon-container svg {
+            width: 60px;
+            height: 60px;
+            color: #ffbe33;
         }
 
         .password-field {
@@ -267,6 +275,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             .auth-box {
                 padding: 30px 20px;
             }
+
+
         }
     </style>
 </head>
@@ -277,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
+                    <a href="home">HOME</a>
                     <a href="menu">MENU</a>
                     <a href="about">ABOUT</a>
                     <a href="book">BOOK TABLE</a>
@@ -289,40 +299,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <main class="auth-container">
         <div class="auth-box">
-            <div class="auth-header">
-                <h2>Register</h2>
-                <p>Create your account to order delicious food</p>
+            <div class="icon-container">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
             </div>
 
-            <form action="register" method="POST">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email"
-                        required>
-                </div>
+            <div class="auth-header">
+                <h2>Reset Password</h2>
+                <p>Create a new password for your account</p>
+            </div>
 
+            <form action="resetpassword" method="POST">
                 <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Adress</label>
-                    <input type="text" id="address" name="address" class="form-control" placeholder="Enter your adress"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
+                    <input type="hidden" id="token" name="token" value="<?php echo $token; ?>">
+                    <input type="hidden" id="email" name="email" value="<?php echo $email; ?>">
+                    <label for="new-password">New Password</label>
                     <div class="password-field">
-                        <input type="password" id="password" name="password" class="form-control"
+                        <input type="password" id="new-password" name="password" class="form-control"
                             placeholder="Enter your password" required>
                         <button type="button" class="password-toggle" id="password-toggle"
                             aria-label="Toggle password visibility">
@@ -335,17 +330,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </svg>
                         </button>
                     </div>
+                    <div class="password-strength">
+                        <div>Password strength: <span id="strength-text">Weak</span></div>
+                        <div class="strength-meter">
+                            <div class="strength-meter-fill" style="width: 20%;"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="confirm-password">Confirm Password</label>
                     <div class="password-field">
-                        <input type="password" id="confirm-password" name="confirm-password" class="form-control"
+                        <input type="password" id="password-confirm" name="confirm-password" class="form-control"
                             placeholder="Enter your password" required>
                         <button type="button" class="password-toggle" id="password-toggle-1"
                             aria-label="Toggle password visibility">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" id="eye-icon">
+                                stroke="currentColor" id="eye-icon-1">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -355,57 +356,101 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
 
-                <div class="terms">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
-                            Policy</a></label>
-                </div>
-
-                <button type="submit" class="btn-submit">Create Account</button>
+                <button type="submit" class="btn-submit">Set New Password</button>
             </form>
 
             <div class="auth-footer">
-                Already have an account? <a href="login">Login</a>
+                Remember your password? <a href="login">Back to Login</a>
             </div>
         </div>
     </main>
+
+    <script>
+        const passwordInput = document.getElementById('new-password');
+        const strengthText = document.getElementById('strength-text');
+        const strengthMeter = document.querySelector('.strength-meter-fill');
+
+        passwordInput.addEventListener('input', function () {
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[0-9]/)) strength += 25;
+            if (password.match(/[^A-Za-z0-9]/)) strength += 25;
+
+            strengthMeter.style.width = strength + '%';
+
+            if (strength <= 25) {
+                strengthText.textContent = 'Weak';
+                strengthMeter.style.backgroundColor = '#ff4d4d';
+            } else if (strength <= 50) {
+                strengthText.textContent = 'Fair';
+                strengthMeter.style.backgroundColor = '#ffa64d';
+            } else if (strength <= 75) {
+                strengthText.textContent = 'Good';
+                strengthMeter.style.backgroundColor = '#ffbe33';
+            } else {
+                strengthText.textContent = 'Strong';
+                strengthMeter.style.backgroundColor = '#66cc66';
+            }
+        });
+
+        const form = document.querySelector('form');
+        const confirmPassword = document.getElementById('confirm-password');
+
+        form.addEventListener('submit', function (e) {
+            if (passwordInput.value !== confirmPassword.value) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                confirmPassword.focus();
+            }
+        });
+    </script>
 </body>
 <script>
-    // Password visibility toggle
-    const passwordField = document.getElementById('password');
+
+    const passwordField = document.getElementById('new-password');
     const passwordToggle = document.getElementById('password-toggle');
-    const passwordConfirmField = document.getElementById('confirm-password');
+    const passwordConfirmField = document.getElementById('password-confirm');
     const passwordConfirmToggle = document.getElementById('password-toggle-1');
     const eyeIcon = document.getElementById('eye-icon');
-
+    const eyeIcon1 = document.getElementById('eye-icon-1');
     passwordToggle.addEventListener('click', function () {
+
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
+
             eyeIcon.innerHTML = `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                 `;
         } else {
             passwordField.type = 'password';
+
             eyeIcon.innerHTML = `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 `;
         }
     });
+
     passwordConfirmToggle.addEventListener('click', function () {
+
         if (passwordConfirmField.type === 'password') {
             passwordConfirmField.type = 'text';
-            eyeIcon.innerHTML = `
+
+            eyeIcon1.innerHTML = `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                 `;
         } else {
             passwordConfirmField.type = 'password';
-            eyeIcon.innerHTML = `
+
+            eyeIcon1.innerHTML = `
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 `;
         }
-    });
+    })
 </script>
 
 </html>

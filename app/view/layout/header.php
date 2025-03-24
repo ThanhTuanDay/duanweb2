@@ -11,6 +11,7 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
     <link rel="shortcut icon" href="public/images/favicon.png" type="">
 
     <title> Feane </title>
