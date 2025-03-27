@@ -1,16 +1,44 @@
 <?php
-require(dirname(__File__) . "/app/lib/session.php");
+require(dirname(__FILE__) . "/app/lib/session.php");
 Session::init();
+
 $page = isset($_GET['page']) ? $_GET['page'] : 'homepage';
+$adminpage = isset($_GET['adminpage']) ? $_GET['adminpage'] : 'dashboard';
 
-$file = "./app/view/page/$page.php";
+$clientfile = "./app/view/page/$page.php";
+$adminfile = "./app/view/admin/$adminpage.php";
 
-$data=Session::get('name');
+if (Session::get('role') === 'admin' || Session::get('role') === 'staff' ) {
+    if (isset($_GET['page'])) {
+        header("Location: /duanweb2/admin/dashboard"); 
+        exit();
+    }
 
-if (file_exists($file)) {
-    $content = $file; 
-    include "./app/view/layout/layout.php";
-} else {
-    include  "./app/view/page/404.php"; 
+    if (file_exists($adminfile)) {
+        $content = $adminfile;
+        include "./app/view/layout/layout-admin.php";
+        exit();
+    } else {
+        include "./app/view/page/404.php"; 
+        exit();
+    }
 }
 
+if (Session::get('role') !== 'admin') {
+    if (isset($_GET['adminpage'])) {
+        header("Location: /duanweb2/403"); 
+        exit();
+    }
+
+    if (file_exists($clientfile)) {
+        $content = $clientfile;
+        include "./app/view/layout/layout.php";
+        exit();
+    } else {
+        include "./app/view/page/404.php"; 
+    }
+}
+else{
+    include "./app/view/page/404.php";
+    exit();
+}

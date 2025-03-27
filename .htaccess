@@ -13,3 +13,5 @@ RewriteRule ^messageSent$ app/view/Auth/messageSent.php [L]
 RewriteRule ^logout$ app/view/Auth/logout.php [L]
 RewriteRule ^cart$ app/view/cart/cart.php [L]
 RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?page=$1 [QSA,L]
+RewriteRule ^admin/([a-zA-Z0-9_-]+)$ index.php?adminpage=$1 [QSA,L]
+
