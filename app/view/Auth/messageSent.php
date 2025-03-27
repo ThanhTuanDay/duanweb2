@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="home">HOME</a>
+                    <a href="homepage">HOME</a>
                     <a href="menu">MENU</a>
                     <a href="about">ABOUT</a>
                     <a href="book">BOOK TABLE</a>
