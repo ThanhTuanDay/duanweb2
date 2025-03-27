@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /duanweb2
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^login$ app/view/Auth/login.php [L]
+RewriteRule ^register$ app/view/Auth/register.php [L]
+RewriteRule ^verify$ app/view/Auth/verify.php [L]
+RewriteRule ^forgot$ app/view/Auth/forgot.php [L]
+RewriteRule ^resetpassword$ app/view/Auth/resetpassword.php [L]
+RewriteRule ^messageSent$ app/view/Auth/messageSent.php [L]
+RewriteRule ^logout$ app/view/Auth/logout.php [L]
+RewriteRule ^cart$ app/view/cart/cart.php [L]
+RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?page=$1 [QSA,L]
