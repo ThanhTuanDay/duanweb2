@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en"> -->
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feane Admin - Products</title>
@@ -266,10 +266,10 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+</head> -->
+<!-- <body> -->
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <!-- <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Feane Admin</h3>
         </div>
@@ -296,11 +296,11 @@
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>
-    </div>
+    </div> -->
 
     <!-- Main Content -->
-    <div class="main-content" id="main-content">
-        <div class="topbar">
+    <!-- <div class="main-content" id="main-content"> -->
+        <!-- <div class="topbar">
             <button class="toggle-sidebar" id="toggle-sidebar">
                 <i class="fas fa-bars"></i>
             </button>
@@ -318,7 +318,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -513,7 +513,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
     <!-- Add Product Modal -->
     <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
@@ -669,13 +669,4 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Toggle Sidebar
-        document.getElementById('toggle-sidebar').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('main-content').classList.toggle('active');
-        });
-    </script>
-</body>
-</html>
+  
