@@ -1,0 +1,73 @@
+
+
+ .sidebar {
+     width: 250px;
+     background-color: var(--dark-light);
+     height: 100vh;
+     position: fixed;
+     left: 0;
+     top: 0;
+     overflow-y: auto;
+     transition: all 0.3s ease;
+     z-index: 1000;
+ }
+
+ .sidebar-header {
+     padding: 20px;
+     text-align: center;
+     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ .sidebar-header h3 {
+     color: var(--primary);
+     font-weight: 700;
+     font-size: 24px;
+     margin: 0;
+ }
+
+ .sidebar-menu {
+     padding: 20px 0;
+ }
+
+ .menu-item {
+     padding: 12px 20px;
+     display: flex;
+     align-items: center;
+     color: var(--light);
+     text-decoration: none;
+     transition: all 0.3s ease;
+     border-left: 3px solid transparent;
+ }
+
+ .menu-item:hover {
+     background-color: rgba(255, 255, 255, 0.05);
+     color: var(--primary);
+ }
+
+ .menu-item.active {
+     background-color: rgba(255, 255, 255, 0.05);
+     color: var(--primary);
+     border-left-color: var(--primary);
+ }
+
+ .menu-item i {
+     margin-right: 10px;
+     font-size: 18px;
+ }
+   .topbar {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin-bottom: 30px;
+       background-color: var(--dark-light);
+       padding: 15px 20px;
+       border-radius: 5px;
+   }
+
+   .toggle-sidebar {
+       background: none;
+       border: none;
+       color: var(--light);
+       font-size: 20px;
+       cursor: pointer;
+   }
