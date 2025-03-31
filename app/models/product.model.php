@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__DIR__) . "../dto/product.dto.php");
-require_once(dirname(__DIR__) . "../models/order-item.models.php");
+require_once(dirname(__DIR__) . "/models/order-item.model.php");
 
 class ProductModel
 {
@@ -116,7 +116,12 @@ class ProductModel
 
         return $stmt->execute();
     }
-
+    public function countProducts(): int {
+        $sql = "SELECT COUNT(*) as total FROM products";
+        $result = $this->conn->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['total'] ?? 0;
+    }
     public function deleteProduct($id): bool
     {
         if ($this->orderItemModel->isProductSold($id)) {

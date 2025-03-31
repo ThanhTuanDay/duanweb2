@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__DIR__) . "../dto/user.dto.php");
 require_once __DIR__ . '/../helper/message-sender.php';
-
+require_once(dirname(__DIR__) . "../lib/staticRole.php");
 class UserModel
 {
 
@@ -16,15 +16,21 @@ class UserModel
     }
     public function LoginUser(UserDto $user)
     {
-        $email = mysqli_real_escape_string($this->db->link, $user->getEmail());
-        $password = mysqli_real_escape_string($this->db->link, $user->getPassword());
-        $query = "SELECT * from users WHERE email = '$email' and password = '$password' LIMIT 1";
-        $data = $this->db->select($query);
-        if (!$data) {
-            echo "<script>alert('tài khoản này không đăng nhập được')</script>";
+        $sql = "SELECT * FROM users WHERE email = ? AND password = ? AND is_verified = 1 LIMIT 1";
+        $stmt = $this->db->link->prepare($sql);
+
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            return $result->fetch_assoc();
         } else {
-            $result = $data->fetch_assoc();
-            return $result;
+            echo "<script>alert('Tài khoản không tồn tại hoặc chưa xác thực');</script>";
+            return null;
         }
     }
 
@@ -37,6 +43,17 @@ class UserModel
         $result = $stmt->get_result();
 
         return $result->num_rows > 0;
+    }
+    public function countCustomers(): int
+    {
+        $sql = "SELECT COUNT(*) as total FROM users WHERE role = ?";
+        $stmt = $this->conn->prepare($sql);
+        $role = AppRole::ROLE_USER;
+        $stmt->bind_param("s", $role);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['total'] ?? 0;
     }
 
     public function registerUser($userDto)
@@ -101,7 +118,7 @@ class UserModel
         if (!$result->num_rows > 0) {
             return false;
         }
-        return $this->updateUserVerified($email,null);
+        return $this->updateUserVerified($email, null);
     }
 
     public function updateUserVerified($email, $token = NULL)

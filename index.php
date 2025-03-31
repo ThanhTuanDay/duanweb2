@@ -22,7 +22,7 @@ if ($adminfolder) {
 // echo "Admin File Path: " . $adminfile . "<br>";
 if (Session::get('role') === 'admin' || Session::get('role') === 'staff' ) {
     if (isset($_GET['page'])) {
-        header("Location: /duanweb2/admin"); 
+        header("Location: /duanweb2/admin/dashboard/page"); 
         exit();
     }
 

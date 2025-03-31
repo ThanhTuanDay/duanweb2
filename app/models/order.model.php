@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__DIR__) . "../dto/order.dto.php");
-
+require_once(dirname(__DIR__) . "../lib/staticOrderStatus.php");
 class OrderModel
 {
     private $conn;
@@ -8,6 +8,57 @@ class OrderModel
     public function __construct($db)
     {
         $this->conn = $db->link;
+    }
+    public function countOrders(): int
+    {
+        $sql = "SELECT COUNT(*) as total FROM orders";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc()['total'] ?? 0;
+    }
+
+    public function getTopSellingCategories($limit = 5): array {
+        $sql = "
+            SELECT 
+                c.name AS category_name,
+                SUM(oi.quantity) AS total_sold
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            JOIN categories c ON p.category_id = c.id
+            JOIN orders o ON oi.order_id = o.id
+            WHERE o.status = ?
+            GROUP BY c.id
+            ORDER BY total_sold DESC
+            LIMIT ?
+        ";
+    
+        $status = OrderStatus::Completed;
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $status, $limit);
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+    public function sumCompletedOrders(): float
+    {
+        $sql = "SELECT SUM(total_price) as revenue FROM orders WHERE status = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        $status = OrderStatus::Completed; 
+        $stmt->bind_param("s", $status);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+        return $row['revenue'] ?? 0.0;
+    }
+
+    public function getRecentOrders(): array
+    {
+        $sql = "SELECT * FROM orders ORDER BY created_at DESC LIMIT 5";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function createOrder(OrderDto $order): bool
@@ -77,7 +128,33 @@ class OrderModel
         }
         return $orders;
     }
+    public function getTopSellingProducts($limit = 5): array
+    {
+        $sql = "
+            SELECT 
+                p.id, 
+                p.name, 
+                p.image_url, 
+                p.price,
+                SUM(oi.quantity) as total_sold
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            JOIN orders o ON oi.order_id = o.id
+            WHERE o.status = ?
+            GROUP BY p.id
+            ORDER BY total_sold DESC
+            LIMIT ?
+        ";
 
+        $status = OrderStatus::Completed;
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $status, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
     private function mapToOrderDto($data): OrderDto
     {
         return new OrderDto(

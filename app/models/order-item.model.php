@@ -1,6 +1,5 @@
 <?php
-require_once 'OrderItemDto.php';
-require_once __DIR__ . '/../lib/Database.php';
+require_once(dirname(__DIR__) . "../dto/order-item.dto.php");
 
 class OrderItemModel
 {
