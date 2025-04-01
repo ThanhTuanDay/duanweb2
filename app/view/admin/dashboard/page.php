@@ -87,8 +87,8 @@ $categoryTotals = json_encode($totals);
                         <i class="fas fa-hamburger"></i>
                     </div>
                     <div class="stats-info">
-                        <h5><?= number_format($totalProducts) ?></h5>
-                        <h3>45</h3>
+                        <h5>Total Products</h5>
+                        <h3><?= number_format($totalProducts) ?></h3>
                         <p class="positive"><i class="fas fa-arrow-up"></i> 5.2% from last month</p>
                     </div>
                 </div>

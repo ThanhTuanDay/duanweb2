@@ -111,7 +111,9 @@ class CategoryModel
         $categories = [];
         $sql = "SELECT * FROM categories ORDER BY created_at DESC";
         $result = $this->conn->query($sql);
-
+        if (!$result) {
+            die("Query failed: " . $this->conn->error);
+        }
         while ($row = $result->fetch_assoc()) {
             $categories[] = $this->mapToCategoryDto($row);
         }

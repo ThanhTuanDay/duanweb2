@@ -39,7 +39,21 @@ class ProductModel
 
         return $stmt->execute();
     }
-
+    public function getProductsPaginated($limit, $offset): array
+    {
+        $sql = "
+            SELECT p.*, c.name AS category_name
+            FROM products p
+            JOIN categories c ON p.category_id = c.id
+            ORDER BY p.created_at DESC
+            LIMIT ? OFFSET ?
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
     public function isStockAvailable($productId, $quantity): bool
     {
         $sql = "SELECT stock FROM products WHERE id = ?";
@@ -116,7 +130,8 @@ class ProductModel
 
         return $stmt->execute();
     }
-    public function countProducts(): int {
+    public function countProducts(): int
+    {
         $sql = "SELECT COUNT(*) as total FROM products";
         $result = $this->conn->query($sql);
         $row = $result->fetch_assoc();
@@ -131,6 +146,24 @@ class ProductModel
         $sql = "DELETE FROM products WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $id);
+        return $stmt->execute();
+    }
+
+    public function isProductSold($id): bool
+    {
+        return $this->orderItemModel->isProductSold($id);
+    }
+
+    function updateStatusToFalse($id)
+    {
+        $sql = "UPDATE products SET status = 0 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 
