@@ -34,6 +34,37 @@ class UserModel
         }
     }
 
+    public function getDeliveryAddressesById($userId)
+    {
+        $sql = "SELECT * FROM user_addresses WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $addresses = [];
+        while ($row = $result->fetch_assoc()) {
+            $addresses[] = $row;
+        }
+
+        return $addresses;
+    }
+
+    public function insertAddress($userId, $addressName, $address, $phone)
+    {
+        $id = uniqid();
+        $sql = "INSERT INTO user_addresses (id, user_id, address_name, address, phone) 
+            VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssss", $id, $userId, $addressName, $address, $phone);
+
+        if ($stmt->execute()) {
+            return $id;
+        }
+
+        return false;
+    }
+
     public function checkEmailExists($email)
     {
         $sql = "SELECT * FROM users WHERE email = ?";

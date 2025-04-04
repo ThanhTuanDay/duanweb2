@@ -35,14 +35,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Delicious Pizza
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $20
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -59,7 +63,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -111,14 +116,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Delicious Burger
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $15
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -135,7 +144,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -187,14 +197,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Delicious Pizza
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $17
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -211,7 +225,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -263,14 +278,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Delicious Pasta
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $18
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -287,7 +306,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -339,14 +359,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     French Fries
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $10
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -363,7 +387,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -415,14 +440,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Delicious Pizza
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $15
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -439,7 +468,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -491,14 +521,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Tasty Burger
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $12
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -515,7 +549,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -567,14 +602,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Tasty Burger
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $14
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -591,7 +630,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -643,14 +683,18 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                     Delicious Pasta
                                 </h5>
                                 <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                    voluptatem repellendus sed eaque
                                 </p>
                                 <div class="options">
                                     <h6>
                                         $10
                                     </h6>
                                     <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 456.029 456.029"
+                                            style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -667,7 +711,8 @@ include dirname(__FILE__) . '/../layout/slider.php';
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                                                    <path
+                                                        d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                          c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                                                 </g>
                                             </g>
@@ -714,6 +759,59 @@ include dirname(__FILE__) . '/../layout/slider.php';
             <a href="">
                 View More
             </a>
+        </div>
+    </div>
+    <!-- Pagination Navigation -->
+    <div class="pagination-container mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <?php if ($current_page > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="?page=<?php echo $current_page - 1; ?><?php echo $current_filter != 'all' ? '&filter=' . $current_filter : ''; ?>"
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            <?php else: ?>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <li class="page-item <?php echo $i == $current_page ? 'active' : ''; ?>">
+                                    <a class="page-link"
+                                        href="?page=<?php echo $i; ?><?php echo $current_filter != 'all' ? '&filter=' . $current_filter : ''; ?>">
+                                        <?php echo $i; ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <?php if ($current_page < $total_pages): ?>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="?page=<?php echo $current_page + 1; ?><?php echo $current_filter != 'all' ? '&filter=' . $current_filter : ''; ?>"
+                                        aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            <?php else: ?>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
     </div>
 </section>

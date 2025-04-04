@@ -45,7 +45,7 @@ const salesChart = new Chart(salesCtx, {
         }
     }
 });
-const dataDiv = document.getElementById("category-chart-data");
+let dataDiv = document.getElementById("category-chart-data");
 if (dataDiv) {
     const labels = JSON.parse(dataDiv.dataset.labels);
     const values = JSON.parse(dataDiv.dataset.values);

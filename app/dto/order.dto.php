@@ -1,5 +1,5 @@
 <?php
-
+require("order-item.dto.php");
 class OrderDto
 {
     private ?string $id;
@@ -8,14 +8,19 @@ class OrderDto
     private ?string $status;
     private ?string $store_id;
     private ?string $created_at;
-
+    private ?string $deliveryAddressId;
+    private ?string $deliveryAddress;
+    private array $orderItems;
     public function __construct(
         ?string $id = null,
         ?string $user_id = null,
         ?float $total_price = null,
         ?string $status = 'pending',
         ?string $store_id = null,
-        ?string $created_at = null
+        ?string $created_at = null,
+        ?string $deliveryAddressId = null,
+        ?array $orderItems = null,
+        ?string $deliveryAddress = null
     ) {
         $this->id = $id;
         $this->user_id = $user_id;
@@ -23,6 +28,9 @@ class OrderDto
         $this->status = $status;
         $this->store_id = $store_id;
         $this->created_at = $created_at;
+        $this->deliveryAddressId = $deliveryAddressId; 
+        $this->orderItems = $orderItems ?? [] ;
+        $this->deliveryAddress = $deliveryAddress;
     }
 
     // Getters
@@ -51,6 +59,20 @@ class OrderDto
         return $this->created_at;
     }
 
+    public function getDeliveryAddressId(): ?string
+    {
+        return $this->deliveryAddressId;
+    }
+
+    public function getOrderItems()
+    {
+        return $this->orderItems;
+    }
+    public function getDeliveryAddress(): ?string
+    {
+        return $this->deliveryAddress;
+    }
+
     // Setters
     public function setId(string $id): void
     {
@@ -75,5 +97,18 @@ class OrderDto
     public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
+    }
+    public function setDeliveryAddressId(string $deliveryAddressId): void
+    {
+        $this->deliveryAddressId = $deliveryAddressId;
+    }
+
+    public function setOrderItems(array $orderItems): void
+    {
+        $this->orderItems = $orderItems;
+    }
+    public function setDeliveryAddress(string $deliveryAddress): void
+    {
+        $this->deliveryAddress = $deliveryAddress;
     }
 }

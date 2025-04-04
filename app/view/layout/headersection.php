@@ -1,4 +1,3 @@
-
 <header class="header_section">
     <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -30,12 +29,18 @@
                 </ul>
                 <div class="user_option">
                     <?php if (Session::get('name')): ?>
+                        <a href="order-history" class="user_link">
+                            <i class="fa fa-list" aria-hidden="true"></i> 
+                        </a>
+                        <a href="user-info" class="user_link">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </a>
                         <a href="logout" class="user_link" style="color: red;">
                             <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                         </a>
                     <?php else: ?>
                         <a href="login" class="user_link">
-                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
                         </a>
                     <?php endif; ?>
                     <p></p>

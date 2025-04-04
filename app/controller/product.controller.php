@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__DIR__) . "../config/config.php");
+include(dirname(__FILE__) . "/../config/config.php");
 require_once(dirname(__DIR__) . "../models/product.model.php");
 require_once(dirname(__DIR__) . "../lib/database.php");
 require_once(dirname(__DIR__) . '../dto/product.dto.php');
@@ -38,6 +38,10 @@ class ProductController{
    }
    public function blockProduct($productId):bool{
         return $this->productModel->updateStatusToFalse($productId);
+   }
+
+   public function getProductsForMenu(){
+            return $this->productModel->getProductsForMenu();
    }
 }
 

@@ -1,3 +1,13 @@
+<?php
+require(dirname(__DIR__) . "../../controller/user.controller.php");
+
+
+$userController = new UserController();
+
+
+$addresses = $userController->getDeliveryAddress();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -478,6 +488,170 @@
                 width: 100%;
             }
         }
+
+        .delivery-address {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed #333;
+        }
+
+        .address-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .address-options {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .address-option {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .address-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .address-option label {
+            display: block;
+            padding: 12px 15px;
+            background-color: #2c2c2c;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: 2px solid transparent;
+            border-radius: 5px;
+        }
+
+        .address-option input:checked+label {
+            border-color: #ffbe33;
+            background-color: #3a3a3a;
+        }
+
+        .address-option label:hover {
+            background-color: #3a3a3a;
+        }
+
+        .address-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .address-name {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .address-text {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .address-phone {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .add-new-address {
+            margin-top: 5px;
+        }
+
+        .add-address-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px;
+            background-color: #2c2c2c;
+            color: #ffbe33;
+            border: 1px dashed #ffbe33;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-address-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        .address-form {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #2c2c2c;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            background-color: #191919;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ffbe33;
+        }
+
+        textarea.form-input {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 10px;
+            background-color: #3a3a3a;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            flex: 1;
+            padding: 10px;
+            background-color: #ffbe33;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background-color: #444;
+        }
     </style>
 </head>
 
@@ -615,7 +789,94 @@
                         <span>Total</span>
                         <span id="total">$25.97</span>
                     </div>
+                    <div class="delivery-address">
+                        <h3 class="address-title">Delivery Address</h3>
 
+                        <div class="address-options">
+                            <?php foreach ($addresses as $index => $address): ?>
+                                <div class="address-option">
+                                    <input type="radio" name="address" id="address<?= $index ?>"
+                                        value="<?= htmlspecialchars($address['id']) ?>" <?= $index === 0 ? 'checked' : '' ?>>
+                                    <label for="address<?= $index ?>">
+                                        <div class="address-details">
+                                            <div class="address-name"><?= htmlspecialchars($address['address_name']) ?>
+                                            </div>
+                                            <div class="address-text"><?= htmlspecialchars($address['address']) ?></div>
+                                            <div class="address-phone"><?= htmlspecialchars($address['phone']) ?></div>
+                                            <div class="address-id hidden"><?= htmlspecialchars($address['id']) ?></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
+                            <!-- <div class="address-option">
+                                <input type="radio" name="address" id="address1" value="address1" checked>
+                                <label for="address1">
+                                    <div class="address-details">
+                                        <div class="address-name">Home</div>
+                                        <div class="address-text">123 Main Street, Apt 4B, District 1, Ho Chi Minh City
+                                        </div>
+                                        <div class="address-phone">+84 123 456 789</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="address-option">
+                                <input type="radio" name="address" id="address2" value="address2">
+                                <label for="address2">
+                                    <div class="address-details">
+                                        <div class="address-name">Office</div>
+                                        <div class="address-text">456 Business Avenue, Floor 8, District 3, Ho Chi Minh
+                                            City</div>
+                                        <div class="address-phone">+84 987 654 321</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="address-option">
+                                <input type="radio" name="address" id="address3" value="address3">
+                                <label for="address3">
+                                    <div class="address-details">
+                                        <div class="address-name">Friend's Place</div>
+                                        <div class="address-text">789 Park Road, Building C, District 7, Ho Chi Minh
+                                            City</div>
+                                        <div class="address-phone">+84 555 123 456</div>
+                                    </div>
+                                </label>
+                            </div> -->
+
+                            <div class="add-new-address">
+                                <button class="add-address-btn" onclick="showAddAddressForm()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" width="18" height="18">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Add New Address
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="address-form" id="address-form" style="display: none;">
+                            <div class="form-group">
+                                <label for="address-name">Address Name</label>
+                                <input type="text" id="address-name" class="form-input"
+                                    placeholder="Home, Office, etc.">
+                            </div>
+                            <div class="form-group">
+                                <label for="address-full">Full Address</label>
+                                <textarea id="address-full" class="form-input"
+                                    placeholder="Street, Building, District, City"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="address-phone">Phone Number</label>
+                                <input type="text" id="address-phone" class="form-input" placeholder="+84 123 456 789">
+                            </div>
+                            <div class="form-actions">
+                                <button class="cancel-btn" onclick="hideAddAddressForm()">Cancel</button>
+                                <button class="save-btn" onclick="saveNewAddress()">Save Address</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="payment-methods">
                         <h3 class="payment-title">Payment Method</h3>
 
@@ -678,137 +939,12 @@
                 <a href="#" class="continue-shopping">Continue Shopping</a>
             </div>
         </div>
+        <div id="app-data" data-user-id="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>"
+            data-products='<?= isset($products) ? json_encode($products, JSON_HEX_APOS | JSON_HEX_QUOT) : "null" ?>'
+            style="display: none;">
+        </div>
     </main>
 
-    <script>
-
-        const cartItems = [
-            { id: 1, name: "Deluxe Cheeseburger", price: 12.99, quantity: 1 },
-            { id: 2, name: "Large French Fries", price: 4.99, quantity: 1 },
-            { id: 3, name: "Chocolate Milkshake", price: 5.49, quantity: 1 }
-        ];
-
-        const deliveryFee = 2.50;
-        let discountAmount = 0;
-        let discountCode = "";
-
-        const promoCodes = {
-            "WELCOME10": { type: "percentage", value: 10 },
-            "FEANE20": { type: "percentage", value: 20 },
-            "FREESHIP": { type: "shipping", value: deliveryFee },
-            "5DOLLAROFF": { type: "fixed", value: 5 }
-        };
-
-
-        function applyPromoCode() {
-            const promoInput = document.getElementById('promo-input');
-            const promoMessage = document.getElementById('promo-message');
-            const code = promoInput.value.trim().toUpperCase();
-
-            if (code === "") {
-                promoMessage.textContent = "Please enter a promotional code";
-                promoMessage.className = "promo-message promo-error";
-                return;
-            }
-
-            if (promoCodes[code]) {
-                const promo = promoCodes[code];
-                discountCode = code;
-
-                if (promo.type === "percentage") {
-                    const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-                    discountAmount = (subtotal * promo.value / 100).toFixed(2);
-                    promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ${promo.value}% discount applied</span>`;
-                } else if (promo.type === "shipping") {
-                    discountAmount = promo.value.toFixed(2);
-                    promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Free shipping applied</span>`;
-                } else if (promo.type === "fixed") {
-                    discountAmount = promo.value.toFixed(2);
-                    promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> $${promo.value} discount applied</span>`;
-                }
-
-                document.getElementById('discount-row').style.display = "flex";
-                document.getElementById('discount-amount').textContent = `-$${discountAmount}`;
-
-                updateCart();
-            } else {
-                promoMessage.textContent = "Invalid promotional code";
-                promoMessage.className = "promo-message promo-error";
-                discountAmount = 0;
-                discountCode = "";
-                document.getElementById('discount-row').style.display = "none";
-                updateCart();
-            }
-        }
-
-        function updateQuantity(itemId, change) {
-            const item = cartItems.find(item => item.id === itemId);
-            if (item) {
-                const newQuantity = item.quantity + change;
-                if (newQuantity >= 1 && newQuantity <= 10) {
-                    item.quantity = newQuantity;
-                    updateCart();
-
-                    const input = document.querySelector(`.quantity-input[data-item-id="${itemId}"]`);
-                    if (input) {
-                        input.value = newQuantity;
-                    }
-                }
-            }
-        }
-
-        function updateQuantityInput(itemId, value) {
-            const quantity = parseInt(value);
-            if (quantity >= 1 && quantity <= 10) {
-                const item = cartItems.find(item => item.id === itemId);
-                if (item) {
-                    item.quantity = quantity;
-                    updateCart();
-                }
-            }
-        }
-
-        function removeItem(itemId) {
-            const index = cartItems.findIndex(item => item.id === itemId);
-            if (index !== -1) {
-                cartItems.splice(index, 1);
-                const itemElement = document.querySelector(`.cart-item:has(.quantity-input[data-item-id="${itemId}"])`);
-                if (itemElement) {
-                    itemElement.remove();
-                }
-
-                updateCart();
-
-
-                if (cartItems.length === 0) {
-                    document.getElementById('cart-container').style.display = 'none';
-                    document.getElementById('empty-cart').style.display = 'block';
-                }
-            }
-        }
-
-        function updateCart() {
-            const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const total = subtotal + deliveryFee - discountAmount;
-
-            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
-        }
-        function checkout() {
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-            const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const total = subtotal + deliveryFee - discountAmount;
-
-            let message = `Proceeding to checkout with ${paymentMethod} payment method. Total: $${total.toFixed(2)}`;
-            if (discountCode) {
-                message += `\nPromo code applied: ${discountCode}`;
-            }
-
-            alert(message);
-        }
-
-        updateCart();
-    </script>
 </body>
 
 </html>

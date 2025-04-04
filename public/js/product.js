@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editProductStatus').value = this.dataset.status;
             document.getElementById('editProductFeatured').value = this.dataset.featured;
             document.getElementById('oldProductImage').value = this.dataset.image;
-            console.log(this.dataset.image);
             const currentImg = document.getElementById('current-product-image');
             if (currentImg && this.dataset.image) {
                 currentImg.src = this.dataset.image;

@@ -76,12 +76,18 @@
             </p>
         </div>
     </div>
+    <div id="app-data" data-user-id="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>"
+    data-products='<?= isset($products) ? json_encode($products, JSON_HEX_APOS | JSON_HEX_QUOT) : "null" ?>'  style="display: none;">
+    </div>
 </footer>
 </main>
 <!-- footer section -->
 
 <!-- jQery -->
 <script src="public/js/jquery-3.4.1.min.js"></script>
+<script src="public/js/cart.model.js"></script>
+<script src="public/js/cart.controller.js"></script>
+<script src="public/js/cart.js"></script>
 <!-- popper js -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
 </script>

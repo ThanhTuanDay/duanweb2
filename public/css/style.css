@@ -718,7 +718,17 @@ a:focus {
   transition: all 0.3s;
   border: none;
 }
-
+.food_section .box .detail-box p.description {
+  height: 80px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 15px;
+}
+.hidden {
+  display: none;
+}
 .book_section .form_container button:hover {
   background-color: #e69c00;
 }
@@ -791,6 +801,7 @@ a:focus {
   color: #ffffff;
   padding: 25px 25px 15px 25px;
   border-radius: 5px;
+  height: 250px;
 }
 
 .client_section .box .detail-box h6 {
@@ -800,6 +811,7 @@ a:focus {
 }
 
 .client_section .box .detail-box p {
+  
   margin-bottom: 0;
   font-size: 15px;
   margin-bottom: 10px;
@@ -1004,4 +1016,32 @@ a:focus {
 .footer_section .footer-info p a {
   color: inherit;
 }
-/*# sourceMappingURL=style.css.map */
+
+.pagination-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.pagination .page-link {
+  color: #222831;
+  background-color: #ffffff;
+  border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+  color: #ffffff;
+  background-color: #ffbe33;
+  border-color: #ffbe33;
+}
+
+.pagination .page-link:hover {
+  color: #ffffff;
+  background-color: #e69c00;
+  border-color: #e69c00;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  background-color: #ffffff;
+  border-color: #dee2e6;
+}

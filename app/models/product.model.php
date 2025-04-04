@@ -167,6 +167,23 @@ class ProductModel
         return $stmt->execute();
     }
 
+    public function getProductsForMenu(): array
+{
+    $sql = "SELECT p.*, c.name as category_slug 
+            FROM products p
+            JOIN categories c ON p.category_id = c.id 
+            Where p.status = 1
+            ORDER BY created_at DESC ";
+    $result = $this->conn->query($sql);
+    $products = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+
+    return $products;
+}
+
     public function getAllProducts(): array
     {
         $products = [];

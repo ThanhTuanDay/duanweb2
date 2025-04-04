@@ -16,7 +16,8 @@ class OrderModel
         return $result->fetch_assoc()['total'] ?? 0;
     }
 
-    public function getTopSellingCategories($limit = 5): array {
+    public function getTopSellingCategories($limit = 5): array
+    {
         $sql = "
             SELECT 
                 c.name AS category_name,
@@ -30,13 +31,13 @@ class OrderModel
             ORDER BY total_sold DESC
             LIMIT ?
         ";
-    
+
         $status = OrderStatus::Completed;
-    
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("si", $status, $limit);
         $stmt->execute();
-    
+
         $result = $stmt->get_result();
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
@@ -45,7 +46,7 @@ class OrderModel
         $sql = "SELECT SUM(total_price) as revenue FROM orders WHERE status = ?";
         $stmt = $this->conn->prepare($sql);
 
-        $status = OrderStatus::Completed; 
+        $status = OrderStatus::Completed;
         $stmt->bind_param("s", $status);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -61,31 +62,78 @@ class OrderModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function createOrder(OrderDto $order): bool
+    public function createOrder(OrderDto $order): ?string
     {
-        $sql = "INSERT INTO orders (user_id, total_price, status, store_id, created_at)
-        VALUES ( ?, ?, ?, ?, NOW())";
+        $sql = "INSERT INTO orders (user_id, total_price, status, store_id, created_at, delivery_address_id)
+            VALUES (?, ?, ?, ?, NOW(), ?)";
         $stmt = $this->conn->prepare($sql);
-
+       
         $userId = $order->getUserId();
         $totalPrice = $order->getTotalPrice();
         $status = $order->getStatus();
         $storeId = $order->getStoreId();
+        $deliveryAddressId = $order->getDeliveryAddressId();
+        $stmt->bind_param("sdsss", $userId, $totalPrice, $status, $storeId, $deliveryAddressId);
+        $result = $stmt->execute();
 
-        $stmt->bind_param(
-            "sdss",
-            $userId,
-            $totalPrice,
-            $status,
-            $storeId
-        );
+        $lastOrder = $this->getLastInsertedOrderByUser($userId);
+        $orderId = $lastOrder['id'];
+        if (!$result) {
+            return null;
+        }
+        file_put_contents(__DIR__ . '/order-log', json_encode($orderId), FILE_APPEND);
+        $this->insertOrderItems($orderId, $order->getOrderItems());
+        return $orderId;
+    }
 
-        return $stmt->execute();
+
+    public function insertOrderItems($orderId, $orderItems): bool
+    {
+        $sql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+
+        foreach ($orderItems as $item) {
+            $productId = $item['id'];
+            $quantity = $item['quantity'];
+            $price = $item['price'];
+
+            $stmt->bind_param("ssds", $orderId, $productId, $quantity, $price);
+            if (!$stmt->execute()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function getLastInsertedOrderByUser($userId)
+    {
+        $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 
     public function getOrderById($id): ?OrderDto
     {
         $sql = "SELECT * FROM orders WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+            return $this->mapToOrderDto($data);
+        }
+        return null;
+    }
+
+    public function getOrderWithAddressById($id): ?OrderDto
+    {
+        $sql = "SELECT o.*,a.address FROM orders as o join user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id  WHERE o.id =  ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $id);
         $stmt->execute();
@@ -113,6 +161,8 @@ class OrderModel
         $stmt->bind_param("s", $id);
         return $stmt->execute();
     }
+
+
 
     public function getOrdersByStoreId($storeId): array
     {
@@ -155,9 +205,10 @@ class OrderModel
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+  
     private function mapToOrderDto($data): OrderDto
     {
-        return new OrderDto(
+        $orderDto = new OrderDto(
             $data['id'],
             $data['user_id'],
             (float) $data['total_price'],
@@ -165,6 +216,12 @@ class OrderModel
             $data['store_id'],
             $data['created_at']
         );
+        file_put_contents(__DIR__ . '/order-log', json_encode($data['address']), FILE_APPEND);
+        if(isset($data['address'])) {
+            $orderDto->setDeliveryAddress($data['address']);
+        }
+
+        return $orderDto;
     }
 }
 ?>

@@ -1,7 +1,5 @@
 <?php
-include(dirname(__FILE__) . "/../config/config.php");
-include(dirname(__FILE__) . "/../lib/database.php");
-include(dirname(__FILE__) . "/../models/user.model.php");
+require(dirname(__DIR__) . "../../controller/user.controller.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -26,28 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-
-
-
-class UserController {
-    private $db;
-    private $userModel;
-    public function __construct()
-    {
-        $this->db = new Database();
-        $this->userModel = new UserModel($this->db);
-    }
-    public function getDeliveryAddress(){
-        return $this->userModel->getDeliveryAddressesById($_SESSION['user_id']);
-    }
-
-
-    public function insertAddress($userId, $addressName, $address, $phone){
-        return $this->userModel->insertAddress($userId, $addressName, $address, $phone);
-    }
-    
-}
-
 
 
 ?>

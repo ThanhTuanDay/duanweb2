@@ -8,10 +8,13 @@ RewriteRule ^login$ app/view/Auth/login.php [L]
 RewriteRule ^register$ app/view/Auth/register.php [L]
 RewriteRule ^verify$ app/view/Auth/verify.php [L]
 RewriteRule ^forgot$ app/view/Auth/forgot.php [L]
+RewriteRule ^payment$ app/view/payment/payment.php [L]
 RewriteRule ^resetpassword$ app/view/Auth/resetpassword.php [L]
 RewriteRule ^messageSent$ app/view/Auth/messageSent.php [L]
+RewriteRule ^ipn$ app/view/payment/ipn.php [L]
+RewriteRule ^success$ app/view/page/success.php [L]
 RewriteRule ^logout$ app/view/Auth/logout.php [L]
-RewriteRule ^cart$ app/view/cart/cart.php [L]
+RewriteRule ^create-adress$ app/controller/user.controller.php [L]
 RewriteRule ^delete-product app/view/admin/product/deleteProduct.php
 RewriteRule ^block-product app/view/admin/product/blockProduct.php
 RewriteCond %{QUERY_STRING} ^$
