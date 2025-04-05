@@ -354,8 +354,8 @@
                 </button>
             </div>
             
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
+            <div class="row container-category">
+                <!-- <div class="col-lg-4 col-md-6 mb-4">
                     <div class="category-card">
                         <div class="category-card-img">
                             <img src="/placeholder.svg?height=150&width=300" alt="Burger">
@@ -467,7 +467,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
