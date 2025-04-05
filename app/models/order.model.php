@@ -67,7 +67,7 @@ class OrderModel
         $sql = "INSERT INTO orders (user_id, total_price, status, store_id, created_at, delivery_address_id)
             VALUES (?, ?, ?, ?, NOW(), ?)";
         $stmt = $this->conn->prepare($sql);
-       
+
         $userId = $order->getUserId();
         $totalPrice = $order->getTotalPrice();
         $status = $order->getStatus();
@@ -85,6 +85,19 @@ class OrderModel
         $this->insertOrderItems($orderId, $order->getOrderItems());
         return $orderId;
     }
+
+
+    public function getOrderItemsWithProductInfoByOrderId($orderId): array
+    {
+        $sql = "SELECT oi.*,p.name,p.image_url FROM order_items as oi join products as p on oi.product_id = p.id  WHERE oi.order_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $orderId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
 
 
     public function insertOrderItems($orderId, $orderItems): bool
@@ -146,6 +159,25 @@ class OrderModel
         return null;
     }
 
+
+    public function getOrdersByUserId($userId): array
+    {
+        $orders = [];
+        $sql = "SELECT o.*,a.address FROM orders as o join user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id  WHERE o.user_id =  ? ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $this->mapToOrderDto($row);
+        }
+        return $orders;
+    }
+
+
+
+
     public function updateOrderStatus($orderId, $status): bool
     {
         $sql = "UPDATE orders SET status = ? WHERE id = ?";
@@ -205,7 +237,7 @@ class OrderModel
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-  
+
     private function mapToOrderDto($data): OrderDto
     {
         $orderDto = new OrderDto(
@@ -217,7 +249,7 @@ class OrderModel
             $data['created_at']
         );
         file_put_contents(__DIR__ . '/order-log', json_encode($data['address']), FILE_APPEND);
-        if(isset($data['address'])) {
+        if (isset($data['address'])) {
             $orderDto->setDeliveryAddress($data['address']);
         }
 
