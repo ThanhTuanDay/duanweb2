@@ -1,3 +1,18 @@
+<?php
+require(dirname(__DIR__) . "../../controller/payment.controller.php");
+
+$paymentController = new PaymentController();
+$userId = Session::get('user_id');
+
+if (!$userId) {
+    header("Location: login");
+    exit;
+}
+
+$orders = $paymentController->getOrdersByUserId($userId);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -293,6 +308,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -656,8 +672,61 @@
             </div>
 
             <div class="orders-container">
-                <!-- Order 1 -->
-                <div class="order-card">
+                <?php if (!empty($orders)): ?>
+                    <?php foreach ($orders as $order):
+                        $items = $paymentController->getOrderItemsByOrderId($order->getId());
+                        ?>
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div>
+                                    <div class="order-number">Order #<?= htmlspecialchars($order->getId()) ?></div>
+                                    <div class="order-date"><?= date('F j, Y - g:i A', strtotime($order->getCreatedAt())) ?>
+                                    </div>
+                                </div>
+                                <span class="order-status <?= match ($order->getStatus()) {
+                                    'completed' => 'status-delivered',
+                                    'delivering', 'preparing' => 'status-processing',
+                                    'cancelled' => 'status-cancelled',
+                                    default => ''
+                                } ?>">
+                                    <?= ucfirst($order->getStatus()) ?>
+                                </span>
+                            </div>
+
+                            <div class="order-summary">
+                                <div class="order-items">
+                                    <?php foreach ($items as $item): ?>
+                                        <div class="item-preview">
+                                            <div class="item-image">
+                                                <img src="<?= htmlspecialchars($item['image_url'] ?? '/placeholder.svg') ?>"
+                                                    alt="<?= htmlspecialchars($item['name']) ?>">
+                                            </div>
+                                            <div class="item-name"><?= htmlspecialchars($item['name']) ?> <span
+                                                    class="item-quantity">x<?= $item['quantity'] ?></span></div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="order-total">
+                                    <div class="total-label">Total Amount</div>
+                                    <div class="total-amount"><?= number_format($order->getTotalPrice(), 2) ?> VND</div>
+                                </div>
+                            </div>
+
+                            <div class="order-actions">
+                                <button class="order-action-btn primary"
+                                    onclick="openOrderDetails('<?= $order->getId() ?>')">View Details</button>
+                                <button class="order-action-btn secondary">Reorder</button>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="empty-orders">
+                        <h3>No Orders Yet</h3>
+                        <p>You haven't placed any orders yet.</p>
+                        <a href="menu" class="browse-menu">Browse Menu</a>
+                    </div>
+                <?php endif; ?>
+                <!-- <div class="order-card">
                     <div class="order-header">
                         <div>
                             <div class="order-number">Order #FN78945612</div>
@@ -711,7 +780,7 @@
                     </div>
                 </div>
 
-                <!-- Order 2 -->
+    
                 <div class="order-card">
                     <div class="order-header">
                         <div>
@@ -766,7 +835,7 @@
                     </div>
                 </div>
 
-                <!-- Order 3 -->
+
                 <div class="order-card">
                     <div class="order-header">
                         <div>
@@ -814,10 +883,10 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Empty State (Hidden by default) -->
-            <div class="empty-orders" style="display: none;">
+
+                <!-- <div class="empty-orders" style="display: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -825,12 +894,12 @@
                 <h3>No Orders Yet</h3>
                 <p>You haven't placed any orders yet. Start ordering your favorite meals!</p>
                 <a href="menu.html" class="browse-menu">Browse Menu</a>
+            </div> -->
             </div>
-        </div>
     </main>
 
     <!-- Order Details Modal -->
-    <div class="modal" id="orderDetailsModal">
+    <!-- <div class="modal" id="orderDetailsModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Order #FN78945612</h2>
@@ -964,31 +1033,101 @@
                 <button class="modal-btn btn-primary">Reorder</button>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <?php foreach ($orders as $order): ?>
+        <?php
+        $items = $paymentController->getOrderItemsByOrderId($order->getId());
+        $modalId = 'orderDetailsModal_' . $order->getId();
+        ?>
+        <div class="modal" id="<?= $modalId ?>">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Order #<?= htmlspecialchars($order->getId()) ?></h2>
+                    <button class="close-modal" onclick="closeOrderDetails('<?= $modalId ?>')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="order-info-section">
+                        <h3 class="section-title">Order Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Order Date</div>
+                                <div class="info-value"><?= date("F j, Y - g:i A", strtotime($order->getCreatedAt())) ?>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Status</div>
+                                <div class="info-value"><?= ucfirst($order->getStatus()) ?></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Payment Method</div>
+                                <div class="info-value">MoMo</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Delivery Address</div>
+                                <div class="info-value"><?= htmlspecialchars($order->getDeliveryAddress()) ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-items-list">
+                        <h3 class="section-title">Order Items</h3>
+                        <?php foreach ($items as $item): ?>
+                            <div class="order-item">
+                                <div class="item-image">
+                                    <img src="<?= htmlspecialchars($item['image_url']) ?>"
+                                        alt="<?= htmlspecialchars($item['name']) ?>">
+                                </div>
+                                <div class="item-details">
+                                    <div class="item-title"><?= htmlspecialchars($item['name']) ?></div>
+                                    <div class="item-variant">Phần</div>
+                                    <div class="item-price">
+                                        <div class="price-amount">$<?= number_format($item['price'], 2) ?></div>
+                                        <div class="price-quantity">Quantity: <?= $item['quantity'] ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="order-summary-section">
+                        <h3 class="section-title">Order Summary</h3>
+                        <div class="summary-row">
+                            <div class="summary-label">Total</div>
+                            <div class="summary-value summary-total">$<?= number_format($order->getTotalPrice(),0) ?></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn btn-secondary" onclick="closeOrderDetails('<?= $modalId ?>')">Close</button>
+                    <button class="modal-btn btn-primary">Reorder</button>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
 
     <script>
-        // Function to open order details modal
+
         function openOrderDetails(orderId) {
-            document.getElementById('orderDetailsModal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
-            
-            // In a real application, you would fetch the order details based on the orderId
-            console.log('Opening order details for:', orderId);
-            
-            // Update modal title with order ID
-            document.querySelector('.modal-title').textContent = 'Order #' + orderId;
-            
-            // You would typically update all the order details here based on the fetched data
+            const modalId = 'orderDetailsModal_' + orderId;
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
         }
-        
-        // Function to close order details modal
-        function closeOrderDetails() {
-            document.getElementById('orderDetailsModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+
+        function closeOrderDetails(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         }
-        
+
         // Close modal when clicking outside of it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('orderDetailsModal');
             if (event.target === modal) {
                 closeOrderDetails();

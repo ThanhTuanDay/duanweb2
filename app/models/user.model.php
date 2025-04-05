@@ -189,6 +189,14 @@ class UserModel
         return $this->updateUser($user);
     }
 
+    public function updatePassword($userDto)
+    {
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $userDto->getPassword(), $userDto->getId());
+        return $stmt->execute();
+    }
+
     public function isRemainingTimeReset($token)
     {
         $token_time = (int) $token;
@@ -199,6 +207,31 @@ class UserModel
         return true;
     }
 
+    public function updateUserInformation($userDto){
+        $sql = "UPDATE users SET 
+            name = ?, 
+            phone = ?, 
+            address = ?,
+        WHERE id = ? ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $name = $userDto->getName();
+        $phone = $userDto->getPhone();
+        $address = $userDto->getAddress();
+        $id = $userDto->getId();
+        $stmt->bind_param(
+            "ssss",
+            $name,
+            $phone,
+            $address,
+            $id
+        );
+
+        return $stmt->execute();
+    }
+
+    
     public function updateUser($userDto)
     {
 
@@ -237,6 +270,33 @@ class UserModel
         $stmt->close();
 
         return $result;
+    }
+
+    public function getUserById($id): UserDto|null
+    {
+        $query = "SELECT * FROM users WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+            return new UserDto(
+                null,
+                $data['name'],
+                $data['email'],
+                $data['phone'],
+                $data['address'],
+                $data['password'],
+                null,
+                null,
+                null,
+               null,
+            );
+        } else {
+            return null;
+        }
     }
 
     public function getUserByEmailAndIsVerified($email)
