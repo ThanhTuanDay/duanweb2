@@ -9,6 +9,8 @@ if (Session::get('name')) {
     header("Location: /duanweb2/homepage");
     exit();
 }
+$mail_error = null;
+$phone_error = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
@@ -18,8 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
 
+    if ($Controller_register->isEmailExists($email)) {
+        $mail_error = "Email đã tồn tại!";
 
-    if ($password !== $confirm_password) {
+    } elseif
+    ($Controller_register->isPhoneExist($phone)) {
+        $phone_error = "Số điện thoại đã được dùng";
+
+    } elseif ($password !== $confirm_password) {
         $error = "Mật khẩu xác nhận không khớp!";
     } else {
         $result = $Controller_register->registerUser($email, $password, $confirm_password, $name, $phone, $address);
@@ -72,6 +80,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .form-error-server {
+            color: #ff4d4d;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .form-error {
+            color: #ff4d4d;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
         }
 
         .navbar {
@@ -299,12 +321,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email"
                         required>
+                    <?php if (!is_null($mail_error)): ?>
+                        <div class="form-error-server">
+                            <?= htmlspecialchars($mail_error) ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-error" id="email-error">Email không đúng định dạng</div>
                 </div>
 
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name"
                         required>
+                    <div class="form-error" id="full-name-error">Tên không được chứa kí tự đặc biệt</div>
                 </div>
 
                 <div class="form-group">
@@ -317,6 +346,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="phone">Phone Number</label>
                     <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number"
                         required>
+                    <?php if (!is_null($phone_error)): ?>
+                        <div class="form-error-server">
+                            <?= htmlspecialchars($phone_error) ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-error" id="phone-error">Số điện thoại không đúng định dạng</div>
                 </div>
 
                 <div class="form-group">
@@ -353,10 +388,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </svg>
                         </button>
                     </div>
+                    <div class="form-error" id="confirm-password-error">Mật khẩu không trùng</div>
                 </div>
 
                 <div class="terms">
-                    <input type="checkbox" id="terms" required>
+                    <input type="checkbox" id="terms" >
                     <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
                             Policy</a></label>
                 </div>
@@ -404,6 +440,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 `;
+        }
+    });
+
+    document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Lấy giá trị
+        const email = document.getElementById("email");
+        const name = document.getElementById("name");
+        const phone = document.getElementById("phone");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm-password");
+        const terms = document.getElementById("terms");
+
+        // Reset lỗi
+        document.querySelectorAll(".form-error").forEach(el => el.style.display = "none");
+
+        let isValid = true;
+
+        // Email validate
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.value.trim())) {
+            document.getElementById("email-error").style.display = "block";
+            isValid = false;
+        }
+
+        // Tên không chứa ký tự đặc biệt
+        const nameRegex = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯưẠ-ỹ\s]+$/u;
+        if (!nameRegex.test(name.value.trim())) {
+            document.getElementById("full-name-error").style.display = "block";
+            isValid = false;
+        }
+
+        // Số điện thoại Việt Nam (bắt đầu bằng 0, 10 số)
+        const phoneRegex = /^0\d{9}$/;
+        if (!phoneRegex.test(phone.value.trim())) {
+            document.getElementById("phone-error").style.display = "block";
+            isValid = false;
+        }
+      
+        // Mật khẩu khớp nhau
+        if (password.value !== confirmPassword.value) {
+            document.getElementById("confirm-password-error").style.display = "block";
+            isValid = false;
+        }
+
+        // Checkbox điều khoản
+        if (!terms.checked) {
+            alert("Bạn cần đồng ý với điều khoản sử dụng.");
+            isValid = false;
+        }
+
+        // Nếu mọi thứ đều ổn → submit form
+        if (isValid) {
+            this.submit();
         }
     });
 </script>

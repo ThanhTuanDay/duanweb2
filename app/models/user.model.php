@@ -75,6 +75,17 @@ class UserModel
 
         return $result->num_rows > 0;
     }
+
+    public function checkPhoneExist($phone)
+    {
+        $sql = "SELECT * FROM users WHERE phone = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $phone);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->num_rows > 0;
+    }
     public function countCustomers(): int
     {
         $sql = "SELECT COUNT(*) as total FROM users WHERE role = ?";
