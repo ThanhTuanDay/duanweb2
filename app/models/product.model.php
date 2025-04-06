@@ -167,7 +167,7 @@ class ProductModel
         return $stmt->execute();
     }
 
-    public function getProductsForMenu($offset, $limit, $filter): array
+    public function getProductsForMenu($offset = null, $limit = null, $filter): array
     {
         $sql = "SELECT p.*, c.name as category_slug 
             FROM products p
@@ -177,15 +177,18 @@ class ProductModel
         if ($filter != 'all') {
             $sql .= " AND c.name = ?";
         }
-
-        $sql .= " ORDER BY p.created_at DESC LIMIT ?, ?";
+        if ($offset != null && $limit != null) {
+            $sql .= " ORDER BY p.created_at DESC LIMIT ?, ?";
+        }
 
         $stmt = $this->conn->prepare($sql);
 
-        if ($filter != 'all') {
-            $stmt->bind_param("sii", $filter, $offset, $limit);
-        } else {
-            $stmt->bind_param("ii", $offset, $limit);
+        if($offset != null && $limit != null){
+            if ($filter != 'all') {
+                $stmt->bind_param("sii", $filter, $offset, $limit);
+            } else {
+                $stmt->bind_param("ii", $offset, $limit);
+            }
         }
 
         $stmt->execute();

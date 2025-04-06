@@ -16,14 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const pathname = window.location.pathname;
     if(pathname.includes("/success")){
-        const key = `cart_${userId}`;
-        console.log(key);
-        clearCart(key);
+      clearCart();
     }
 });
-function clearCart(userId) {
-    const cartKey = `cart_${userId}`;
-    cart.clearCart(cartKey);
+function clearCart() {
+    cart.clearCart();
 }
 
 

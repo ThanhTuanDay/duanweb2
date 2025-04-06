@@ -69,7 +69,7 @@ class CartModel {
     }
 
     clearCart() {
-        localStorage.removeItem(this.userKey);
+        localStorage.removeItem(this.key);
     }
 
     getCartTotal() {
