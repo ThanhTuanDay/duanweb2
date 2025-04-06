@@ -68,3 +68,15 @@ $(".client_owl-carousel").owlCarousel({
         }
     }
 });
+
+// if food section is loaded with pagination, scroll to it
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pathname = window.location.pathname;
+    if (urlParams.has('pagination') || pathname.includes('/menu')) {
+        const section = document.getElementById('food-section');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});

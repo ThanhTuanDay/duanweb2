@@ -1,12 +1,12 @@
 
 <?php 
 class UserDto {
-    private ?int $id;
+    private ?string $id;
     private ?string $name;
-    private string $email;
+    private ?string $email;
     private ?string $phone;
     private ?string $address;
-    private string $password;
+    private ?string $password;
     private ?string $role;
     private ?string $created_at;
 
@@ -15,12 +15,12 @@ class UserDto {
     private ?int $isVerified;
 
     public function __construct(
-        ?int $id=null,
+        ?string $id=null,
        ?string $name=null,
-        string $email,
+        ?string $email=null,
         ?string $phone = null,
         ?string $address = null,
-        string $password,
+        ?string $password=null,
         ?string $role = null,
         ?string $created_at = null,
         ?string $verifyToken = null,
@@ -39,7 +39,7 @@ class UserDto {
     }
 
     // Getters
-    public function getId(): int {
+    public function getId(): string {
         return $this->id;
     }
 
@@ -79,7 +79,7 @@ class UserDto {
     }
 
     // Setters
-    public function setId(int $id): void {
+    public function setId(string $id): void {
         $this->id = $id;
     }
 

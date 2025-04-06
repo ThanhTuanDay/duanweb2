@@ -193,7 +193,10 @@ class UserModel
     {
         $sql = "UPDATE users SET password = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ss", $userDto->getPassword(), $userDto->getId());
+        $password = $userDto->getPassword();
+        $id = $userDto->getId();
+
+        $stmt->bind_param("ss", $password, $id);
         return $stmt->execute();
     }
 
@@ -211,7 +214,7 @@ class UserModel
         $sql = "UPDATE users SET 
             name = ?, 
             phone = ?, 
-            address = ?,
+            address = ?
         WHERE id = ? ";
 
         $stmt = $this->conn->prepare($sql);

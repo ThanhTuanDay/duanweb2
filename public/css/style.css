@@ -1045,3 +1045,50 @@ a:focus {
   background-color: #ffffff;
   border-color: #dee2e6;
 }
+.cart-notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+}
+
+.cart-notification {
+  background-color: green;
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.cart-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.cart-notification-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-notification i {
+  font-size: 20px;
+}
+
+/* Animation for cart icon when adding to cart */
+@keyframes cartBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.cart-animation {
+  animation: cartBounce 0.5s ease;
+}
