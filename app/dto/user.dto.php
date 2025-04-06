@@ -1,6 +1,4 @@
-<!-- 
- ĐỐI TƯỢNGTƯỢNG 
--->
+
 <?php 
 class UserDto {
     private ?int $id;

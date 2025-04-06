@@ -19,7 +19,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="/duanweb2/public/js/sidebar.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>   
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="/duanweb2/public/js/jquery-3.4.1.min.js"></script>
 <?php
 $folder = basename(dirname($content));
 if (!empty($folder)) {

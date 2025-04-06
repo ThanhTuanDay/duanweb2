@@ -15,9 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!is_null($data)) {
         Session::set('role', $data['role']);
         Session::set('name', $data['name']);
+        Session::set('user_id', $data['id']);
+        Session::set('email', $data['email']);
+        Session::set('phone', $data['phone']);
         header("Location:/duanweb2/homepage");
     }
 }
+
+
+
 if (Session::get('name')) {
     header("Location:/duanweb2/homepage");
 } else {

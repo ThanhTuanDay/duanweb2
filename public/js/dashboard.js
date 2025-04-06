@@ -45,39 +45,74 @@ const salesChart = new Chart(salesCtx, {
         }
     }
 });
+let dataDiv = document.getElementById("category-chart-data");
+if (dataDiv) {
+    const labels = JSON.parse(dataDiv.dataset.labels);
+    const values = JSON.parse(dataDiv.dataset.values);
 
-// Category Chart
-const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-const categoryChart = new Chart(categoryCtx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Burger', 'Pizza', 'Pasta', 'Fries', 'Drinks'],
-        datasets: [{
-            data: [35, 25, 20, 15, 5],
-            backgroundColor: [
-                '#dc3545',
-                '#ffc107',
-                '#28a745',
-                '#17a2b8',
-                '#6c757d'
-            ],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: {
-                    color: '#fff',
-                    padding: 15,
-                    usePointStyle: true,
-                    pointStyle: 'circle'
-                }
-            }
+    const ctx = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: [
+                    '#dc3545', '#ffc107', '#28a745', '#17a2b8', '#6c757d'
+                ],
+                borderWidth: 0
+            }]
         },
-        cutout: '70%'
-    }
-});
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#fff',
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
+                }
+            },
+            cutout: '70%'
+        }
+    });
+}
+
+// const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+// const categoryChart = new Chart(categoryCtx, {
+//     type: 'doughnut',
+//     data: {
+//         labels: ['Burger', 'Pizza', 'Pasta', 'Fries', 'Drinks'],
+//         datasets: [{
+//             data: [35, 25, 20, 15, 5],
+//             backgroundColor: [
+//                 '#dc3545',
+//                 '#ffc107',
+//                 '#28a745',
+//                 '#17a2b8',
+//                 '#6c757d'
+//             ],
+//             borderWidth: 0
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         plugins: {
+//             legend: {
+//                 position: 'bottom',
+//                 labels: {
+//                     color: '#fff',
+//                     padding: 15,
+//                     usePointStyle: true,
+//                     pointStyle: 'circle'
+//                 }
+//             }
+//         },
+//         cutout: '70%'
+//     }
+// });
