@@ -22,5 +22,8 @@ class CategoryController {
         $offset = ($page - 1) * $perPage;
         return $this->categoryModel->getPaginationCategories($offset, $perPage);
     }
+    public function updateCategory($data):bool{
+        return $this->categoryModel->updateCategory($data);
+    }
 }
 
