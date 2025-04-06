@@ -1,0 +1,1 @@
+accessKey=F8BBA842ECF85&amount=215000&extraData=&ipnUrl=http://localhost/duanweb2/ipn&orderId=ad1f1e6d-1300-11f0-ab99-6ef87da1f643&orderInfo=Thanh toán đơn hàng #67f2a5ccee1e0&partnerCode=MOMO&redirectUrl=http://localhost/duanweb2/success&requestId=1743955407&requestType=payWithMethod
