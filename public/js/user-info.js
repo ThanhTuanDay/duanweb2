@@ -169,11 +169,7 @@ function resetPasswordForm() {
     checkPasswordStrength();
 }
 
-// Validate phone number
-function isValidPhone(phone) {
-    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,9}$/;
-    return phoneRegex.test(phone);
-}
+
 
 // Menu item click handler
 document.querySelectorAll('.menu-item').forEach(item => {
