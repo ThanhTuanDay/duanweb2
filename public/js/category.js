@@ -250,18 +250,23 @@ $(document).ready(function () {
         let createData = {
             name: $('#addCategoryModal input[name="name"]').val(),
             description: $('#categoryDescriptionHidden').val(),
-            images_url: $('#addCategoryModal input[name="images_url"]').val(),
+            images_files: $('#categoryImage').prop('files')[0],
             status: $('#addCategoryModal select[name="status"]').val()
         };
-
+        let formData = new FormData();
+        formData.append('name', createData.name);
+        formData.append('description', createData.description);
+        formData.append('status', createData.status);
+        formData.append('image', createData.images_files);
+        formData.append('action', 'createCategory');
         $.ajax({
             url: '/duanweb2/app/api/category.api.php',
             type: 'POST',
-            data: {
-                action: 'createCategory',
-                categoryData: createData
-            },
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (response) {
+                console.log(response)
                 if (response[0].success) {
 
                     $('#addCategoryModal').modal('hide');
