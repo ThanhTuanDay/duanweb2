@@ -132,3 +132,43 @@
      transform: translateY(-50%);
      color: var(--gray);
  }
+ .notifications-container {
+     position: fixed;
+     top: 20px;
+     right: 20px;
+     z-index: 9999;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     max-width: 300px;
+ }
+
+ .notification {
+     background-color: green;
+     color: #fff;
+     padding: 15px 20px;
+     border-radius: 5px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     transform: translateX(100%);
+     opacity: 0;
+     transition: transform 0.3s ease, opacity 0.3s ease;
+     margin-bottom: 10px;
+ }
+ .notification.error{
+    background-color: red;
+ }
+
+ .notification.show {
+     transform: translateX(0);
+     opacity: 1;
+ }
+
+ .notification-content {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+ }
+
+ .notification i {
+     font-size: 20px;
+ }

@@ -90,6 +90,7 @@ switch ($action) {
             $_POST['status'],
             $targetPath
         );
+
         
 
         $updateCategoryItem= $categoryController->updateCategory($categoryDto);
@@ -98,12 +99,11 @@ switch ($action) {
             $response[]=[
                 'success'=>$updateCategoryItem,
                 'message'=>'UpdateCategory success'
-
             ];
-        }else{
+        } else {
             $response[] = [
                 'success' => false,
-                'message' => 'UpdateCategory fail!'
+                'message' => 'CreateCategory fail!'
 
             ];
         }
@@ -112,7 +112,6 @@ switch ($action) {
         echo json_encode($response);
 
         break;
-    case 'deleteCurrent':
     default:
 
         break;
