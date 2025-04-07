@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__DIR__) . "../dto/product.dto.php");
-require_once(dirname(__DIR__) . "../models/order-item.models.php");
+require_once(dirname(__DIR__) . "/models/order-item.model.php");
 
 class ProductModel
 {
@@ -39,7 +39,21 @@ class ProductModel
 
         return $stmt->execute();
     }
-
+    public function getProductsPaginated($limit, $offset): array
+    {
+        $sql = "
+            SELECT p.*, c.name AS category_name
+            FROM products p
+            JOIN categories c ON p.category_id = c.id
+            ORDER BY p.created_at DESC
+            LIMIT ? OFFSET ?
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
     public function isStockAvailable($productId, $quantity): bool
     {
         $sql = "SELECT stock FROM products WHERE id = ?";
@@ -116,7 +130,13 @@ class ProductModel
 
         return $stmt->execute();
     }
-
+    public function countProducts(): int
+    {
+        $sql = "SELECT COUNT(*) as total FROM products";
+        $result = $this->conn->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['total'] ?? 0;
+    }
     public function deleteProduct($id): bool
     {
         if ($this->orderItemModel->isProductSold($id)) {
@@ -127,6 +147,59 @@ class ProductModel
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $id);
         return $stmt->execute();
+    }
+
+    public function isProductSold($id): bool
+    {
+        return $this->orderItemModel->isProductSold($id);
+    }
+
+    function updateStatusToFalse($id)
+    {
+        $sql = "UPDATE products SET status = 0 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    public function getProductsForMenu($offset = null, $limit = null, $filter): array
+    {
+        $sql = "SELECT p.*, c.name as category_slug 
+            FROM products p
+            JOIN categories c ON p.category_id = c.id 
+            WHERE p.status = 1";
+
+        if ($filter != 'all') {
+            $sql .= " AND c.name = ?";
+        }
+        if ($offset != null && $limit != null) {
+            $sql .= " ORDER BY p.created_at DESC LIMIT ?, ?";
+        }
+
+        $stmt = $this->conn->prepare($sql);
+
+        if($offset != null && $limit != null){
+            if ($filter != 'all') {
+                $stmt->bind_param("sii", $filter, $offset, $limit);
+            } else {
+                $stmt->bind_param("ii", $offset, $limit);
+            }
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+
+        return $products;
     }
 
     public function getAllProducts(): array

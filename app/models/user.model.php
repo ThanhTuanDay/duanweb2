@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__DIR__) . "../dto/user.dto.php");
 require_once __DIR__ . '/../helper/message-sender.php';
-
+require_once(dirname(__DIR__) . "../lib/staticRole.php");
 class UserModel
 {
 
@@ -16,16 +16,53 @@ class UserModel
     }
     public function LoginUser(UserDto $user)
     {
-        $email = mysqli_real_escape_string($this->db->link, $user->getEmail());
-        $password = mysqli_real_escape_string($this->db->link, $user->getPassword());
-        $query = "SELECT * from users WHERE email = '$email' and password = '$password' LIMIT 1";
-        $data = $this->db->select($query);
-        if (!$data) {
-            echo "<script>alert('tài khoản này không đăng nhập được')</script>";
+        $sql = "SELECT * FROM users WHERE email = ? AND password = ? AND is_verified = 1 LIMIT 1";
+        $stmt = $this->db->link->prepare($sql);
+
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            return $result->fetch_assoc();
         } else {
-            $result = $data->fetch_assoc();
-            return $result;
+            echo "<script>alert('Tài khoản không tồn tại hoặc chưa xác thực');</script>";
+            return null;
         }
+    }
+
+    public function getDeliveryAddressesById($userId)
+    {
+        $sql = "SELECT * FROM user_addresses WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $addresses = [];
+        while ($row = $result->fetch_assoc()) {
+            $addresses[] = $row;
+        }
+
+        return $addresses;
+    }
+
+    public function insertAddress($userId, $addressName, $address, $phone)
+    {
+        $id = uniqid();
+        $sql = "INSERT INTO user_addresses (id, user_id, address_name, address, phone) 
+            VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssss", $id, $userId, $addressName, $address, $phone);
+
+        if ($stmt->execute()) {
+            return $id;
+        }
+
+        return false;
     }
 
     public function checkEmailExists($email)
@@ -37,6 +74,28 @@ class UserModel
         $result = $stmt->get_result();
 
         return $result->num_rows > 0;
+    }
+
+    public function checkPhoneExist($phone)
+    {
+        $sql = "SELECT * FROM users WHERE phone = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $phone);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->num_rows > 0;
+    }
+    public function countCustomers(): int
+    {
+        $sql = "SELECT COUNT(*) as total FROM users WHERE role = ?";
+        $stmt = $this->conn->prepare($sql);
+        $role = AppRole::ROLE_USER;
+        $stmt->bind_param("s", $role);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['total'] ?? 0;
     }
 
     public function registerUser($userDto)
@@ -101,7 +160,7 @@ class UserModel
         if (!$result->num_rows > 0) {
             return false;
         }
-        return $this->updateUserVerified($email,null);
+        return $this->updateUserVerified($email, null);
     }
 
     public function updateUserVerified($email, $token = NULL)
@@ -141,6 +200,17 @@ class UserModel
         return $this->updateUser($user);
     }
 
+    public function updatePassword($userDto)
+    {
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $password = $userDto->getPassword();
+        $id = $userDto->getId();
+
+        $stmt->bind_param("ss", $password, $id);
+        return $stmt->execute();
+    }
+
     public function isRemainingTimeReset($token)
     {
         $token_time = (int) $token;
@@ -151,6 +221,31 @@ class UserModel
         return true;
     }
 
+    public function updateUserInformation($userDto){
+        $sql = "UPDATE users SET 
+            name = ?, 
+            phone = ?, 
+            address = ?
+        WHERE id = ? ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $name = $userDto->getName();
+        $phone = $userDto->getPhone();
+        $address = $userDto->getAddress();
+        $id = $userDto->getId();
+        $stmt->bind_param(
+            "ssss",
+            $name,
+            $phone,
+            $address,
+            $id
+        );
+
+        return $stmt->execute();
+    }
+
+    
     public function updateUser($userDto)
     {
 
@@ -189,6 +284,33 @@ class UserModel
         $stmt->close();
 
         return $result;
+    }
+
+    public function getUserById($id): UserDto|null
+    {
+        $query = "SELECT * FROM users WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+            return new UserDto(
+                null,
+                $data['name'],
+                $data['email'],
+                $data['phone'],
+                $data['address'],
+                $data['password'],
+                null,
+                null,
+                null,
+               null,
+            );
+        } else {
+            return null;
+        }
     }
 
     public function getUserByEmailAndIsVerified($email)

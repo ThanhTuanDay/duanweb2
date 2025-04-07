@@ -1,7 +1,18 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const currentPath = window.location.pathname; 
+    const match = currentPath.match(/\/admin\/([^\/]+)\/page/); 
 
+    if (match && match[1]) {
+      const currentPage = match[1]; 
+      const menuItems = document.querySelectorAll(".sidebar-menu .menu-item");
 
-        // Toggle Sidebar
-    document.getElementById('toggle-sidebar').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.toggle('active');
-    document.getElementById('main-content').classList.toggle('active');
-        });
+      menuItems.forEach((item) => {
+        const href = item.getAttribute("href");
+        if (href && href.includes(`/admin/${currentPage}/page`)) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+    }
+});

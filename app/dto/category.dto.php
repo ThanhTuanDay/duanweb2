@@ -51,4 +51,13 @@ class CategoryDto {
     public function setCreatedAt(string $created_at): void {
         $this->created_at = $created_at;
     }
+    public function jsonSerialize(): array {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'created_at' => $this->created_at,
+        ];
+    }
+
 }

@@ -11,9 +11,8 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;"> -->
     <link rel="shortcut icon" href="public/images/favicon.png" type="">
-
     <title> Feane </title>
 
     <!-- bootstrap core css -->
@@ -38,7 +37,7 @@
     <main>
 
         <div class="hero_area">
-     
+        
             <!-- header section strats -->
             
             <!-- end header section -->

@@ -1,7 +1,7 @@
 <?php
 class AppRole{
-    private static $ROLE_ADMIN = "admin";
-    private static $ROLE_USER = "user";
+    public const ROLE_ADMIN = "admin";
+    public const ROLE_USER = "customer";
 }
 
 
