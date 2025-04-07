@@ -13,16 +13,19 @@ class CategoryModel
 
     public function createCategory(CategoryDto $category): bool
     {
-        $sql = "INSERT INTO categories (name, description, created_at) VALUES (?, ?, NOW())";
+        $sql = "INSERT INTO categories (name, description,images_url,status,created_at) VALUES (?, ?,?,?, NOW())";
         $stmt = $this->conn->prepare($sql);
 
+        $status = $category->getStatus();
+        $image = $category->getImage();
         $name = $category->getName();
         $description = $category->getDescription();
-
         $stmt->bind_param(
-            "ss",
+            "ssss",
             $name,
-            $description
+            $description,
+            $image,
+            $status,
         );
 
         return $stmt->execute();
@@ -67,7 +70,7 @@ class CategoryModel
             $id
         );
 
-        return $stmt->execute();
+        return $stmt->execute() ? true : false;
     }
 
     public function isCategorySold($categoryId): bool
@@ -98,15 +101,17 @@ class CategoryModel
     }
 
     public function deleteCategory($id): bool
-    {
+    {   
         if ($this->hasProductsInCategory($id)) {
             return false;
         }
-
-        $sql = "DELETE FROM categories WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $id);
-        return $stmt->execute();
+        else{
+            $sql = "DELETE FROM categories WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("s", $id);
+            return $stmt->execute() ? true : false;
+        }
+ 
     }
 
     public function getAllCategories(): array
