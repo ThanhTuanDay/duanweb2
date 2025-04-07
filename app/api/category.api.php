@@ -53,21 +53,45 @@ switch ($action) {
         echo json_encode($response);
         break;
     case 'updateCategory':
-        $categoryData = $_POST['categoryData'];
-        $data = [
-            'id' => $categoryData['id'],
-            'name' => $categoryData['name'],
-            'images_url' => $categoryData['images_url'],
-            'description' => $categoryData['description'],
-            'status' => $categoryData['status'],
-        ];
+        // $categoryData = $_POST['formData'];
+        // $data = [
+        //     'id' => $categoryData['id'],
+        //     'name' => $categoryData['name'],
+        //     'description' => $categoryData['description'],
+        //     'status' => $categoryData['status'],
+        // ];
+
+        if (!isset($_FILES['image'])) {
+            $response[] = [
+                'success' => false,
+                'message' => 'UpdateCategory fail!'
+
+            ];
+        }
+        $image = $_FILES['image'];
+        $uploadDir = __DIR__ . '/../../public/images/categories/';
+        
+        file_put_contents(__DIR__ . '/category-api.txt', json_encode($uploadDir), FILE_APPEND);
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true); // tạo folder nếu chưa tồn tại
+        }
+        
+        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $rawName = $_POST['name'] ?? 'image';
+        $safeName = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $rawName))));
+        $filename = $safeName . '.' . $ext;
+        $targetPath = $uploadDir . $filename;
+        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
+        $targetPath = '/duanweb2/public/images/categories/' . $filename;
         $categoryDto = new CategoryDto(
-            $categoryData['id'],
-            $categoryData['name'],
-            $categoryData['description'],
-            $categoryData['status'],
-            $categoryData['images_url']
+            $_POST['id'],
+            $_POST['name'],
+            $_POST['description'],
+            $_POST['status'],
+            $targetPath
         );
+        
+
         $updateCategoryItem= $categoryController->updateCategory($categoryDto);
         $response=[];
         if($updateCategoryItem){

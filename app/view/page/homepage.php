@@ -580,9 +580,6 @@ $products = $productController->getProductsForMenu();
             </div>
         </div>
     </div>
-
+    <input type="hidden" id="product-data" value='<?= htmlspecialchars(json_encode($products, JSON_UNESCAPED_UNICODE)) ?>'>
 </section>
 
-<script>
-    const allProducts = <?= json_encode($products, JSON_UNESCAPED_UNICODE) ?>;
-</script>

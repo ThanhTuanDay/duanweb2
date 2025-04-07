@@ -71,7 +71,7 @@ $(document).ready(function () {
                             </div>
                             <span>Current Image</span>
                         </div>
-                        <input type="file"  accept="image/*" class="form-control" id="editCategoryImage">
+                        <input type="file" class="form-control custom-cursor-on-hover" id="editCategoryImage">
                     </div>
                     <div class="mb-3">
                         <label for="editCategoryStatus" class="form-label">Status</label>
@@ -91,7 +91,7 @@ $(document).ready(function () {
             image: $(this).data('image'),
             status: $(this).data('status')
         };
-        $('.modal-body').html(renderModalItem(categoryData))
+        $('#editCategoryModal .modal-body').html(renderModalItem(categoryData))
 
     });
     $(document).on('change', '#editCategoryImage', function (event) {
@@ -106,12 +106,7 @@ $(document).ready(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                fileDisplayArea.innerHTML = "";
-
-                var img = new Image();
-                img.src = reader.result;
-
-                fileDisplayArea.appendChild(img);
+                fileDisplayArea.src = e.target.result;
             }
 
             reader.readAsDataURL(file);
@@ -136,19 +131,23 @@ $(document).ready(function () {
             id: $('#editCategoryModal input[name="id"]').val(),
             name: $('#editCategoryModal input[name="name"]').val(),
             description: $('#editCategoryHiddenDescription').val(),
-            images_url: $('#editCategoryModal input[name="images_url"]').val(),
+            images_files: $('#editCategoryImage').prop('files')[0],
             status: $('#editCategoryModal select[name="status"]').val()
         };
 
-        console.log("Updated data:", updatedData);
-
+        let formData = new FormData();
+        formData.append('id', updatedData.id);
+        formData.append('name', updatedData.name);
+        formData.append('description', updatedData.description);
+        formData.append('status', updatedData.status);
+        formData.append('image', updatedData.images_files);
+        formData.append('action', 'updateCategory');
         $.ajax({
             url: '/duanweb2/app/api/category.api.php',
             type: 'POST',
-            data: {
-                action: 'updateCategory',
-                categoryData: updatedData
-            },
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (response) {
                 if (response) {
                     $('#editCategoryModal').modal('hide');

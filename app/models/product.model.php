@@ -154,8 +154,9 @@ class ProductModel
         return $this->orderItemModel->isProductSold($id);
     }
 
-    function updateStatusToFalse($id)
+    function updateStatusToFalse(string $id)
     {
+        $id = trim($id);
         $sql = "UPDATE products SET status = 0 WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
 
@@ -163,8 +164,12 @@ class ProductModel
             return false;
         }
 
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        $stmt->bind_param("s", $id);
+        if ($stmt->execute()) {
+            return $stmt->affected_rows > 0;
+        }
+    
+        return false;
     }
 
     public function getProductsForMenu($offset = null, $limit = null, $filter): array

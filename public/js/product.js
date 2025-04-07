@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', async function () {
             const id = this.dataset.id;
             const name = this.dataset.name;
-
-            const confirmed = confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${name}" không?`);
+            console.log(id);
+            const confirmed = confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${name}" với id ${id} không?`);
             if (!confirmed) return;
 
             try {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 const responseText = await res.text();
-
+     
                 if (res.ok) {
                     if (responseText.trim() === 'sold') {
                         const blockConfirmed = confirm("Sản phẩm đã được bán. Bạn có muốn xóa không? (Sản phẩm sẽ bị block)");
@@ -114,7 +114,7 @@ async function blockProduct(id) {
 
         if (res.ok) {
             alert('Sản phẩm đã được block thành công!');
-            location.reload();
+            // location.reload();
         } else {
             alert('Không thể block sản phẩm: ' + result);
         }
