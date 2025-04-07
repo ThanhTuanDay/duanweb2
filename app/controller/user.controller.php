@@ -18,10 +18,19 @@ class UserController {
         return $this->userModel->getDeliveryAddressesById($_SESSION['user_id']);
     }
 
+
+
     public function getUserById($userId): UserDto|null{
         return $this->userModel->getUserById($userId);
     }
 
+    public function getAllUsers(): array{
+        return $this->userModel->getAllUsers();
+    }
+
+    public function blockerUser($userId): bool{
+        return $this->userModel->blockUser($userId);
+    }
 
     public function insertAddress($userId, $addressName, $address, $phone){
         return $this->userModel->insertAddress($userId, $addressName, $address, $phone);
