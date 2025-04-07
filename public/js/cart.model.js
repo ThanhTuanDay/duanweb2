@@ -64,12 +64,12 @@ class CartModel {
     }
 
     removeFromCart(productId) {
-        const userCart = this.getUserCart().filter(item => item.id !== productId);
-        this.saveUserCart(userCart);
+        const userCart = this.getCart().filter(item => item.id !== productId);
+        this.saveCart(userCart);
     }
 
     clearCart() {
-        localStorage.removeItem(this.userKey);
+        localStorage.removeItem(this.key);
     }
 
     getCartTotal() {

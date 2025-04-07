@@ -343,7 +343,13 @@ if ($resultCode == "0") {
                 </div>
             </div>
         </div>
+        <div id="app-data" data-user-id="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>"
+            data-products='<?= isset($products) ? json_encode($products, JSON_HEX_APOS | JSON_HEX_QUOT) : "null" ?>'
+            style="display: none;">
+        </div>
     </main>
 </body>
+
+
 
 </html>

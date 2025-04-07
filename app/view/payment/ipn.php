@@ -21,7 +21,7 @@ $transId = $data['transId'] ?? null;
 $paymentController = new PaymentController();
 if ($resultCode == 0) {
     // thành công
-    $paymentController->handlePaymentResponse($orderId, OrderStatus::Processing);
+    $paymentController->handlePaymentResponse($orderId, OrderStatus::Delivering);
 
 } else {
     // thất bại
@@ -30,3 +30,4 @@ if ($resultCode == 0) {
 
 
 echo json_encode(['message' => 'IPN received successfully']);
+?>
