@@ -14,6 +14,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav  mx-auto ">
+
                     <?php
                     $uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                     $currentPage = basename($uriPath);

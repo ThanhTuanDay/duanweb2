@@ -17,5 +17,13 @@ class CategoryController {
     public function getAllCategory(): array {
         return $this->categoryModel->getAllCategories();
     }
+    public function getPaginatedCategories($page, $perPage): array
+    {
+        $offset = ($page - 1) * $perPage;
+        return $this->categoryModel->getPaginationCategories($offset, $perPage);
+    }
+    public function updateCategory($data):bool{
+        return $this->categoryModel->updateCategory($data);
+    }
 }
 

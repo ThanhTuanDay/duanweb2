@@ -49,18 +49,21 @@ class CategoryModel
             return false;
         }
 
-        $sql = "UPDATE categories SET name = ?, description = ? WHERE id = ?";
+        $sql = "UPDATE categories SET name = ?, description = ?,images_url=?,status = ? WHERE id = ? ";
         $stmt = $this->conn->prepare($sql);
 
-
+        $status = $category->getStatus();
+        $image=$category->getImage();
         $name = $category->getName();
         $description = $category->getDescription();
         $id = $category->getId();
 
         $stmt->bind_param(
-            "sss",
+            "sssss",
             $name,
             $description,
+            $image,
+            $status,
             $id
         );
 
@@ -119,14 +122,47 @@ class CategoryModel
         }
         return $categories;
     }
+    public function getPaginationCategories($page, $perPage): array
+    {
 
+        $sql = "
+        SELECT * FROM categories
+        ORDER BY created_at DESC
+        LIMIT ? OFFSET ?
+    ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $perPage, $page);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $categories = [];
+
+        if ($result->num_rows > 0) {
+            $categories = $result->fetch_all(MYSQLI_ASSOC);
+        }
+
+        $countSql = "SELECT COUNT(*) FROM categories";
+        $countResult = $this->conn->query($countSql);
+
+        $totalCategories = 0;
+        if ($countResult) {
+            $totalCategories = $countResult->fetch_row()[0];
+        }
+
+        return [
+            'categories' => $categories,
+            'totalItems' => $totalCategories 
+        ];
+    }
     private function mapToCategoryDto($data): CategoryDto
     {
         return new CategoryDto(
             $data['id'],
             $data['name'],
             $data['description'],
-            $data['created_at']
+            $data['created_at'],
+            $data['images_url'],
         );
     }
 }
