@@ -1,14 +1,14 @@
 <?php 
 require(dirname(__DIR__) . "../../controller/user.controller.php");
-$userId = $_SESSION['user_id'] ?? null;
+header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
     $data = json_decode(file_get_contents("php://input"), true);
     
     $userDto = new UserDto(
-        $userId,
+        $data['userId'],
         $data['firstName'] . ' ' . $data['lastName'],
-        null,
+        $data['email'],
         $data['phone'],
         $data['address']  
     );
@@ -17,6 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId) {
     $success = $userController->updateUserInformation( $userDto);
 
     echo json_encode(['success' => $success]);
+    exit;
+}else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Invalid request or not logged in'
+    ]);
     exit;
 }
 

@@ -41,7 +41,7 @@ class PaymentController{
 
     private function handleProductSell($items){
         foreach($items as $item){
-            $productId = $item['product_id'];
+            $productId = $item['id'];
             $quantity = $item['quantity'];
             if(!$this->productModel->sellProduct($productId, $quantity)){
                 return false;

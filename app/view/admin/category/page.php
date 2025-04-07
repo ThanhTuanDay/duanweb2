@@ -6,7 +6,7 @@
     <title>Feane Admin - Categories</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <!-- <style>
+<!-- <style>
         :root {
             --primary: #ffbe33;
             --primary-dark: #e69c00;
@@ -310,11 +310,11 @@
             }
         }
     </style> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head> -->
 <!-- <body> -->
-    <!-- Sidebar -->
-    <!-- <div class="sidebar" id="sidebar">
+<!-- Sidebar -->
+<!-- <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Feane Admin</h3>
         </div>
@@ -343,19 +343,19 @@
         </div>
     </div> -->
 
-    <!-- Main Content -->
-   
-       
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Categories Management</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                    <i class="fas fa-plus me-2"></i> Add New Category
-                </button>
-            </div>
-            
-            <div class="row container-category">
-                <!-- <div class="col-lg-4 col-md-6 mb-4">
+<!-- Main Content -->
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Categories Management</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+            <i class="fas fa-plus me-2"></i> Add New Category
+        </button>
+    </div>
+
+    <div class="row container-category">
+        <!-- <div class="col-lg-4 col-md-6 mb-4">
                     <div class="category-card">
                         <div class="category-card-img">
                             <img src="/placeholder.svg?height=150&width=300" alt="Burger">
@@ -468,92 +468,71 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
+    </div>
+    <div class="pagination-container">
+        <ul id="pagination-links" class="pagination">
+        </ul>
+        <div class="pagination-info">
+            <span>Showing <span id="pagination-start">1</span> to <span id="pagination-end">10</span> of <span id="pagination-total">100</span> items</span>
         </div>
+    </div>
+</div>
 
 
-    <!-- Add Category Modal -->
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="categoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="categoryDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="categoryImage" class="form-label">Category Image</label>
-                            <input type="file" class="form-control" id="categoryImage">
-                        </div>
-                        <div class="mb-3">
-                            <label for="categoryStatus" class="form-label">Status</label>
-                            <select class="form-select" id="categoryStatus">
-                                <option value="active" selected>Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Add Category</button>
-                </div>
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryImage" class="form-label">Category Image</label>
+                        <input type="file" class="form-control" id="categoryImage">
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryStatus" class="form-label">Status</label>
+                        <select class="form-select" id="categoryStatus">
+                            <option value="active" selected>Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add Category</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Edit Category Modal -->
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="editCategoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="editCategoryName" value="Burger">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCategoryDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="editCategoryDescription" rows="3">Delicious burgers with various toppings and flavors.</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCategoryImage" class="form-label">Category Image</label>
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="category-img me-3">
-                                    <img src="/placeholder.svg?height=60&width=60" alt="Current Image">
-                                </div>
-                                <span>Current Image</span>
-                            </div>
-                            <input type="file" class="form-control" id="editCategoryImage">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCategoryStatus" class="form-label">Status</label>
-                            <select class="form-select" id="editCategoryStatus">
-                                <option value="active" selected>Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save Changes</button>
-                </div>
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="saveBtnEditCategory" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
     </div>
-
-
+</div>

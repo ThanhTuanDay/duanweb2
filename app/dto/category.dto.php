@@ -6,6 +6,7 @@ class CategoryDto {
     private ?string $description;
     private ?string $created_at;
     private ?string $images_url;
+    private ?string $status;
 
     public function __construct(
         ?string $id = null,
@@ -13,12 +14,14 @@ class CategoryDto {
         ?string $description = null,
         ?string $created_at = null,
         ?string $images_url=null,
+        ?string $status = null,
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->created_at = $created_at;
         $this->images_url = $images_url;
+        $this->status=$status;
     }
 
     // Getters
@@ -42,6 +45,10 @@ class CategoryDto {
     {
         return $this->images_url;
     }
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
 
     // Setters
     public function setId(string $id): void {
@@ -62,13 +69,18 @@ class CategoryDto {
     public function setImage(string $images_url): void{
         $this->images_url= $images_url;
     }
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
     public function jsonSerialize(): array {
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'created_at' => $this->created_at,
-            'images_url'=>$this->images_url
+            'images_url'=>$this->images_url,
+            
         ];
     }
 

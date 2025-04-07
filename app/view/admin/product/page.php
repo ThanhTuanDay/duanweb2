@@ -565,8 +565,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td>$<?= number_format($product['price'], 2) ?></td>
                                 <td><?= $product['stock'] ?></td>
                                 <td>
-                                    <?php if ((int) $product['stock'] === 0): ?>
+                                    <?php if ((int) $product['stock'] === 0 ): ?>
                                         <span class="badge bg-danger">Out of Stock</span>
+                                    <?php elseif ((int) $product['status'] === 0 ): ?>
+                                            <span class="badge bg-danger">Inactive</span>
                                     <?php elseif ((int) $product['stock'] < 10): ?>
                                         <span class="badge bg-warning">Low Stock</span>
                                     <?php else: ?>
