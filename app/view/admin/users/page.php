@@ -1,15 +1,20 @@
 
 
     <!-- Sidebar -->
+<?php 
+require(dirname(__DIR__) . "/../../controller/user.controller.php");
 
+$userController = new UserController();
+$users = $userController->getAllUsers();
+?>
 
     <!-- Main Content -->
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Users Management</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="fas fa-plus me-2"></i> Add New User
-                </button>
+                </button> -->
             </div>
             
             <div class="card">
@@ -56,121 +61,35 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach ($users as $user): ?>  
                                 <tr>
-                                    <td>#U001</td>
+                                    <td><?= $user['id'] ?></td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="user-avatar me-2">
                                                 <img src="/placeholder.svg?height=40&width=40" alt="John Doe">
                                             </div>
-                                            <div>John Doe</div>
+                                            <div><?= $user['name'] ?></div>
                                         </div>
                                     </td>
-                                    <td>john.doe@example.com</td>
-                                    <td>+1 (555) 123-4567</td>
-                                    <td>Customer</td>
-                                    <td>May 10, 2023</td>
+                                    <td><?= $user['email'] ?></td>
+                                    <td><?= $user['phone'] ?></td>
+                                    <td><?= $user['role'] ?></td>
+                                    <td><?= $user['created_at'] ?></td>
+                                    <?php if ($user['is_block'] === 0): ?>
                                     <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#U002</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-avatar me-2">
-                                                <img src="/placeholder.svg?height=40&width=40" alt="Jane Smith">
-                                            </div>
-                                            <div>Jane Smith</div>
-                                        </div>
-                                    </td>
-                                    <td>jane.smith@example.com</td>
-                                    <td>+1 (555) 987-6543</td>
-                                    <td>Admin</td>
-                                    <td>Apr 15, 2023</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#U003</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-avatar me-2">
-                                                <img src="/placeholder.svg?height=40&width=40" alt="Robert Johnson">
-                                            </div>
-                                            <div>Robert Johnson</div>
-                                        </div>
-                                    </td>
-                                    <td>robert.johnson@example.com</td>
-                                    <td>+1 (555) 456-7890</td>
-                                    <td>Customer</td>
-                                    <td>May 5, 2023</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#U004</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-avatar me-2">
-                                                <img src="/placeholder.svg?height=40&width=40" alt="Emily Davis">
-                                            </div>
-                                            <div>Emily Davis</div>
-                                        </div>
-                                    </td>
-                                    <td>emily.davis@example.com</td>
-                                    <td>+1 (555) 789-0123</td>
-                                    <td>Customer</td>
-                                    <td>Apr 28, 2023</td>
+                                    <?php else: ?>
                                     <td><span class="badge bg-danger">Inactive</span></td>
+                                    <?php endif; ?>
                                     <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        <div class="action-btns d-flex">
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fa fa-ban"></i></button>
+                                        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fa fa-lock-open"></i></button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>#U005</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="user-avatar me-2">
-                                                <img src="/placeholder.svg?height=40&width=40" alt="Michael Wilson">
-                                            </div>
-                                            <div>Michael Wilson</div>
-                                        </div>
-                                    </td>
-                                    <td>michael.wilson@example.com</td>
-                                    <td>+1 (555) 234-5678</td>
-                                    <td>Customer</td>
-                                    <td>Apr 20, 2023</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
+                              
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -254,7 +173,7 @@
     </div>
 
     <!-- Edit User Modal -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -303,10 +222,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- View User Modal -->
-    <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -392,4 +311,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->

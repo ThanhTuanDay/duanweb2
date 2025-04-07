@@ -33,7 +33,29 @@ class UserModel
             return null;
         }
     }
+    public function getAllUsers(): mixed
+    {
+        $sql = "SELECT * FROM users";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+        // $users = [];
+        // while ($row = $result->fetch_assoc()) {
+        //     $users[] = new UserDto(
+        //         $row['id'],
+        //         $row['name'],
+        //         $row['email'],
+        //         $row['phone'],
+        //         role: $row['role'],
+        //         created_at: $row['created_at'],
+        //         isBlocked: (bool) $row['is_block'],
+        //     );
+        // }
 
+        // return $users;
+    }
+    
     public function getDeliveryAddressesById($userId)
     {
         $sql = "SELECT * FROM user_addresses WHERE user_id = ?";
