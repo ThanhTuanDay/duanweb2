@@ -74,27 +74,27 @@ document.getElementById('toggle-sidebar').addEventListener('click', function () 
 });
 
 
-let currentPage = 1;
-let perPage = 10;
+// let currentPage = 1;
+// let perPage = 10;
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
+// document.addEventListener('DOMContentLoaded', () => {
+//     loadProducts();
 
-    document.getElementById('pagination-size').addEventListener('change', (e) => {
-        perPage = parseInt(e.target.value);
-        currentPage = 1;
-        loadProducts();
-    });
-});
+//     document.getElementById('pagination-size').addEventListener('change', (e) => {
+//         perPage = parseInt(e.target.value);
+//         currentPage = 1;
+//         loadProducts();
+//     });
+// });
 
-function loadProducts() {
-    fetch(`product-api.php?page=${currentPage}&per_page=${perPage}`)
-        .then(res => res.json())
-        .then(data => {
-            renderProducts(data.products);
-            renderPagination(data.total, data.page, data.per_page);
-        });
-}
+// function loadProducts() {
+//     fetch(`product-api.php?page=${currentPage}&per_page=${perPage}`)
+//         .then(res => res.json())
+//         .then(data => {
+//             renderProducts(data.products);
+//             renderPagination(data.total, data.page, data.per_page);
+//         });
+// }
 
 
 async function blockProduct(id) {
@@ -123,73 +123,73 @@ async function blockProduct(id) {
         alert('Có lỗi xảy ra khi gửi yêu cầu block sản phẩm.');
     }
 }
-function renderProducts(products) {
-    const tbody = document.getElementById('product-table-body');
-    tbody.innerHTML = "";
+// function renderProducts(products) {
+//     const tbody = document.getElementById('product-table-body');
+//     tbody.innerHTML = "";
 
-    products.forEach(p => {
-        const status = p.stock === 0 ? "Out of Stock" :
-            p.stock < 10 ? "Low Stock" : "Active";
+//     products.forEach(p => {
+//         const status = p.stock === 0 ? "Out of Stock" :
+//             p.stock < 10 ? "Low Stock" : "Active";
 
-        const badge = p.stock === 0 ? "danger" :
-            p.stock < 10 ? "warning" : "success";
+//         const badge = p.stock === 0 ? "danger" :
+//             p.stock < 10 ? "warning" : "success";
 
-        tbody.innerHTML += `
-            <tr>
-                <td>#${p.id}</td>
-                <td><div class="product-img"><img src="${p.image_url || '/placeholder.svg'}" alt="${p.name}"></div></td>
-                <td>${p.name}</td>
-                <td>${p.category_name}</td>
-                <td>$${parseFloat(p.price).toFixed(2)}</td>
-                <td>${p.stock}</td>
-                <td><span class="badge bg-${badge}">${status}</span></td>
-                <td>
-                    <div class="action-btns">
-                        <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
-                    </div>
-                </td>
-            </tr>
-        `;
-    });
-}
+//         tbody.innerHTML += `
+//             <tr>
+//                 <td>#${p.id}</td>
+//                 <td><div class="product-img"><img src="${p.image_url || '/placeholder.svg'}" alt="${p.name}"></div></td>
+//                 <td>${p.name}</td>
+//                 <td>${p.category_name}</td>
+//                 <td>$${parseFloat(p.price).toFixed(2)}</td>
+//                 <td>${p.stock}</td>
+//                 <td><span class="badge bg-${badge}">${status}</span></td>
+//                 <td>
+//                     <div class="action-btns">
+//                         <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+//                         <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+//                         <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+//                     </div>
+//                 </td>
+//             </tr>
+//         `;
+//     });
+// }
 
-function renderPagination(total, page, perPage) {
-    const totalPages = Math.ceil(total / perPage);
-    const pagination = document.getElementById('pagination-links');
-    const info = document.getElementById('pagination-info');
+// function renderPagination(total, page, perPage) {
+//     const totalPages = Math.ceil(total / perPage);
+//     const pagination = document.getElementById('pagination-links');
+//     const info = document.getElementById('pagination-info');
 
-    pagination.innerHTML = '';
-    info.innerHTML = `Showing ${(page - 1) * perPage + 1} to ${Math.min(page * perPage, total)} of ${total} products`;
+//     pagination.innerHTML = '';
+//     info.innerHTML = `Showing ${(page - 1) * perPage + 1} to ${Math.min(page * perPage, total)} of ${total} products`;
 
-    // Previous
-    pagination.innerHTML += `
-        <li class="page-item ${page <= 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="changePage(${page - 1})">Previous</a>
-        </li>
-    `;
+//     // Previous
+//     pagination.innerHTML += `
+//         <li class="page-item ${page <= 1 ? 'disabled' : ''}">
+//             <a class="page-link" href="#" onclick="changePage(${page - 1})">Previous</a>
+//         </li>
+//     `;
 
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === page ? 'active' : ''}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-    }
+//     for (let i = 1; i <= totalPages; i++) {
+//         pagination.innerHTML += `
+//             <li class="page-item ${i === page ? 'active' : ''}">
+//                 <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+//             </li>
+//         `;
+//     }
 
-    pagination.innerHTML += `
-        <li class="page-item ${page >= totalPages ? 'disabled' : ''}">
-            <a class="page-link" href="#" onclick="changePage(${page + 1})">Next</a>
-        </li>
-    `;
-}
+//     pagination.innerHTML += `
+//         <li class="page-item ${page >= totalPages ? 'disabled' : ''}">
+//             <a class="page-link" href="#" onclick="changePage(${page + 1})">Next</a>
+//         </li>
+//     `;
+// }
 
-function changePage(page) {
-    event.preventDefault();
-    currentPage = page;
-    loadProducts();
-}
+// function changePage(page) {
+//     event.preventDefault();
+//     currentPage = page;
+//     loadProducts();
+// }
 
 
 

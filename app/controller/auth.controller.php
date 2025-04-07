@@ -22,7 +22,15 @@ class AuthController
         return $this->userModel->LoginUser($user);
     }
 
+    public function isEmailExists($email)
+    {
+        return $this->userModel->checkEmailExists($email);
+    }
 
+
+    public function isPhoneExist($phone){
+        return $this->userModel->checkPhoneExist($phone);
+    }
     public function registerUser($email, $password, $password2, $name, $phone = null, $address = null)
     {
         if ($password !== $password2) {

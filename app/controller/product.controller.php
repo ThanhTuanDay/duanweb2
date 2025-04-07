@@ -40,8 +40,8 @@ class ProductController{
         return $this->productModel->updateStatusToFalse($productId);
    }
 
-   public function getProductsForMenu(){
-            return $this->productModel->getProductsForMenu();
+   public function getProductsForMenu($offset=null,$limit=null,$filter='all'){
+            return $this->productModel->getProductsForMenu($offset,$limit,$filter);
    }
 }
 

@@ -167,22 +167,40 @@ class ProductModel
         return $stmt->execute();
     }
 
-    public function getProductsForMenu(): array
-{
-    $sql = "SELECT p.*, c.name as category_slug 
+    public function getProductsForMenu($offset = null, $limit = null, $filter): array
+    {
+        $sql = "SELECT p.*, c.name as category_slug 
             FROM products p
             JOIN categories c ON p.category_id = c.id 
-            Where p.status = 1
-            ORDER BY created_at DESC ";
-    $result = $this->conn->query($sql);
-    $products = [];
+            WHERE p.status = 1";
 
-    while ($row = $result->fetch_assoc()) {
-        $products[] = $row;
+        if ($filter != 'all') {
+            $sql .= " AND c.name = ?";
+        }
+        if ($offset != null && $limit != null) {
+            $sql .= " ORDER BY p.created_at DESC LIMIT ?, ?";
+        }
+
+        $stmt = $this->conn->prepare($sql);
+
+        if($offset != null && $limit != null){
+            if ($filter != 'all') {
+                $stmt->bind_param("sii", $filter, $offset, $limit);
+            } else {
+                $stmt->bind_param("ii", $offset, $limit);
+            }
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+
+        return $products;
     }
-
-    return $products;
-}
 
     public function getAllProducts(): array
     {
