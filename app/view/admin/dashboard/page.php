@@ -41,7 +41,7 @@ $categoryTotals = json_encode($totals);
     <div class="container-fluid">
         <h2 class="mb-4">Dashboard</h2>
         <div id="category-chart-data" data-labels='<?= json_encode($categoryLabels) ?>'
-            data-values='<?= json_encode($categoryTotals) ?>'>
+            data-values='<?= htmlspecialchars(json_encode($categoryTotals), ENT_QUOTES, 'UTF-8') ?>'>
         </div>
         <!-- Stats Cards -->
         <div class="row">
@@ -121,7 +121,10 @@ $categoryTotals = json_encode($totals);
                     </div>
                     <div class="card-body">
                         <div class="chart-container">
-                            <canvas id="categoryChart"></canvas>
+                    
+                            <canvas id="categoryChart">
+
+                            </canvas>
                         </div>
                     </div>
                 </div>

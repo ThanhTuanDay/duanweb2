@@ -47,16 +47,20 @@ const salesChart = new Chart(salesCtx, {
 });
 let dataDiv = document.getElementById("category-chart-data");
 if (dataDiv) {
+    console.log(dataDiv.dataset.values)
     const labels = JSON.parse(dataDiv.dataset.labels);
-    const values = JSON.parse(dataDiv.dataset.values);
+    const values = JSON.parse(dataDiv.dataset.values) || [];
+
+    const intValues = JSON.parse(values);
+    const labelsArray = JSON.parse(labels);
 
     const ctx = document.getElementById('categoryChart').getContext('2d');
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: labels,
+            labels: labelsArray,
             datasets: [{
-                data: values,
+                data: intValues,
                 backgroundColor: [
                     '#dc3545', '#ffc107', '#28a745', '#17a2b8', '#6c757d'
                 ],

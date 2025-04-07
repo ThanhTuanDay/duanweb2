@@ -53,88 +53,52 @@ switch ($action) {
         echo json_encode($response);
         break;
     case 'updateCategory':
-        $categoryData = $_POST['categoryData'];
-        $data = [
-            'id' => $categoryData['id'],
-            'name' => $categoryData['name'],
-            'images_url' => $categoryData['images_url'],
-            'description' => $categoryData['description'],
-            'status' => $categoryData['status'],
-        ];
-        $categoryDto = new CategoryDto(
-            $categoryData['id'],
-            $categoryData['name'],
-            $categoryData['description'],
-            $categoryData['status'],
-            $categoryData['images_url']
-        );
-        $updateCategoryItem = $categoryController->updateCategory($categoryDto);
-        // print_r($updateCategoryItem);
-        $response = [];
-        if ($updateCategoryItem) {
-            $response[] = [
-                'success' => $updateCategoryItem,
-                'message' => 'UpdateCategory success'
+        // $categoryData = $_POST['formData'];
+        // $data = [
+        //     'id' => $categoryData['id'],
+        //     'name' => $categoryData['name'],
+        //     'description' => $categoryData['description'],
+        //     'status' => $categoryData['status'],
+        // ];
 
-            ];
-        } 
-            else {
-                $response[] = [
-                    'success' => false,
-                    'message' => 'UpdateCategory fail!'
-
-                ];
-            }
-        header('Content-Type: application/json');
-
-        echo json_encode($response);
-
-        break;
-    case 'deleteCategory':
-
-        $categoryDataId = $_POST['categoryId'];
-        
-        $deleteCategoryId = $categoryController->deleteCategory($categoryDataId);
-        $response = [];
-        if ($deleteCategoryId) {
-            $response[] = [
-                'success' => $deleteCategoryId,
-                'message' => 'DeleteCategory success'
-
-            ];
-        } else {
+        if (!isset($_FILES['image'])) {
             $response[] = [
                 'success' => false,
-                'message' => 'DeleteCategory fail!'
+                'message' => 'UpdateCategory fail!'
 
             ];
         }
-        header('Content-Type: application/json');
-
-        echo json_encode($response);
-
-        break;
-    case 'createCategory':
-        $categoryData = $_POST['categoryData'];
-        $data = [
-            'name' => $categoryData['name'],
-            'images_url' => $categoryData['images_url'],
-            'description' => $categoryData['description'],
-            'status' => $categoryData['status'],
-        ];
+        $image = $_FILES['image'];
+        $uploadDir = __DIR__ . '/../../public/images/categories/';
+        
+        file_put_contents(__DIR__ . '/category-api.txt', json_encode($uploadDir), FILE_APPEND);
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true); // tạo folder nếu chưa tồn tại
+        }
+        
+        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $rawName = $_POST['name'] ?? 'image';
+        $safeName = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $rawName))));
+        $filename = $safeName . '.' . $ext;
+        $targetPath = $uploadDir . $filename;
+        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
+        $targetPath = '/duanweb2/public/images/categories/' . $filename;
         $categoryDto = new CategoryDto(
-            $categoryData['name'],
-            $categoryData['description'],
-            $categoryData['status'],
-            $categoryData['images_url']
+            $_POST['id'],
+            $_POST['name'],
+            $_POST['description'],
+            $_POST['status'],
+            $targetPath
         );
-        $createCategoryItem = $categoryController->createCategory($categoryDto);
-        $response = [];
-        if ($createCategoryItem) {
-            $response[] = [
-                'success' =>  $createCategoryItem,
-                'message' => 'CreateCategory success'
 
+        
+
+        $updateCategoryItem= $categoryController->updateCategory($categoryDto);
+        $response=[];
+        if($updateCategoryItem){
+            $response[]=[
+                'success'=>$updateCategoryItem,
+                'message'=>'UpdateCategory success'
             ];
         } else {
             $response[] = [

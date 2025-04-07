@@ -4,7 +4,9 @@ $productController = new ProductController();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
 
-    $productController -> blockProduct($id); 
+   if( $productController -> blockProduct($id)){
 
     echo "blocked";
+   }
+
 }
