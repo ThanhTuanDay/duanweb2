@@ -6,7 +6,7 @@
     <title>Feane Admin - Orders</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <!-- <style>
+<!-- <style>
         :root {
             --primary: #ffbe33;
             --primary-dark: #e69c00;
@@ -333,11 +333,11 @@
             }
         }
     </style> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
 <!-- </head> -->
 <!-- <body> -->
-    <!-- Sidebar -->
-    <!-- <div class="sidebar" id="sidebar">
+<!-- Sidebar -->
+<!-- <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Feane Admin</h3>
         </div>
@@ -366,313 +366,609 @@
         </div>
     </div> -->
 
-    <!-- Main Content -->
+<!-- Main Content -->
 
-       
 
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Orders Management</h2>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <h5 class="mb-0">All Orders</h5>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-md-end">
-                                <div class="search-container me-3">
-                                    <input type="text" class="form-control" placeholder="Search orders...">
-                                    <i class="fas fa-search search-icon"></i>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Filter
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="filterDropdown">
-                                        <li><a class="dropdown-item" href="#">All Orders</a></li>
-                                        <li><a class="dropdown-item" href="#">Pending</a></li>
-                                        <li><a class="dropdown-item" href="#">Processing</a></li>
-                                        <li><a class="dropdown-item" href="#">Shipped</a></li>
-                                        <li><a class="dropdown-item" href="#">Delivered</a></li>
-                                        <li><a class="dropdown-item" href="#">Cancelled</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Orders Management</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exportOrdersModal">
+            <i class="fas fa-file-export me-2"></i> Export Orders
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="mb-0">All Orders</h5>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Date</th>
-                                    <th>Total</th>
-                                    <th>Payment Method</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#ORD-0025</td>
-                                    <td>John Doe</td>
-                                    <td>May 15, 2023</td>
-                                    <td>$125.99</td>
-                                    <td>Credit Card</td>
-                                    <td><span class="badge bg-success">Delivered</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info"><i class="fas fa-print"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-0024</td>
-                                    <td>Jane Smith</td>
-                                    <td>May 14, 2023</td>
-                                    <td>$78.50</td>
-                                    <td>PayPal</td>
-                                    <td><span class="badge bg-warning">Processing</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info"><i class="fas fa-print"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-0023</td>
-                                    <td>Robert Johnson</td>
-                                    <td>May 14, 2023</td>
-                                    <td>$42.75</td>
-                                    <td>Cash on Delivery</td>
-                                    <td><span class="badge bg-info">Shipped</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info"><i class="fas fa-print"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-0022</td>
-                                    <td>Emily Davis</td>
-                                    <td>May 13, 2023</td>
-                                    <td>$96.25</td>
-                                    <td>Credit Card</td>
-                                    <td><span class="badge bg-danger">Cancelled</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info"><i class="fas fa-print"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-0021</td>
-                                    <td>Michael Wilson</td>
-                                    <td>May 12, 2023</td>
-                                    <td>$112.00</td>
-                                    <td>PayPal</td>
-                                    <td><span class="badge bg-success">Delivered</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info"><i class="fas fa-print"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-0020</td>
-                                    <td>Sarah Brown</td>
-                                    <td>May 11, 2023</td>
-                                    <td>$65.75</td>
-                                    <td>Cash on Delivery</td>
-                                    <td><span class="badge bg-primary">Pending</span></td>
-                                    <td>
-                                        <div class="action-btns">
-                                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-eye"></i></button>
-                                            <button class="btn btn-sm btn-info"><i class="fas fa-print"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-md-end">
+                        <div class="search-container me-3">
+                            <input id="search-input-id" type="text" class="form-control" placeholder="Search orders...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                            data-bs-target="#filterOrdersModal">
+                            <i class="fas fa-filter me-2"></i> Filter
+                        </button>
                     </div>
-                    
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center mt-4">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>
-  
+        <div class="card-body">
+            <div class="mb-4">
+                <div class="row">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end align-items-center">
+                        <div class="me-3">
+                            <select id="per-page-select" class="form-select form-select-sm">
+                                <option value="10">10 per page</option>
+                                <option value="25">25 per page</option>
+                                <option value="50">50 per page</option>
+                                <option value="100">100 per page</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-secondary me-2">
+                                <i class="fas fa-print"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- View Order Modal -->
-    <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewOrderModalLabel">Order Details - #ORD-0025</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <nav aria-label="Page navigation">
+                <ul id="paginationContainer" class="pagination justify-content-center mt-4">
+
+                </ul>
+                <div class="pagination-info">
+                    <span>Showing <span id="pagination-start">1</span> to <span id="pagination-end">10</span> of <span
+                            id="pagination-total">100</span> items</span>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="order-details-row">
-                                <div class="order-details-label">Customer Information</div>
-                                <div>John Doe</div>
-                                <div>john.doe@example.com</div>
-                                <div>+1 (555) 123-4567</div>
-                            </div>
-                            <div class="order-details-row">
-                                <div class="order-details-label">Shipping Address</div>
-                                <div>123 Main Street</div>
-                                <div>Apt 4B</div>
-                                <div>New York, NY 10001</div>
-                                <div>United States</div>
-                            </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6 mb-3">
+                            <h3 class="mb-1" id="total-orders">0</h3>
+                            <p class="text-muted mb-0">Total Orders</p>
                         </div>
-                        <div class="col-md-6">
-                            <div class="order-details-row">
-                                <div class="order-details-label">Order Information</div>
-                                <div><strong>Order ID:</strong> #ORD-0025</div>
-                                <div><strong>Date:</strong> May 15, 2023</div>
-                                <div><strong>Payment Method:</strong> Credit Card</div>
-                                <div><strong>Status:</strong> <span class="badge bg-success">Delivered</span></div>
-                            </div>
-                            <div class="order-details-row">
-                                <div class="order-details-label">Order Timeline</div>
-                                <div class="timeline">
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">May 15, 2023 - 18:30</div>
-                                        <div class="timeline-content">Order delivered</div>
-                                    </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">May 14, 2023 - 10:15</div>
-                                        <div class="timeline-content">Order shipped</div>
-                                    </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">May 13, 2023 - 14:45</div>
-                                        <div class="timeline-content">Order processed</div>
-                                    </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">May 13, 2023 - 09:20</div>
-                                        <div class="timeline-content">Payment confirmed</div>
-                                    </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">May 13, 2023 - 09:10</div>
-                                        <div class="timeline-content">Order placed</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-6 mb-3">
+                            <h3 class="mb-1" id="total-revenue">₫0</h3>
+                            <p class="text-muted mb-0">Total Revenue</p>
                         </div>
-                    </div>
-                    
-                    <div class="order-details-row mt-4">
-                        <div class="order-details-label">Order Items</div>
-                        <div class="order-product-item">
-                            <div class="order-product-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Delicious Burger">
-                            </div>
-                            <div class="order-product-info">
-                                <h6>Delicious Burger</h6>
-                                <p>Quantity: 2</p>
-                            </div>
-                            <div class="order-product-price">$31.98</div>
+                        <div class="col-6">
+                            <h3 class="mb-1 text-success" id="completion-rate">0%</h3>
+                            <p class="text-muted mb-0">Completion Rate</p>
                         </div>
-                        <div class="order-product-item">
-                            <div class="order-product-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="French Fries">
-                            </div>
-                            <div class="order-product-info">
-                                <h6>French Fries</h6>
-                                <p>Quantity: 2</p>
-                            </div>
-                            <div class="order-product-price">$17.00</div>
-                        </div>
-                        <div class="order-product-item">
-                            <div class="order-product-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Cheese Pizza">
-                            </div>
-                            <div class="order-product-info">
-                                <h6>Cheese Pizza</h6>
-                                <p>Quantity: 1</p>
-                            </div>
-                            <div class="order-product-price">$18.99</div>
-                        </div>
-                        <div class="order-product-item">
-                            <div class="order-product-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Chocolate Shake">
-                            </div>
-                            <div class="order-product-info">
-                                <h6>Chocolate Shake</h6>
-                                <p>Quantity: 2</p>
-                            </div>
-                            <div class="order-product-price">$12.50</div>
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-4">
-                        <div class="col-md-6 offset-md-6">
-                            <div class="order-details-row">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Subtotal:</span>
-                                    <span>$80.47</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Shipping:</span>
-                                    <span>$5.99</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Tax:</span>
-                                    <span>$8.05</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Discount:</span>
-                                    <span>-$10.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between fw-bold">
-                                    <span>Total:</span>
-                                    <span>$125.99</span>
-                                </div>
-                            </div>
+                        <div class="col-6">
+                            <h3 class="mb-1 text-danger" id="cancellation-rate">0%</h3>
+                            <p class="text-muted mb-0">Cancellation Rate</p>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="dropdown me-2">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="updateStatusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Update Status
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="updateStatusDropdown">
-                            <li><a class="dropdown-item" href="#">Pending</a></li>
-                            <li><a class="dropdown-item" href="#">Processing</a></li>
-                            <li><a class="dropdown-item" href="#">Shipped</a></li>
-                            <li><a class="dropdown-item" href="#">Delivered</a></li>
-                            <li><a class="dropdown-item" href="#">Cancelled</a></li>
-                        </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Recent Activities</h5>
+                </div>
+                <div class="card-body">
+                    <div class="order-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Today, 10:30 AM</div>
+                            <div class="timeline-content">Order #ORD-0025 has been completed</div>
+                            <div class="timeline-note">Customer: John Doe</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Today, 9:15 AM</div>
+                            <div class="timeline-content">Order #ORD-0024 status changed to Processing</div>
+                            <div class="timeline-note">Updated by: Admin User</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Yesterday, 3:45 PM</div>
+                            <div class="timeline-content">New order #ORD-0024 received</div>
+                            <div class="timeline-note">Customer: Jane Smith</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Yesterday, 1:20 PM</div>
+                            <div class="timeline-content">New order #ORD-0023 received</div>
+                            <div class="timeline-note">Customer: Robert Johnson</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">May 13, 7:15 PM</div>
+                            <div class="timeline-content">Order #ORD-0022 has been completed</div>
+                            <div class="timeline-note">Customer: Emily Davis</div>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-info me-2"><i class="fas fa-print me-2"></i> Print Invoice</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
+
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewOrderModalLabel"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="customer-info">
+                            <div class="customer-avatar">
+                                <img id="customer-avatar" src="/placeholder.svg?height=60&width=60"
+                                    alt="Customer Avatar">
+                            </div>
+                            <div class="customer-details">
+                                <h5></h5>
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <p><strong>Email:</strong> <span id="customer-email"></span></p>
+                            <p><strong>Phone:</strong> <span id="customer-phone"></span></p>
+                        </div>
+                        <div class="delivery-address">
+                            <h6><i class="fas fa-map-marker-alt"></i> Delivery Address</h6>
+                            <p>
+                                <br<br>
+                            </p>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-icon">
+                                <i class="fab fa-cc-visa"></i>
+                            </div>
+                            <div class="payment-details">
+                                <h6>Payment Method</h6>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0">Order Status</h6>
+                            <span class="badge bg-success"></span>
+                        </div>
+                        <div class="mb-3">
+                            <p><strong>Order Date:</strong> <span id="order-date"></span></p>
+                            <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+                        </div>
+                        <div class="order-timeline">
+                            <!-- <div class="timeline-item">
+                                <div class="timeline-date"></div>
+                                <div class="timeline-content"></div>
+                                <div class="timeline-note">Delivered by: Delivery Agent #12</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">May 15, 2023, 12:30 PM</div>
+                                <div class="timeline-content">Order Out for Delivery</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">May 15, 2023, 11:15 AM</div>
+                                <div class="timeline-content">Order Processing</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">May 15, 2023, 10:30 AM</div>
+                                <div class="timeline-content">Order Placed</div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h6 class="mb-3">Order Items</h6>
+                <div class="order-items">
+                    <!-- <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="/placeholder.svg?height=50&width=50" alt="Delicious Pizza">
+                        </div>
+                        <div class="order-item-details">
+                            <div class="order-item-name">Delicious Pizza</div>
+                            <div class="order-item-price">$20.99 <span class="order-item-quantity">x 2</span></div>
+                        </div>
+                        <div class="ms-auto">
+                            <strong>$41.98</strong>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="/placeholder.svg?height=50&width=50" alt="Tasty Burger">
+                        </div>
+                        <div class="order-item-details">
+                            <div class="order-item-name">Tasty Burger</div>
+                            <div class="order-item-price">$15.99 <span class="order-item-quantity">x 1</span></div>
+                        </div>
+                        <div class="ms-auto">
+                            <strong>$15.99</strong>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-item-img">
+                            <img src="/placeholder.svg?height=50&width=50" alt="French Fries">
+                        </div>
+                        <div class="order-item-details">
+                            <div class="order-item-name">French Fries</div>
+                            <div class="order-item-price">$8.99 <span class="order-item-quantity">x 2</span></div>
+                        </div>
+                        <div class="ms-auto">
+                            <strong>$17.98</strong>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="order-summary">
+                    <div class="order-summary-item">
+                        <span>Subtotal</span>
+                        <span></span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Delivery Fee</span>
+                        <span></span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Tax</span>
+                        <span></span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Discount</span>
+                        <span></span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Total</span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6 class="mb-2">Notes</h6>
+                    <p class="mb-0">Please deliver to the front desk. No onions in the burger please.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="update-status-btn" type="button" class="btn btn-info" data-bs-toggle="modal"
+                    data-bs-target="#updateStatusModal">
+                    <i class="fas fa-edit me-2"></i> Update Status
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-print me-2"></i> Print Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Status Modal -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateStatusModalLabel">Update Order Status - #ORD-0025</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="orderStatus" class="form-label">Order Status</label>
+                        <select class="form-select" id="orderStatus">
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="out-for-delivery">Out for Delivery</option>
+                            <option value="completed" selected>Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="statusNote" class="form-label">Status Note (Optional)</label>
+                        <textarea class="form-control" id="statusNote" rows="3"
+                            placeholder="Add a note about this status change..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Notify Customer</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notifyEmail" checked>
+                            <label class="form-check-label" for="notifyEmail">
+                                Send Email Notification
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notifySMS" checked>
+                            <label class="form-check-label" for="notifySMS">
+                                Send SMS Notification
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Orders Modal -->
+<div class="modal fade" id="exportOrdersModal" tabindex="-1" aria-labelledby="exportOrdersModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exportOrdersModalLabel">Export Orders</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Date Range</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exportDateFrom" class="form-label">From</label>
+                                    <input type="date" class="form-control" id="exportDateFrom">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exportDateTo" class="form-label">To</label>
+                                    <input type="date" class="form-control" id="exportDateTo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exportStatus" class="form-label">Order Status</label>
+                        <select class="form-select" id="exportStatus">
+                            <option value="all" selected>All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="delivering">Delivering</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exportFormat" class="form-label">Export Format</label>
+                        <select class="form-select" id="exportFormat">
+                            <option value="csv" selected>CSV</option>
+                            <option value="excel">Excel</option>
+                            <option value="pdf">PDF</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Include Fields</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="includeOrderId" checked>
+                                    <label class="form-check-label" for="includeOrderId">
+                                        Order ID
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="includeCustomer" checked>
+                                    <label class="form-check-label" for="includeCustomer">
+                                        Customer Details
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="includeDate" checked>
+                                    <label class="form-check-label" for="includeDate">
+                                        Order Date
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="includeTotal" checked>
+                                    <label class="form-check-label" for="includeTotal">
+                                        Order Total
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="includeStatus" checked>
+                                    <label class="form-check-label" for="includeStatus">
+                                        Order Status
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Export</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterOrdersModal" tabindex="-1" aria-labelledby="filterOrdersModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterOrdersModalLabel">Filter Orders</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Price Range Filter -->
+                    <div class="mb-3">
+                        <label class="form-label">Price Range</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text bg-dark text-light border-secondary">VNĐ</span>
+                                    <input type="number" class="form-control" id="priceMin" placeholder="Min">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark text-light border-secondary">VNĐ</span>
+                                    <input type="number" class="form-control" id="priceMax" placeholder="Max">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order ID/Name Filter -->
+                    <div class="mb-3">
+                        <label for="orderNameFilter" class="form-label">Order ID/Name</label>
+                        <input type="text" class="form-control" id="orderNameFilter"
+                            placeholder="Search by order ID or name...">
+                    </div>
+
+                    <!-- Customer Name Filter -->
+                    <div class="mb-3">
+                        <label for="customerNameFilter" class="form-label">Customer Name</label>
+                        <input type="text" class="form-control" id="customerNameFilter"
+                            placeholder="Search by customer name...">
+                    </div>
+
+                    <!-- Order Status Filter -->
+                    <div class="mb-3">
+                        <label class="form-label">Order Status</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="statusPending" checked>
+                                    <label class="form-check-label" for="statusPending">
+                                        <span class="order-status status-pending"></span> Pending
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="statusProcessing" checked>
+                                    <label class="form-check-label" for="statusProcessing">
+                                        <span class="order-status status-processing"></span> Delivering
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="statusCompleted" checked>
+                                    <label class="form-check-label" for="statusCompleted">
+                                        <span class="order-status status-completed"></span> Completed
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="statusCancelled" checked>
+                                    <label class="form-check-label" for="statusCancelled">
+                                        <span class="order-status status-cancelled"></span> Cancelled
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date Range Filter -->
+                    <div class="mb-3">
+                        <label class="form-label">Order Date</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <label for="filterDateFrom" class="form-label">From</label>
+                                    <input type="date" class="form-control" id="filterDateFrom">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <label for="filterDateTo" class="form-label">To</label>
+                                    <input type="date" class="form-control" id="filterDateTo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Filter -->
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="paymentCredit" checked>
+                                    <label class="form-check-label" for="paymentCredit">
+                                        Credit Card
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="paymentDebit" checked>
+                                    <label class="form-check-label" for="paymentDebit">
+                                        Debit Card
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="paymentPaypal" checked>
+                                    <label class="form-check-label" for="paymentPaypal">
+                                        PayPal
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="paymentCash" checked>
+                                    <label class="form-check-label" for="paymentCash">
+                                        Cash on Delivery
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary">Reset Filters</button>
+                <button type="button" class="btn btn-primary">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</div>

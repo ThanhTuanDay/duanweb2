@@ -344,7 +344,7 @@
     </div> -->
 
 <!-- Main Content -->
-
+<div id="notifications-container" class="notifications-container"></div>
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -469,8 +469,8 @@
                     </div>
                 </div> -->
     </div>
-    <div class="pagination-container">
-        <ul id="pagination-links" class="pagination">
+    <div class="pagination-info">
+        <ul id="pagination-links" class="pagination justify-content-center">
         </ul>
         <div class="pagination-info">
             <span>Showing <span id="pagination-start">1</span> to <span id="pagination-end">10</span> of <span id="pagination-total">100</span> items</span>
@@ -491,28 +491,30 @@
                 <form>
                     <div class="mb-3">
                         <label for="categoryName" class="form-label">Category Name</label>
-                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                        <input type="text" class="form-control" name="name" id="categoryName" value="" placeholder="Enter category name">
                     </div>
                     <div class="mb-3">
                         <label for="categoryDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description"></textarea>
+                        <input type="hidden" class="form-control" name="description" id="categoryDescriptionHidden" value="">
                     </div>
                     <div class="mb-3">
                         <label for="categoryImage" class="form-label">Category Image</label>
                         <input type="file" class="form-control" id="categoryImage">
+                        <input type="hidden" class="form-control" name="images_url" id="img_url" value="" placeholder="Enter category name">
                     </div>
                     <div class="mb-3">
                         <label for="categoryStatus" class="form-label">Status</label>
-                        <select class="form-select" id="categoryStatus">
-                            <option value="active" selected>Active</option>
-                            <option value="inactive">Inactive</option>
+                        <select class="form-select" name='status' id="categoryStatus">
+                            <option value="1" selected>Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add Category</button>
+                <button type="button" class="btn btn-primary" id="saveBtnCreateCategory">Add Category</button>
             </div>
         </div>
     </div>
@@ -527,11 +529,27 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" id="saveBtnEditCategory" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- delete modal  -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true" aria-labelledby="deleteModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveDeleteCategory">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

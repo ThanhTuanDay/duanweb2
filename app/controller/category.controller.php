@@ -25,5 +25,12 @@ class CategoryController {
     public function updateCategory($data):bool{
         return $this->categoryModel->updateCategory($data);
     }
+    public function deleteCategory($id):bool{
+        return $this->categoryModel->deleteCategory($id); 
+    }
+    public function createCategory($data): bool
+    {
+        return $this->categoryModel->createCategory($data);
+    }
 }
 
