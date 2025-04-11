@@ -1,6 +1,6 @@
 <?php
 require("order-item.dto.php");
-class OrderDto
+class OrderDto implements JsonSerializable
 {
     private ?string $id;
     private ?string $user_id;
@@ -11,6 +11,10 @@ class OrderDto
     private ?string $deliveryAddressId;
     private ?string $deliveryAddress;
     private array $orderItems;
+    private ?string $paymentMethod;
+    private ?string $userName;
+    private ?string $userEmail;
+    private ?string $phone;
     public function __construct(
         ?string $id = null,
         ?string $user_id = null,
@@ -20,7 +24,11 @@ class OrderDto
         ?string $created_at = null,
         ?string $deliveryAddressId = null,
         ?array $orderItems = null,
-        ?string $deliveryAddress = null
+        ?string $deliveryAddress = null,
+        ?string $paymentMethod = null,
+        ?string $userName = null,
+        ?string $userEmail = null,
+        ?string $phone = null
     ) {
         $this->id = $id;
         $this->user_id = $user_id;
@@ -28,15 +36,36 @@ class OrderDto
         $this->status = $status;
         $this->store_id = $store_id;
         $this->created_at = $created_at;
-        $this->deliveryAddressId = $deliveryAddressId; 
-        $this->orderItems = $orderItems ?? [] ;
+        $this->deliveryAddressId = $deliveryAddressId;
+        $this->orderItems = $orderItems ?? [];
         $this->deliveryAddress = $deliveryAddress;
+        $this->paymentMethod = $paymentMethod;
+        $this->userName = $userName;
+        $this->userEmail = $userEmail;
+        $this->phone = $phone;
     }
 
     // Getters
     public function getId(): ?string
     {
         return $this->id;
+    }
+    public function getUserName(): ?string
+    {
+        return $this->userName;
+    }
+
+    public function getUserEmails(): ?string
+    {
+        return $this->userEmail;
+    }
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
     }
     public function getUserId(): ?string
     {
@@ -110,5 +139,38 @@ class OrderDto
     public function setDeliveryAddress(string $deliveryAddress): void
     {
         $this->deliveryAddress = $deliveryAddress;
+    }
+
+    public function setUserName(string $username)
+    {
+        $this->userName = $username;
+    }
+
+    public function setPaymentMethod(string $paymentMethod)
+    {
+        $this->paymentMethod = $paymentMethod;
+    }
+
+    public function setUserEmail(string $userEmail){
+        $this->userEmail = $userEmail;
+    }
+
+    public function setPhone(string $phone){
+        $this->phone = $phone;
+    }
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'total' => $this->total_price,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'payment_method' => $this->paymentMethod ?? "COD",
+            'delivery_address' => $this->deliveryAddress,
+            'user_name' => $this->userName ?? null,
+            "user_email" => $this->userEmail ?? null,
+            "user_phone" => $this->phone ?? null 
+        ];
     }
 }
