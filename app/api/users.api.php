@@ -65,6 +65,50 @@ switch ($action) {
             'message' => $response ? 'User unblocked successfully' : 'Failed to unblock user',
         ]);
         break;
+    case 'getUserById':
+        $userId = $_POST['id'];
+        $user = $userController->getUserById($userId);
+        if ($user) {
+            $response = [
+                'id' => $user->getId(),
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'phone' => $user->getPhone(),
+                'address' => $user->getAddress(),
+                'password' => $user->getPassword(),
+                'role' => $user->getRole(),
+                'created_at' => $user->getCreatedAt(),
+                'is_block' => $user->isBlocked(),
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => false,
+                'message' => 'User not found',
+            ]);
+        }
+        break;
+    case 'updateUser':
+        $userId = $_POST['id'];
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        $userDto = new UserDto(
+            $userId,
+            $name,
+            phone: $phone,
+            address: $address,
+        );
+
+        $response = $userController->updateUserInformation($userDto);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => $response,
+            'message' => $response ? 'User updated successfully' : 'Failed to update user'
+        ]);
+        break;
     default:
         break;
 }

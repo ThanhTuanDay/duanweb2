@@ -24,6 +24,10 @@ class UserController {
         return $this->userModel->getUserById($userId);
     }
 
+    public function udateUser($userId, $name, $email, $phone, $address): bool{
+        return $this->userModel->updateUser($userId, $name, $email, $phone, $address);
+    }
+
     public function getAllUsers(): array{
         return $this->userModel->getAllUsers();
     }

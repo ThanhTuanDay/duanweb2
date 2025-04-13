@@ -241,20 +241,34 @@ class UserModel
         }
         return true;
     }
-
-    public function updateUserInformation($userDto){
+    public function updateUserInformation($userDto) {
         $sql = "UPDATE users SET 
             name = ?, 
             phone = ?, 
             address = ?
-        WHERE id = ? ";
-
+        WHERE id = ?";
+        
+        // Debugging: Log the SQL query and parameters
+        error_log("Executing query: $sql with params: name={$userDto->getName()}, phone={$userDto->getPhone()}, address={$userDto->getAddress()}, id={$userDto->getId()}");
+    
         $stmt = $this->conn->prepare($sql);
-
+    
+        if (!$stmt) {
+            error_log("SQL Error: " . $this->conn->error);
+            return false;
+        }
+    
         $name = $userDto->getName();
         $phone = $userDto->getPhone();
         $address = $userDto->getAddress();
         $id = $userDto->getId();
+    
+        // Validate input data
+        if (empty($name) || empty($phone) || empty($address) || empty($id)) {
+            error_log("Validation Error: All fields are required.");
+            return false;
+        }
+    
         $stmt->bind_param(
             "ssss",
             $name,
@@ -262,10 +276,32 @@ class UserModel
             $address,
             $id
         );
-
-        return $stmt->execute();
+    
+        if (!$stmt->execute()) {
+            error_log("Execution Error: " . $stmt->error);
+            return false;
+        }
+    
+        // Check if any rows were affected
+        if ($stmt->affected_rows === 0) {
+            // Check if the user ID exists
+            $checkSql = "SELECT id FROM users WHERE id = ?";
+            $checkStmt = $this->conn->prepare($checkSql);
+            $checkStmt->bind_param("s", $id);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+    
+            if ($checkResult->num_rows === 0) {
+                error_log("No rows were updated because the user ID does not exist.");
+                return false; // User ID does not exist
+            }
+    
+            error_log("No rows were updated because the data is unchanged.");
+            return true; // Data is unchanged, but the update is valid
+        }
+    
+        return true;
     }
-
     
     public function updateUser($userDto)
     {
@@ -318,16 +354,18 @@ class UserModel
         if ($result && $result->num_rows > 0) {
             $data = $result->fetch_assoc();
             return new UserDto(
-                null,
+                $data['id'],
                 $data['name'],
                 $data['email'],
                 $data['phone'],
                 $data['address'],
                 $data['password'],
+                $data['role'],
+                $data['created_at'],
                 null,
                 null,
-                null,
-               null,
+                isBlocked:$data['is_block']
+
             );
         } else {
             return null;
