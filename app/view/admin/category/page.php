@@ -469,8 +469,8 @@
                     </div>
                 </div> -->
     </div>
-    <div class="pagination-container">
-        <ul id="pagination-links" class="pagination">
+    <div class="pagination-info">
+        <ul id="pagination-links" class="pagination justify-content-center">
         </ul>
         <div class="pagination-info">
             <span>Showing <span id="pagination-start">1</span> to <span id="pagination-end">10</span> of <span id="pagination-total">100</span> items</span>

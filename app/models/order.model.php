@@ -1,6 +1,8 @@
 <?php
 require_once(dirname(__DIR__) . "../dto/order.dto.php");
 require_once(dirname(__DIR__) . "../lib/staticOrderStatus.php");
+require_once(dirname(__DIR__) . "../lib/state/OrderStatusContext.php");
+require_once(dirname(__DIR__) . "../lib/state/OrderStateFactory.php");
 class OrderModel
 {
     private $conn;
@@ -146,24 +148,59 @@ class OrderModel
 
     public function getOrderWithAddressById($id): ?OrderDto
     {
-        $sql = "SELECT o.*,a.address FROM orders as o join user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id  WHERE o.id =  ?";
+        $sql = "SELECT o.*,a.address,u.name,u.email,a.phone 
+        FROM orders as o 
+        JOIN user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id  
+        JOIN users as u on u.id = o.user_id
+        WHERE o.id =  ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result && $result->num_rows > 0) {
+        if ($result) {
             $data = $result->fetch_assoc();
             return $this->mapToOrderDto($data);
         }
         return null;
     }
 
+    public function getOrderTimeline(string $orderId): array
+    {
+        $sql = "SELECT status, description, created_at 
+                FROM order_status 
+                WHERE order_id = ? 
+                ORDER BY created_at ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt)
+            return [];
+
+        $stmt->bind_param("s", $orderId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $timeline = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $timeline[] = [
+                'status' => $row['status'],
+                'description' => $row['description'],
+                'created_at' => $row['created_at'],
+            ];
+        }
+
+        return $timeline;
+    }
 
     public function getOrdersByUserId($userId): array
     {
         $orders = [];
-        $sql = "SELECT o.*,a.address FROM orders as o join user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id  WHERE o.user_id =  ? ORDER BY created_at DESC";
+        $sql = "SELECT o.*,a.address,u.name 
+        FROM orders as o 
+        JOIN user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id 
+        JOIN users AS u 
+        ON u.id = o.user_id  WHERE o.user_id =  ? ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $userId);
         $stmt->execute();
@@ -175,17 +212,88 @@ class OrderModel
         return $orders;
     }
 
-
-
-
-    public function updateOrderStatus($orderId, $status): bool
+    public function getRecentOrderStatuses(int $limit = 5): array
     {
-        $sql = "UPDATE orders SET status = ? WHERE id = ?";
+        $sql = "SELECT os.*, o.user_id, u.name AS user_name 
+                FROM order_status os
+                JOIN orders o ON os.order_id = o.id
+                JOIN users u ON o.user_id = u.id
+                ORDER BY os.created_at DESC
+                LIMIT ?";
+
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ss", $status, $orderId);
-        return $stmt->execute();
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $recentStatuses = [];
+        while ($row = $result->fetch_assoc()) {
+            $recentStatuses[] = [
+                'order_id' => $row['order_id'],
+                'status' => $row['status'],
+                'description' => $row['description'],
+                'created_at' => $row['created_at'],
+                'user_name' => $row['user_name']
+            ];
+        }
+
+        return $recentStatuses;
     }
 
+
+    public function updateOrderStatus($orderId, $status, $description = null): bool
+    {
+        $sql = "SELECT status FROM orders WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $orderId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $row = $result->fetch_assoc()) {
+            $currentStatus = $row['status'];
+
+            $context = new OrderStatusContext();
+            $context->setState(OrderStateFactory::fromString($currentStatus));
+
+            try {
+                if ($status === OrderStatus::Cancelled) {
+                    $context->cancel();
+                } else {
+                    $context->next();
+                    if ($context->getState()->getStatus() !== $status)
+                        return false;
+                }
+
+                $updatedStatus = $context->getState()->getStatus();
+
+                $updateStmt = $this->conn->prepare("UPDATE orders SET status = ? WHERE id = ?");
+                $updateStmt->bind_param("ss", $updatedStatus, $orderId);
+                $updateSuccess = $updateStmt->execute();
+                file_put_contents(__DIR__ . '/order-log', json_encode("UPDATE SUCCESS {$updateSuccess}"), FILE_APPEND);
+
+                $logSuccess = $this->logOrderStatus($orderId, $updatedStatus, $description);
+
+                return $updateSuccess && $logSuccess;
+
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+    public function logOrderStatus(string $orderId, string $status, string $description): bool
+    {
+        $sql = "INSERT INTO order_status (order_id, status, description, created_at)
+            VALUES (?, ?, ?, NOW())";
+
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt)
+            return false;
+
+        $stmt->bind_param("sss", $orderId, $status, $description);
+        return $stmt->execute();
+    }
     public function deleteOrder($id): bool
     {
         $sql = "DELETE FROM orders WHERE id = ?";
@@ -238,6 +346,35 @@ class OrderModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getAllOrders()
+    {
+        $sql = "SELECT 
+    o.*, 
+    a.address, 
+    u.name 
+    FROM orders AS o
+    JOIN user_addresses AS a 
+        ON o.user_id = a.user_id 
+        AND o.delivery_address_id = a.id
+    JOIN users AS u 
+        ON u.id = o.user_id
+    ORDER BY o.created_at DESC;";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $orders = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $orders[] = $this->mapToOrderDto($row);
+            }
+
+            return $orders;
+        }
+
+        return null;
+    }
+
     private function mapToOrderDto($data): OrderDto
     {
         $orderDto = new OrderDto(
@@ -251,6 +388,20 @@ class OrderModel
         file_put_contents(__DIR__ . '/order-log', json_encode($data['address']), FILE_APPEND);
         if (isset($data['address'])) {
             $orderDto->setDeliveryAddress($data['address']);
+        }
+        if (isset($data['name'])) {
+            $orderDto->setUserName($data['name']);
+        }
+        if (isset($data['payment_method'])) {
+            $orderDto->setPaymentMethod($data['payment_method']);
+        }
+
+        if (isset($data['email'])) {
+            $orderDto->setUserEmail($data['email']);
+        }
+
+        if (isset($data['phone'])) {
+            $orderDto->setPhone($data['phone']);
         }
 
         return $orderDto;

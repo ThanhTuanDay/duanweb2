@@ -5,6 +5,7 @@ require_once(dirname(__DIR__) . "../models/product.model.php");
 require_once(dirname(__DIR__) . "../models/momo-payment.model.php");
 require_once(dirname(__DIR__) . "../lib/database.php");
 require_once(dirname(__DIR__) . '../dto/order.dto.php');
+require_once(dirname(__DIR__) . './controller/order.controller.php');
 ?>
 <?php
 class PaymentController{
@@ -12,10 +13,11 @@ class PaymentController{
     private $momoPayment;
     private $orderModel;
     private $productModel;
+    private $orderController;
     public function __construct() {
         $this->db = new Database();
         $this->momoPayment = new MomoPaymentModel();
-        $this->orderModel = new OrderModel($this->db);
+        $this->orderController = new OrderController();
         $this->productModel = new ProductModel($this->db);
     }
 
@@ -51,23 +53,23 @@ class PaymentController{
     }
 
     public function handlePaymentResponse($orderId,$status){
-        return $this->orderModel->updateOrderStatus($orderId, $status);
+        return $this->orderController->updateOrderStatus($orderId, $status);
     }
     private function preCreateOrder($orderDto) {
-        return $this->orderModel->createOrder($orderDto);
+        return $this->orderController->preCreateOrder($orderDto);
     }
 
     public function getOrderById($orderId) {
-        return $this->orderModel->getOrderWithAddressById($orderId);
+        return $this->orderController->getOrderById($orderId);
     }
 
     public function getOrderItemsByOrderId($orderId) {
-        return $this->orderModel->getOrderItemsWithProductInfoByOrderId($orderId);
+        return $this->orderController->getOrderItemsByOrderId($orderId);
     }
 
 
     public function getOrdersByUserId($userId) {
-        return $this->orderModel->getOrdersByUserId($userId);
+        return $this->orderController->getOrdersByUserId($userId);
     }
 }
 
