@@ -28,8 +28,12 @@ class UserController {
         return $this->userModel->getAllUsers();
     }
 
-    public function blockerUser($userId): bool{
+    public function blockUser($userId): bool{
         return $this->userModel->blockUser($userId);
+    }
+
+    public function unBlockUser($userId): bool{
+        return $this->userModel->unBlockUser($userId);
     }
 
     public function insertAddress($userId, $addressName, $address, $phone){

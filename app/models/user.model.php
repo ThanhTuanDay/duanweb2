@@ -40,22 +40,21 @@ class UserModel
         $stmt->execute();
         $result = $stmt->get_result();
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-        // $users = [];
-        // while ($row = $result->fetch_assoc()) {
-        //     $users[] = new UserDto(
-        //         $row['id'],
-        //         $row['name'],
-        //         $row['email'],
-        //         $row['phone'],
-        //         role: $row['role'],
-        //         created_at: $row['created_at'],
-        //         isBlocked: (bool) $row['is_block'],
-        //     );
-        // }
-
-        // return $users;
     }
-    
+    public function blockUser($userId): bool
+    {
+        $sql = "UPDATE users SET is_block = 1 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        return $stmt->execute();
+    }
+    public function unBlockUser($userId): bool
+    {
+        $sql = "UPDATE users SET is_block = 0 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        return $stmt->execute();
+    }
     public function getDeliveryAddressesById($userId)
     {
         $sql = "SELECT * FROM user_addresses WHERE user_id = ?";

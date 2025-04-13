@@ -83,8 +83,16 @@ $users = $userController->getAllUsers();
                                     <?php endif; ?>
                                     <td>
                                         <div class="action-btns d-flex">
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#viewUserModal"><i class="fa fa-ban"></i></button>
-                                        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fa fa-lock-open"></i></button>
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#viewUserModal"
+                                        data-user-id="<?= $user['id'] ?>" 
+                                        onclick="blockUser(this)">
+                                        >
+                                            
+                                        <i class="fa fa-ban"></i></button>
+                                        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editUserModal"
+                                        data-user-id="<?= $user['id'] ?>" 
+                                        onclick="unBlockUser(this)"></button>
+                                        ><i class="fa fa-lock-open"></i></button>
                                         </div>
                                     </td>
                                 </tr>

@@ -1,6 +1,6 @@
-<?php 
-    require_once(dirname(__DIR__).'../controller/user.controller.php');
-    $userController = new UserController();
+<?php
+require_once(dirname(__DIR__) . '../controller/user.controller.php');
+$userController = new UserController();
 ?>
 
 <?php
@@ -15,9 +15,9 @@ if (($_SERVER["REQUEST_METHOD"] === "GET" && !isset($_GET['action'])) || ($_SERV
 ?>
 <?php
 $action = isset($_GET['action']) ? $_GET['action'] : $_POST["action"];
-switch($action){
+switch ($action) {
     case 'getDeliveryAddress':
-        $listAddress = $userController->getDeliveryAddress(); 
+        $listAddress = $userController->getDeliveryAddress();
         foreach ($listAddress as $address) {
             $response[] = [
                 'id' => $address->getId(),
@@ -31,7 +31,7 @@ switch($action){
         echo json_encode($response);
         break;
     case 'getAllUsers':
-        $listUsers = $userController->getAllUsers(); 
+        $listUsers = $userController->getAllUsers();
         foreach ($listUsers as $user) {
             $response[] = [
                 'id' => $user->getId(),
@@ -46,7 +46,26 @@ switch($action){
         header('Content-Type: application/json');
         echo json_encode($response);
         break;
+    case 'blockUser':
+        $userId = $_POST['id'];
+        $response = $userController->blockUser($userId);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => $response,
+            'message' => $response ? 'User blocked successfully' : 'Failed to block user',
+        ]);
+        break;
+    case 'unblockUser':
+        $userId = $_POST['id'];
+
+        $response = $userController->unblockUser($userId);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => $response,
+            'message' => $response ? 'User unblocked successfully' : 'Failed to unblock user',
+        ]);
+        break;
     default:
-      break;
+        break;
 }
 ?>
