@@ -7,51 +7,39 @@ $(document).ready(function () {
         $('#main-content').toggleClass('active');
     })
     function showCartNotification(message, type = 'success') {
-        const container = $('#notifications-container'); // Ensure we use jQuery to get the container
+        const container = $('#notifications-container'); 
 
-        // Check if the container exists
         if (!container.length) {
             console.error('Notification container not found!');
             return;
         }
 
-        // Create a new notification element
         const notification = $('<div>', { class: `notification ${type}` });
 
-        // Create notification content
         const content = $('<div>', { class: 'notification-content' });
 
-        // Add icon based on type
         const icon = $('<i>', { class: type === 'success' ? 'fa fa-check-circle' : 'fa fa-exclamation-circle' });
 
-        // Add icon and message to content
         content.append(icon, $('<span>', { text: message }));
 
-        // Append content to notification
         notification.append(content);
 
-        // Add notification to container
         container.append(notification);
 
-        // Trigger reflow to enable transition
         notification[0].offsetHeight;
 
-        // Show notification with animation
         notification.addClass('show');
 
-        // Remove notification after 3 seconds
         setTimeout(() => {
             notification.removeClass('show');
-            // After transition ends, remove the element from DOM
-            setTimeout(() => notification.remove(), 300); // Match this with your transition duration
+            setTimeout(() => notification.remove(), 300); 
         }, 3000);
     }
 
     let currentPage = 1;
-    let perPage = 5;
+    let perPage = 6;
     let totalItems = 100;
     let totalPages = Math.ceil(totalItems / perPage);
-    // Render list Categories with params ;
     function renderCategories(categories) {
         if (categories.length > 0) {
             let categoriesList = categories.map(category => {
@@ -115,7 +103,7 @@ $(document).ready(function () {
                             </div>
                             <span>Current Image</span>
                         </div>
-                        <input type="file" class="form-control custom-cursor-on-hover" id="editCategoryImage">
+                        <input type="file" class="form-control custom-cursor-on-hover" value="${categoryItem.image}" id="editCategoryImage">
                     </div>
                     <div class="mb-3">
                         <label for="editCategoryStatus" class="form-label">Status</label>
@@ -285,7 +273,9 @@ $(document).ready(function () {
         })
     })
     //Pagination
-    function updatePagination() {
+    function updatePagination(currentPage, perPage, totalItems) {
+        const totalPages = Math.ceil(totalItems / perPage);
+
         $('#pagination-start').text((currentPage - 1) * perPage + 1);
         $('#pagination-end').text(Math.min(currentPage * perPage, totalItems));
         $('#pagination-total').text(totalItems);
@@ -293,24 +283,24 @@ $(document).ready(function () {
         $('#pagination-links').empty();
 
         $('#pagination-links').append(`
-            <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}" id="prev-page">
-                <a class="page-link" href="javascript:void(0);">Previous</a>
-            </li>
-        `);
+        <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}" id="prev-page">
+            <a class="page-link" href="javascript:void(0);">Previous</a>
+        </li>
+    `);
 
         for (let i = 1; i <= totalPages; i++) {
             $('#pagination-links').append(`
-                <li class="page-item ${i === currentPage ? 'active' : ''}">
-                    <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a>
-                </li>
-            `);
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a>
+            </li>
+        `);
         }
 
         $('#pagination-links').append(`
-            <li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}" id="next-page">
-                <a class="page-link" href="javascript:void(0);">Next</a>
-            </li>
-        `);
+        <li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}" id="next-page">
+            <a class="page-link" href="javascript:void(0);">Next</a>
+        </li>
+    `);
     }
 
     function fetchCategories(page) {
@@ -326,7 +316,7 @@ $(document).ready(function () {
                 renderCategories(response.data);
                 totalItems = response.totalItems;
                 totalPages = Math.ceil(totalItems / perPage);
-                updatePagination();
+                updatePagination(currentPage, perPage, totalItems);
             }
         });
     }
