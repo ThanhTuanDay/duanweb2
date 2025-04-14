@@ -39,6 +39,10 @@ class UserController {
         return $this->userModel->blockUser($userId);
     }
 
+    public function searchUsers($keyword): array{
+        return $this->userModel->searchUsers($keyword);
+    }
+
     public function unBlockUser($userId): bool{
         return $this->userModel->unBlockUser($userId);
     }

@@ -386,7 +386,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
                 <div class="col-md-6">
                     <div class="d-flex justify-content-md-end">
                         <div class="search-container me-3">
-                            <input type="text" class="form-control" placeholder="Search users...">
+                            <input type="text" class="form-control" id="searchUsers" placeholder="Search users...">
                             <i class="fas fa-search search-icon"></i>
                         </div>
                         <div class="dropdown">

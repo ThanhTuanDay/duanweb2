@@ -231,6 +231,16 @@ class UserModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
+    public function searchUsers($keyword): array
+    {
+        $sql = "SELECT * FROM users WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?";
+        $stmt = $this->conn->prepare($sql);
+        $keyword = "%" . $keyword . "%";
+        $stmt->bind_param("sss", $keyword, $keyword, $keyword);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
     public function updatePassword($userDto)
     {
         $sql = "UPDATE users SET password = ? WHERE id = ?";

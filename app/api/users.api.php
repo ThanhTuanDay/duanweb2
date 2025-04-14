@@ -109,6 +109,21 @@ switch ($action) {
             'message' => $response ? 'User updated successfully' : 'Failed to update user'
         ]);
         break;
+    case 'search':
+        if (isset($_GET['action']) && $_GET['action'] === 'search') {
+            $query = isset($_GET['query']) ? trim($_GET['query']) : '';
+        
+            // Fetch filtered users
+            $users = $userController->searchUsers($query);
+        
+            // Return the response as JSON
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'users' => $users
+            ]);
+            exit;
+        }
     default:
         break;
 }
