@@ -396,11 +396,12 @@ $users = $userController->getUsersPaginated($perPage, $page);
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
                                 aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item" href="#">All Users</a></li>
-                                <li><a class="dropdown-item" href="#">Admins</a></li>
-                                <li><a class="dropdown-item" href="#">Customers</a></li>
-                                <li><a class="dropdown-item" href="#">Active</a></li>
-                                <li><a class="dropdown-item" href="#">Inactive</a></li>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="admin">Admin</a></li>
+                                <li><a class="dropdown-item filter-option" href="#"
+                                        data-filter="customer">Customer</a></li>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="active">Active</a></li>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="inactive">Inactive</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -124,6 +124,28 @@ switch ($action) {
             ]);
             exit;
         }
+        break;
+    case 'filter':
+        if (isset($_GET['action']) && $_GET['action'] === 'filter') {
+            $query = isset($_GET['query']) ? trim($_GET['query']) : '';
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $perPage = isset($_GET['per_page']) ? (int)$_GET['per_page'] : 2;
+            // Fetch filtered users
+            $users = $userController->filterUsers($query, $page, $perPage);
+            $totalUsers = $userController->getAllUsers();
+            $totalUsersCount = count($totalUsers);
+            $totalPages = ceil($totalUsersCount / $perPage);
+        
+            // Return the response as JSON
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'users' => $users,
+                'total_pages' => $totalPages,
+            ]);
+            exit;
+        }
+        break;
     default:
         break;
 }

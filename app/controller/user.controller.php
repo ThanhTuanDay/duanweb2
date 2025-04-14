@@ -38,6 +38,9 @@ class UserController {
     public function blockUser($userId): bool{
         return $this->userModel->blockUser($userId);
     }
+    public function filterUsers($filter, $page, $perPage){
+        return $this->userModel->filterUsers($filter, $page, $perPage);
+    }
 
     public function searchUsers($keyword): array{
         return $this->userModel->searchUsers($keyword);
