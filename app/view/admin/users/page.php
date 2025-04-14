@@ -3,33 +3,13 @@
 require(dirname(__DIR__) . "/../../controller/user.controller.php");
 
 $userController = new UserController();
-$users = $userController->getAllUsers();
+$allusers = $userController->getAllUsers();
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $name = $_POST['name'];
-//     $email = $_POST['email'];
-//     $phone = $_POST['phone'];
-//     $role = $_POST['role'];
-//     $address = $_POST['address'];
-//     $userId = $_POST['user_id'];
-//     $userDto = new UserDto(
-//         $userId,
-//         $name,
-//         $email,
-//         $phone,
-//         $role,
-//         $address
-//     );
-//     if($userId){
-//         $result = $userController->updateUserInformation($userDto);
-//     }
-//     if($result){
-//         echo "User updated successfully";
-//     } else {
-//         echo "Failed to update user";
-//     }
-//     exit;
-// }
+$totoalUsers = count($allusers);
+$page = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
+$perPage = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 2;
+$totalPages = ceil($totoalUsers / $perPage);
+$users = $userController->getUsersPaginated($perPage, $page);
 ?>
 
 <head>
@@ -466,20 +446,18 @@ $users = $userController->getAllUsers();
                                 <td>
                                     <div class="action-btns d-flex">
                                         <button class="btn btn-sm btn-primary btn-edit" data-bs-toggle="modal"
-                                            data-bs-target="#editUserModal" data-user-id="<?= $user['id'] ?>" 
+                                            data-bs-target="#editUserModal" data-user-id="<?= $user['id'] ?>"
                                             data-name="<?= $user['name'] ?>" data-phone="<?= $user['phone'] ?>"
                                             data-address="<?= $user['address'] ?>">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#viewUserModal" data-user-id="<?= $user['id'] ?>"
-                                            onclick="blockUser(this)"
-                                            >
+                                            onclick="blockUser(this)">
 
                                             <i class="fa fa-ban"></i></button>
                                         <button class="btn btn-sm btn-success" data-user-id="<?= $user['id'] ?>"
-                                            onclick="unBlockUser(this)"
-                                        ><i class="fa fa-lock-open"></i></button>
+                                            onclick="unBlockUser(this)"><i class="fa fa-lock-open"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -490,15 +468,25 @@ $users = $userController->getAllUsers();
             </div>
 
             <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center mt-4">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                <ul class="pagination justify-content-center">
+                    <!-- Previous Button -->
+                    <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?pagination=<?= max(1, $page - 1) ?>&per_page=<?= $perPage ?>"
+                            tabindex="-1" aria-disabled="<?= $page <= 1 ? 'true' : 'false' ?>">Previous</a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+
+                    <!-- Page Numbers -->
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                            <a class="page-link" href="?pagination=<?= $i ?>&per_page=<?= $perPage ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <!-- Next Button -->
+                    <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link"
+                            href="?pagination=<?= min($totalPages, $page + 1) ?>&per_page=<?= $perPage ?>"
+                            aria-disabled="<?= $page >= $totalPages ? 'true' : 'false' ?>">Next</a>
                     </li>
                 </ul>
             </nav>

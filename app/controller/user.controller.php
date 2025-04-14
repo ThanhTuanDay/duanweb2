@@ -31,6 +31,9 @@ class UserController {
     public function getAllUsers(): array{
         return $this->userModel->getAllUsers();
     }
+    public function getUsersPaginated($limit, $page): array{
+        return $this->userModel->getUserPage($limit, $page);
+    }
 
     public function blockUser($userId): bool{
         return $this->userModel->blockUser($userId);

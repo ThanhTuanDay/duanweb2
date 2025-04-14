@@ -49,48 +49,39 @@ function unBlockUser(button) {
 document.addEventListener('DOMContentLoaded', function () {
   const editButtons = document.querySelectorAll('.btn-edit');
 
-  // Add click event listeners to all "Edit" buttons
   editButtons.forEach(btn => {
       btn.addEventListener('click', function () {
-          // Populate the modal fields with user data
           document.getElementById('editName').value = this.dataset.name;
           document.getElementById('editAddress').value = this.dataset.address;
           document.getElementById('editPhone').value = this.dataset.phone;
-
-          // Set the user ID on the "Save Changes" button
           document.getElementById('saveUserChanges').setAttribute('data-user-id', this.dataset.userId);
       });
   });
 
-  // Handle the "Save Changes" button click
   document.getElementById('saveUserChanges').addEventListener('click', function () {
-      const userId = this.getAttribute('data-user-id'); // Get the user ID from the button
-
-      // Collect updated user data from the form fields
+      const userId = this.getAttribute('data-user-id');
       const updatedUserData = {
           id: userId,
           name: document.getElementById('editName').value,
           address: document.getElementById('editAddress').value,
           phone: document.getElementById('editPhone').value
       };
-
-      // Send the updated data to the API via AJAX
       $.ajax({
           url: '/duanweb2/app/api/users.api.php',
           type: 'POST',
           data: {
               action: 'updateUser',
-              ...updatedUserData // Spread the updated user data into the request
+              ...updatedUserData
           },
           success: function (response) {
               console.log("Raw response from API:", response);
               try {
-                  const data = typeof response === 'string' ? JSON.parse(response) : response; // Parse only if it's a string
+                  const data = typeof response === 'string' ? JSON.parse(response) : response;
                   if (data.success) {
-                      alert(data.message); // Show success message
-                      location.reload(); // Reload the page to reflect changes
+                      alert(data.message); 
+                      location.reload(); 
                   } else {
-                      alert(data.message); // Show failure message
+                      alert(data.message);
                   }
               } catch (error) {
                   console.error('Error parsing response:', error);

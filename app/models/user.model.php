@@ -220,6 +220,16 @@ class UserModel
         $user->setPassword($newPassword);
         return $this->updateUser($user);
     }
+    public function getUserPage($limit, $page): array
+    {
+        $offset = ($page - 1) * $limit;
+        $sql = "SELECT * FROM users LIMIT ?, ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $offset, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
 
     public function updatePassword($userDto)
     {
