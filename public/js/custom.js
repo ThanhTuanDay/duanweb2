@@ -1,3 +1,10 @@
+let settings = [];
+let taxClasses = [];
+let taxRules = [];
+let coupons = [];
+let deliveryFee = 0;
+let applicationTaxRate = 0;
+let cartItems = null;
 // to get current year
 function getYear() {
     var currentDate = new Date();
@@ -78,27 +85,33 @@ if(dataInput) {
     const jsonData = document.getElementById('product-data').value || null;
     allProducts = JSON.parse(jsonData || null);
 }
+document.addEventListener('DOMContentLoaded', getSettings());
+async function getSettings() {
+    const response = await fetch('/duanweb2/app/api/settings.api.php?action=getSettings');
+    const data = await response.json();
 
+    if (data.success) {
+        settings = data.general;
+        taxClasses = data.tax.classes;
+        taxRules = data.tax.rules;
+        coupons = data.coupons;
+        deliveryFee = parseInt(data.general.delivery_fee)||0;
+    }
+    let renderItems = cartItems ? cartItems : null;
+    if(renderItems){
+        window.cartItems = cartItems;
+        updateCart(cartItems);
+    }
+}
 
 if (allProducts) {
     const itemsPerPage = 6;
     let currentPage = 1;
     let filteredProducts = [...allProducts];
-    // if food section is loaded with pagination, scroll to it
     window.addEventListener('DOMContentLoaded', () => {
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const pathname = window.location.pathname;
-        // if (urlParams.has('pagination') || pathname.includes('/menu')) {
-        //     const section = document.getElementById('food-section');
-        //     if (section) {
-        //         section.scrollIntoView({ behavior: 'smooth' });
-        //     }
-        // }
-
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        // Price Range Slider
         const rangeInput = document.querySelectorAll(".range-input input");
         const priceInput = document.querySelectorAll(".price-input input");
         const progress = document.querySelector(".price-progress");
@@ -178,49 +191,72 @@ if (allProducts) {
         renderProducts(allProducts, currentPage);
     });
 
-    function renderProducts(products, page = 1) {
+    function renderProducts(products, page = 1, general = {}) {
         const productList = document.getElementById('product-list');
         productList.innerHTML = '';
-
+    
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
         const paginatedItems = products.slice(start, end);
-
+    
         if (paginatedItems.length === 0) {
             productList.innerHTML = '<p class="text-center w-100">Không tìm thấy sản phẩm nào.</p>';
             return;
         }
-
+    
+        const { enable_taxes, tax_display_option, currency } = settings;
+    
+        const getApplicableTaxRate = () => {
+            const activeRules = taxRules
+                .filter(rule => rule.is_active)
+                .sort((a, b) => a.priority - b.priority);
+            if (activeRules.length > 0) {
+                return parseFloat(activeRules[0].rate || 0);
+            }
+            return 0;
+        };
+    
+        const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
+        applicationTaxRate = taxRate;
         paginatedItems.forEach(product => {
+            let finalPrice = Number(product.price);
+    
+           
+            if (enable_taxes && tax_display_option === 'including_tax') {
+                const taxAmount = (finalPrice * taxRate) / 100;
+                finalPrice += taxAmount;
+            }
+    
             const productHTML = `
-            <div class="col-sm-6 col-lg-4 all ${product.category_slug}">
-                <div class="box">
-                    <div>
-                        <div class="img-box">
-                            <img src="${product.image_url}" alt="${product.name}">
-                        </div>
-                        <div class="detail-box">
-                            <h5>${product.name}</h5>
-                            <p class="description"
-                                style="height: 80px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-                                ${product.description}
-                            </p>
-                            <div class="options">
-                                <h6>${Number(product.price).toLocaleString('vi-VN')}₫</h6>
-                                <a href="javascript:void(0)" onclick="addToCart(event,'${product.id}')">
-                                    🛒
-                                </a>
+                <div class="col-sm-6 col-lg-4 all ${product.category_slug}">
+                    <div class="box">
+                        <div>
+                            <div class="img-box">
+                                <img src="${product.image_url}" alt="${product.name}">
+                            </div>
+                            <div class="detail-box">
+                                <h5>${product.name}</h5>
+                                <p class="description"
+                                    style="height: 80px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                                    ${product.description}
+                                </p>
+                                <div class="options">
+                                    <h6>${Number(finalPrice).toLocaleString('vi-VN')}₫</h6>
+                                    <a href="javascript:void(0)" onclick="addToCart(event,'${product.id}')">
+                                        🛒
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
             productList.innerHTML += productHTML;
         });
-
+    
         renderPagination(products.length, page);
     }
+    
 
 
 

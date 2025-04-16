@@ -1,5 +1,5 @@
 let discountAmount = 0;
-const deliveryFee = 25000;
+getSettings();
 const promoCodes = {
     "WELCOME10": { type: "percentage", value: 10 },
     "FEANE20": { type: "percentage", value: 20 },
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateCart(cart) {
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const total = subtotal + deliveryFee - discountAmount;
+    const total = subtotal + Math.round(deliveryFee) - discountAmount;
     document.getElementById("delivery-fee").textContent = `${formatCurrency(deliveryFee)}`;
     document.getElementById("subtotal").textContent = `${formatCurrency(subtotal)}`;
     document.getElementById("total").textContent = `${formatCurrency(total)}`;
@@ -127,33 +127,39 @@ function applyPromoCode() {
         return;
     }
 
-    if (promoCodes[code]) {
-        const promo = promoCodes[code];
+    const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
+    const matchedCoupon = coupons.find(coupon =>
+        coupon.code === code &&
+        coupon.is_active == 1 &&
+        coupon.valid_from <= today &&
+        coupon.valid_until >= today
+    );
+
+    if (matchedCoupon) {
+        const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
         discountCode = code;
-        if (promo.type === "percentage") {
-            const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-            discountAmount = subtotal * (promo.value / 100);
-            promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ${promo.value}% discount applied</span>`;
-        } else if (promo.type === "shipping") {
+
+        if (matchedCoupon.discount_type === "percentage") {
+            discountAmount = subtotal * (parseFloat(matchedCoupon.discount_amount) / 100);
+            promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ${matchedCoupon.discount_amount}% discount applied</span>`;
+        } else if (matchedCoupon.discount_type === "shipping") {
             discountAmount = deliveryFee;
             promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Free shipping applied</span>`;
-        } else if (promo.type === "fixed") {
-            discountAmount = promo.value;
-            promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> $${promo.value} discount applied</span>`;
+        } else if (matchedCoupon.discount_type === "fixed") {
+            discountAmount = parseFloat(matchedCoupon.discount_amount);
+            promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ₫${Number(discountAmount).toLocaleString('vi-VN')} discount applied</span>`;
         }
 
         document.getElementById('discount-row').style.display = "flex";
-        document.getElementById('discount-amount').textContent = `-$${discountAmount}`;
-
+        document.getElementById('discount-amount').textContent = `-${Number(discountAmount).toLocaleString('vi-VN')}₫`;
 
         updateCart(cartItems);
     } else {
-        promoMessage.textContent = "Invalid promotional code";
+        promoMessage.textContent = "Invalid or expired promotional code";
         promoMessage.className = "promo-message promo-error";
         discountAmount = 0;
         discountCode = "";
         document.getElementById('discount-row').style.display = "none";
-        let cartItems = getUserCart();
         updateCart(cartItems);
     }
 }
@@ -164,67 +170,94 @@ function applyPromoCode() {
 
 
 
+
 function checkout() {
     const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-
-   
-
     const cartItems = getUserCart();
+    const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const total = subtotal + deliveryFee - discountAmount;
+    const selectedAddressRadio = document.querySelector('input[name="address"]:checked');
+    const addressLabel = selectedAddressRadio?.nextElementSibling;
+    const deliveryAddress = addressLabel?.querySelector('.address-text')?.textContent?.trim() || '';
+    const deliveryPhone = addressLabel?.querySelector('.address-phone')?.textContent?.trim() || '';
+    const deliveryName = addressLabel?.querySelector('.address-name')?.textContent?.trim() || '';
+    const deliveryAddressId = addressLabel?.querySelector('.address-id')?.textContent?.trim() || '';
+    const userId = document.getElementById('app-data').dataset.userId;
+    const payload = {
+        paymentMethod: paymentMethod,
+        amount: total,
+        deliveryAddressId: deliveryAddressId,
+        userId: userId,
+        cartItems: cartItems.map(item => ({
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity,
+            price: Math.round(parseFloat(item.price)),
+            totalPrice: item.price * item.quantity,
+            currency: 'VND',
+        })),
+        addressInfo: {
+            deliveryAddress,
+            deliveryFee
+        },
+        userInfo: {
+            name: deliveryName,
+            phone: deliveryPhone
+        }
+    };
     if (paymentMethod === 'momo') {
-        const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-        const total = subtotal + deliveryFee - discountAmount;
-        const selectedAddressRadio = document.querySelector('input[name="address"]:checked');
-        const addressLabel = selectedAddressRadio?.nextElementSibling;
-        const deliveryAddress = addressLabel?.querySelector('.address-text')?.textContent?.trim() || '';
-        const deliveryPhone = addressLabel?.querySelector('.address-phone')?.textContent?.trim() || '';
-        const deliveryName = addressLabel?.querySelector('.address-name')?.textContent?.trim() || '';
-        const deliveryAddressId = addressLabel?.querySelector('.address-id')?.textContent?.trim() || '';
-        const userId = document.getElementById('app-data').dataset.userId;
-        const payload = {
-            amount: total,
-            deliveryAddressId: deliveryAddressId,
-            userId: userId,
-            cartItems: cartItems.map(item => ({
-                id: item.id,
-                name: item.name,
-                quantity: item.quantity,
-                price: Math.round(parseFloat(item.price)),
-                totalPrice: item.price * item.quantity,
-                currency: 'VND',
-            })),
-            addressInfo: {
-                deliveryAddress,
-                deliveryFee
-            },
-            userInfo: {
-                name: deliveryName,
-                phone: deliveryPhone
-            }
-        };
-        
-        fetch('http://localhost/duanweb2/payment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.payUrl) {
-                    window.location.href = data.payUrl;
-                } else {
-                    alert('Không thể tạo thanh toán MoMo');
-                    console.error(data);
-                }
-            })
-            .catch(err => {
-                alert('Có lỗi khi kết nối đến MoMo');
-                console.error(err);
-            });
-    } else {
+        momoPayment(payload);
+    }
+    else if (paymentMethod === 'cod') {
+        codPayment(payload);
+    }
+    else {
         alert('Chưa tích hợp phương thức này!');
     }
+}
+
+function momoPayment(payload) {
+    fetch('http://localhost/duanweb2/payment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.payUrl) {
+                window.location.href = data.payUrl;
+            } else {
+                alert('Không thể tạo thanh toán MoMo');
+                console.error(data);
+            }
+        })
+        .catch(err => {
+            alert('Có lỗi khi kết nối đến MoMo');
+            console.error(err);
+        });
+}
+
+
+function codPayment(payload) {
+    fetch('http://localhost/duanweb2/payment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(res => res.json())
+        .then(data => {
+
+            window.location.href = '/duanweb2/success?orderId=' + data +"&resultCode=0";
+
+        })
+        .catch(err => {
+            alert('Có lỗi khi kết nối đến server.');
+            console.error(err);
+        });
 }
 
 function showAddAddressForm() {
@@ -235,8 +268,8 @@ function showAddAddressForm() {
 function hideAddAddressForm() {
     document.getElementById('address-form').style.display = 'none';
     document.querySelector('.add-address-btn').style.display = 'flex';
-    
-   
+
+
     document.getElementById('address-name').value = '';
     document.getElementById('address-full').value = '';
     document.getElementById('address-phone').value = '';
@@ -266,14 +299,14 @@ function saveNewAddress() {
             phone: addressPhone
         })
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-        if (data.success && data.addressId) {
-            const addressOptions = document.querySelector('.address-options');
-            const newAddressId = data.addressId;
-            
-            const newAddressHTML = `
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.success && data.addressId) {
+                const addressOptions = document.querySelector('.address-options');
+                const newAddressId = data.addressId;
+
+                const newAddressHTML = `
                 <div class="address-option">
                     <input type="radio" name="address" id="${newAddressId}" value="${newAddressId}" checked>
                     <label for="${newAddressId}">
@@ -286,18 +319,18 @@ function saveNewAddress() {
                 </div>
             `;
 
-            const addNewAddressDiv = document.querySelector('.add-new-address');
-            addNewAddressDiv.insertAdjacentHTML('beforebegin', newAddressHTML);
+                const addNewAddressDiv = document.querySelector('.add-new-address');
+                addNewAddressDiv.insertAdjacentHTML('beforebegin', newAddressHTML);
 
-            document.getElementById(newAddressId).checked = true;
-            hideAddAddressForm();
-            location.reload();
-        } else {
-            alert('Lưu địa chỉ thất bại!');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Có lỗi xảy ra khi lưu địa chỉ.');
-    });
+                document.getElementById(newAddressId).checked = true;
+                hideAddAddressForm();
+                location.reload();
+            } else {
+                alert('Lưu địa chỉ thất bại!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Có lỗi xảy ra khi lưu địa chỉ.');
+        });
 }

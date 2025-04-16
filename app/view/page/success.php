@@ -7,7 +7,7 @@ require(dirname(__DIR__) . "../../controller/payment.controller.php");
 $orderId = $_GET['orderId'] ?? null;
 $resultCode = $_GET['resultCode'] ?? null;
 
-if (!$orderId || !isset($resultCode)) {
+if (!$orderId ) {
     http_response_code(400);
     echo "Invalid payment data";
     exit;
