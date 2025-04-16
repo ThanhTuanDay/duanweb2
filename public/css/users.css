@@ -17,6 +17,19 @@
             margin-bottom: 20px;
         }
 
+        .action-btns {
+            display: flex; /* Use flexbox for alignment */
+            gap: 10px; /* Add spacing between buttons */
+        }
+        
+        .action-btns .btn {
+            display: flex; /* Ensure buttons are flex containers */
+            align-items: center; /* Vertically center the content */
+            justify-content: center; /* Horizontally center the content */
+            padding: 5px 10px; /* Adjust padding for consistent button size */
+            font-size: 14px; /* Adjust font size */
+        }
+
         .user-details-avatar {
             width: 80px;
             height: 80px;
