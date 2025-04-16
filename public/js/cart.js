@@ -1,5 +1,5 @@
 let discountAmount = 0;
-getSettings();
+
 const promoCodes = {
     "WELCOME10": { type: "percentage", value: 10 },
     "FEANE20": { type: "percentage", value: 20 },
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.cartItems = cartItems;
     updateCart(cartItems);
-
+    getSettings(cartItems);
     document.querySelectorAll(".quantity-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             const input = btn.closest(".quantity-control").querySelector(".quantity-input");

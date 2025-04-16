@@ -240,6 +240,65 @@ class OrderModel
         return $recentStatuses;
     }
 
+    public function getSalesByDate($from, $to, $period = 'weekly')
+    {
+        $results = [];
+        $stmt = $this->conn->prepare("SELECT 
+            DATE(created_at) AS date,
+            SUM(total_price) AS total
+        FROM orders
+        WHERE created_at BETWEEN ? AND ?
+        GROUP BY DATE(created_at)
+    ");
+        $stmt->bind_param("ss", $from, $to);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+
+        $sales = [];
+        while ($row = $res->fetch_assoc()) {
+            $sales[$row['date']] = (float) $row['total'];
+        }
+
+        $date = new DateTime($from);
+        $end = new DateTime($to);
+        $end->setTime(23, 59, 59);
+
+        while ($date <= $end) {
+            $key = $date->format('Y-m-d');
+
+            if ($period === 'yearly') {
+                $monthKey = $date->format('Y-m');
+                if (!isset($results[$monthKey])) {
+                    $results[$monthKey] = 0;
+                }
+                if (isset($sales[$key])) {
+                    $results[$monthKey] += $sales[$key];
+                }
+            } elseif ($period === 'monthly') {
+                $dayKey = $date->format('Y-m-d');
+                $results[$dayKey] = $sales[$dayKey] ?? 0;
+            } else { 
+                $dayKey = $date->format('Y-m-d');
+                $results[$dayKey] = $sales[$dayKey] ?? 0;
+            }
+
+            $date->modify('+1 day');
+        }
+
+       
+        $final = [];
+        foreach ($results as $label => $total) {
+            $final[] = [
+                'date' => $label,
+                'total' => $total
+            ];
+        }
+
+        return $final;
+    }
+
+
 
     public function updateOrderStatus($orderId, $status, $description = null): bool
     {
@@ -274,7 +333,6 @@ class OrderModel
                 $logSuccess = $this->logOrderStatus($orderId, $updatedStatus, $description);
 
                 return $updateSuccess && $logSuccess;
-
             } catch (Exception $e) {
                 return false;
             }
@@ -407,4 +465,3 @@ class OrderModel
         return $orderDto;
     }
 }
-?>

@@ -86,13 +86,27 @@ switch ($action) {
             exit();
         }
 
-        $result = $orderController->updateOrderStatus($orderId, $status,$description);
+        $result = $orderController->updateOrderStatus($orderId, $status, $description);
         echo json_encode([
             'success' => $result,
             'message' => $result ? 'Order status updated' : 'Failed to update status'
         ]);
         break;
+    case 'getSalesByDay':
+        $from = $_POST['from'] ?? null;
+        $to = $_POST['to'] ?? null;
+        $period = $_POST['period'] ?? null;
+        if (!$from || !$to) {
+            echo json_encode(["success" => false, "message" => "Missing from/to date"]);
+            break;
+        }
 
+        $salesData = $orderController->getSalesByDate($from, $to,$period);
+        echo json_encode([
+            "success" => true,
+            "data" => $salesData
+        ]);
+        break;
     default:
         echo json_encode(["success" => false, "message" => "Unknown action"]);
         break;

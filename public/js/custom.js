@@ -86,7 +86,7 @@ if(dataInput) {
     allProducts = JSON.parse(jsonData || null);
 }
 document.addEventListener('DOMContentLoaded', getSettings());
-async function getSettings() {
+async function getSettings(cartData = null) {
     const response = await fetch('/duanweb2/app/api/settings.api.php?action=getSettings');
     const data = await response.json();
 
@@ -97,10 +97,9 @@ async function getSettings() {
         coupons = data.coupons;
         deliveryFee = parseInt(data.general.delivery_fee)||0;
     }
-    let renderItems = cartItems ? cartItems : null;
-    if(renderItems){
-        window.cartItems = cartItems;
-        updateCart(cartItems);
+    if(cartData){
+        window.cartItems = cartData;
+        updateCart(cartData);
     }
 }
 

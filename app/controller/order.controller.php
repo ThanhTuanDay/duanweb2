@@ -51,5 +51,10 @@ class OrderController{
     public function getRecentOrderStatus($limit =5){
         return $this->orderModel->getRecentOrderStatuses($limit);
     }
+
+
+    public function getSalesByDate($startDate, $endDate,$period) {
+        return $this->orderModel->getSalesByDate($startDate, $endDate, $period);
+    }
 }
 

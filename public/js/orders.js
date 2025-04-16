@@ -97,7 +97,7 @@ $('#search-input-id').on('input', function () {
     }
 });
 let allOrders = [];
-let currentFilterOrder = [];
+let currentFilterOrder = null;
 let perPage = 5;
 
 function renderPagination(currentPage, totalPages) {
@@ -143,7 +143,7 @@ function renderPagination(currentPage, totalPages) {
 }
 function paginateOrders(page = 1) {
     let currentOrders = []
-    if(currentFilterOrder.length > 0){
+    if(currentFilterOrder){
         currentOrders = currentFilterOrder;
     }else{
         currentOrders = allOrders;
