@@ -136,6 +136,16 @@ function applyPromoCode() {
     );
 
     if (matchedCoupon) {
+        if (cartItems == null) {
+            cartItems = getUserCart();
+        }
+        if (cartItems.length == 0) {
+            promoMessage.textContent = "Please add items to your cart before applying a promotional code";
+            promoMessage.className = "promo-message promo-error";
+            return;
+        }
+
+
         const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
         discountCode = code;
 
@@ -251,7 +261,7 @@ function codPayment(payload) {
         .then(res => res.json())
         .then(data => {
 
-            window.location.href = '/duanweb2/success?orderId=' + data +"&resultCode=0";
+            window.location.href = '/duanweb2/success?orderId=' + data + "&resultCode=0";
 
         })
         .catch(err => {

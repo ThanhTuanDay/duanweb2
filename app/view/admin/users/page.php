@@ -7,7 +7,7 @@ $allusers = $userController->getAllUsers();
 
 $totoalUsers = count($allusers);
 $page = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
-$perPage = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 2;
+$perPage = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 5;
 $totalPages = ceil($totoalUsers / $perPage);
 $users = $userController->getUsersPaginated($perPage, $page);
 ?>
@@ -45,7 +45,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
             background-color: var(--dark);
             color: var(--light);
             min-height: 100vh;
-            display: flex;
+            /* display: flex; */
         }
 
         .sidebar {

@@ -23,7 +23,7 @@ body {
     background-color: var(--dark);
     color: var(--light);
     min-height: 100vh;
-    display: flex;
+    /* display: flex; */
 }
 
 /* Sidebar Styles */

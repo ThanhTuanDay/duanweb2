@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const paginationContainer = document.querySelector('.pagination');
   let currentFilter = 'all';
   let currentPage = 1;
-  const perPage = 2;
+  const perPage = 5;
 
   // Function to fetch and display users based on filter and pagination
   function fetchUsers(filter, page) {

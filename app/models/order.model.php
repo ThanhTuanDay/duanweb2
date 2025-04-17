@@ -349,7 +349,9 @@ class OrderModel
                 $updateStmt->bind_param("ss", $updatedStatus, $orderId);
                 $updateSuccess = $updateStmt->execute();
                 file_put_contents(__DIR__ . '/order-log', json_encode("UPDATE SUCCESS {$updateSuccess}"), FILE_APPEND);
-
+                if($description == null) {
+                    $description = "Order status changed to $status";
+                }
                 $logSuccess = $this->logOrderStatus($orderId, $updatedStatus, $description);
 
                 return $updateSuccess && $logSuccess;
@@ -362,6 +364,7 @@ class OrderModel
     }
     public function logOrderStatus(string $orderId, string $status, string $description): bool
     {
+      
         $sql = "INSERT INTO order_status (order_id, status, description, created_at)
             VALUES (?, ?, ?, NOW())";
 
