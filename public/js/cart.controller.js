@@ -7,12 +7,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const productsRaw = data.getAttribute("data-products");
     const products = JSON.parse(productsRaw || "[]");
-
+    
     if (products && products.length > 0) {
-
-        localStorage.setItem("store_cart", JSON.stringify(products));
+        const updatedProducts = products.map(product => {
+            const price = parseFloat(product.price);
+            let finalPrice = price;
+    
+            if (settings.enable_taxes) {
+                const taxRate = applicationTaxRate || 0;
+    
+                if (settings.tax_calculation_method === 'per_item') {
+                    finalPrice = price + (price * taxRate / 100);
+    
+                    if (settings.tax_rounding === 'round_up') {
+                        finalPrice = Math.ceil(finalPrice);
+                    } else if (settings.tax_rounding === 'round_down') {
+                        finalPrice = Math.floor(finalPrice);
+                    } else if (settings.tax_rounding === 'round_nearest') {
+                        finalPrice = Math.round(finalPrice);
+                    }
+                }
+            }
+    
+            return {
+                ...product,
+                final_price: finalPrice,
+                currency: settings.currency || "VND"
+            };
+        });
+    
+        localStorage.setItem("store_cart", JSON.stringify(updatedProducts));
     }
-
+    
 
     const pathname = window.location.pathname;
     if(pathname.includes("/success")){
@@ -26,7 +52,7 @@ function clearCart() {
 
 function addToCart(event, productId, quantity = 1) {
     cart.addToCart(productId, quantity);
-    const cartIcon = event.currentTarget.querySelector('svg');
+    const cartIcon = event.currentTarget;
     cartIcon.classList.add('cart-animation');
     setTimeout(() => {
         cartIcon.classList.remove('cart-animation');

@@ -23,7 +23,7 @@ body {
     background-color: var(--dark);
     color: var(--light);
     min-height: 100vh;
-    display: flex;
+    /* display: flex; */
 }
 
 /* Sidebar Styles */
@@ -614,4 +614,10 @@ body {
         margin-right: 0;
         margin-bottom: 15px;
     }
+}
+
+.active{
+    background-color: var(--primary) !important;
+    border-color: var(--primary)  !important;
+    color: var(--light)  !important;
 }
