@@ -101,11 +101,16 @@ switch ($action) {
             break;
         }
 
-        $salesData = $orderController->getSalesByDate($from, $to,$period);
+        $salesData = $orderController->getSalesByDate($from, $to, $period);
         echo json_encode([
             "success" => true,
             "data" => $salesData
         ]);
+        break;
+    case 'getStats':
+        $id = $_POST['id'] ?? null;
+        $stats = $orderController->getProductStats($id);
+        echo json_encode(['success' => true, 'data' => $stats]);
         break;
     default:
         echo json_encode(["success" => false, "message" => "Unknown action"]);

@@ -56,5 +56,9 @@ class OrderController{
     public function getSalesByDate($startDate, $endDate,$period) {
         return $this->orderModel->getSalesByDate($startDate, $endDate, $period);
     }
+
+    public function getProductStats($productId){
+        return $this->orderModel->getProductStats($productId);
+    }
 }
 

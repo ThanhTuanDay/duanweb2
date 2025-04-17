@@ -32,5 +32,10 @@ class CategoryController {
     {
         return $this->categoryModel->createCategory($data);
     }
+
+
+    public function getAllCategoriesWithoutMapping(){
+        return $this->categoryModel->getAllCategoriesWithoutMapping();
+    }
 }
 

@@ -299,6 +299,26 @@ class OrderModel
     }
 
 
+    public function getProductStats($productId): ?array
+    {
+        $sql = "
+            SELECT 
+                IFNULL(SUM(oi.quantity), 0) AS total_sales,
+                IFNULL(SUM(oi.quantity * oi.price), 0) AS revenue,
+                IFNULL(SUM(oi.quantity * oi.price * 0.4), 0) AS profit, 
+                ROUND(IFNULL(SUM(oi.quantity * oi.price * 0.4) / NULLIF(SUM(oi.quantity * oi.price), 0), 0) * 100, 2) AS profit_margin
+            FROM order_items oi
+            JOIN orders o ON o.id = oi.order_id
+            WHERE oi.product_id = ?
+            AND o.status IN ('completed') 
+        ";
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 
     public function updateOrderStatus($orderId, $status, $description = null): bool
     {

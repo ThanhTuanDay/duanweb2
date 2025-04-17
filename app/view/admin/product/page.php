@@ -75,8 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "Sản phẩm đã từng bán, không thể cập nhật !";
         }
-
-
     }
 
     $products = $productController->getPaginatedProducts($page, $perPage);
@@ -84,8 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 
-<!-- <!DOCTYPE html> -->
-<!-- <html lang="en"> -->
+
 
 <head>
     <meta charset="UTF-8">
@@ -120,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: var(--dark);
             color: var(--light);
             min-height: 100vh;
-            display: flex;
+
         }
 
         .sidebar {
@@ -517,19 +514,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="filterDropdown"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            >
                                 Filter
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
-                                aria-labelledby="filterDropdown">
-                                <?php foreach ($categories as $category): ?>
-                                    <li>
-                                        <a class="dropdown-item" href="?filter=<?= htmlspecialchars($category->getId()) ?>">
-                                            <?= htmlspecialchars($category->getName()) ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
+                            
                         </div>
                     </div>
                 </div>
@@ -565,10 +553,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td>$<?= number_format($product['price'], 2) ?></td>
                                 <td><?= $product['stock'] ?></td>
                                 <td>
-                                    <?php if ((int) $product['stock'] === 0 ): ?>
+                                    <?php if ((int) $product['stock'] === 0): ?>
                                         <span class="badge bg-danger">Out of Stock</span>
-                                    <?php elseif ((int) $product['status'] === 0 ): ?>
-                                            <span class="badge bg-danger">Inactive</span>
+                                    <?php elseif ((int) $product['status'] === 0): ?>
+                                        <span class="badge bg-danger">Inactive</span>
                                     <?php elseif ((int) $product['stock'] < 10): ?>
                                         <span class="badge bg-warning">Low Stock</span>
                                     <?php else: ?>
@@ -610,14 +598,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <nav aria-label="Product pagination" class="mt-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="pagination-info">
-                        Showing <span id="pagination-start"><?= ($page - 1) * $perPage + 1 ?></span>
+                        <!-- Showing <span id="pagination-start"></span>
                         to
-                        <span id="pagination-end"><?= min($page * $perPage, $total) ?></span>
+                        <span id="pagination-end"></span>
                         of
-                        <span id="pagination-total"><?= $total ?></span> products
+                        <span id="pagination-total"></span> products -->
                     </div>
                     <ul class="pagination justify-content-center">
-                        <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                        <!-- <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
                             <a class="page-link"
                                 href="?pagination=<?= $page - 1 ?>&per_page=<?= $perPage ?>">Previous</a>
                         </li>
@@ -630,15 +618,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
                             <a class="page-link" href="?pagination=<?= $page + 1 ?>&per_page=<?= $perPage ?>">Next</a>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="pagination-options">
-                        <select class="form-select form-select-sm" id="pagination-size"
-                            onchange="location.href='page?pagination=1&per_page=' + this.value">
-                            <option value="10" <?= $perPage == 10 ? 'selected' : '' ?>>10 per page</option>
-                            <option value="25" <?= $perPage == 25 ? 'selected' : '' ?>>25 per page</option>
-                            <option value="50" <?= $perPage == 50 ? 'selected' : '' ?>>50 per page</option>
-                            <option value="100" <?= $perPage == 100 ? 'selected' : '' ?>>100 per page</option>
+                        <select class="form-select form-select-sm" id="pagination-size">
+                            <option value="10">10 per page</option>
+                            <option value="25">25 per page</option>
+                            <option value="50">50 per page</option>
+                            <option value="100">100 per page</option>
                         </select>
                     </div>
                 </div>
@@ -698,7 +685,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="mb-3">
                         <label for="productImage" class="form-label">Product Image</label>
-                        <input type="file" class="form-control" id="productImage" name="productImage">
+                        <input type="file" class="form-control" id="productImage" name="productImage" accept="image/*">
+                        <div class="mt-2">
+                            <img id="previewImage" src="" alt="Preview Image" style="max-width: 150px; display: none; border-radius: 8px; border: 1px solid #ddd;">
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -817,6 +807,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+<div class="modal fade" id="filterProductsModal" tabindex="-1" aria-labelledby="filterProductsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterProductsModalLabel">Filter Products</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Product ID / Name -->
+                    <div class="mb-3">
+                        <label for="productIdOrName" class="form-label">Product ID / Name</label>
+                        <input type="text" class="form-control" id="productIdOrName" placeholder="Search by ID or name...">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label for="productCategoryFilter" class="form-label">Category</label>
+                        <select class="form-select" id="productCategoryFilter">
+                            <option value="">All Categories</option>
+                            <!-- Inject category options dynamically -->
+                        </select>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="mb-3">
+                        <label class="form-label">Price Range</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text bg-dark text-light border-secondary">VNĐ</span>
+                                    <input type="number" class="form-control" id="priceMin" placeholder="Min">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark text-light border-secondary">VNĐ</span>
+                                    <input type="number" class="form-control" id="priceMax" placeholder="Max">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stock Range -->
+                    <div class="mb-3">
+                        <label class="form-label">Stock Range</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control mb-2" id="stockMin" placeholder="Min Stock">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="stockMax" placeholder="Max Stock">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="statusActive" checked>
+                            <label class="form-check-label" for="statusActive">Active</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="statusInactive" checked>
+                            <label class="form-check-label" for="statusInactive">Inactive</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="statusOutOfStock" checked>
+                            <label class="form-check-label" for="statusOutOfStock">Out of Stock</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary" id="resetProductFilters">Reset Filters</button>
+                <button type="button" class="btn btn-primary" id="applyProductFilters">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Product Detail Modal -->
 <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel"
     aria-hidden="true">
@@ -932,53 +1005,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card bg-dark border-info">
-                            <div class="card-header bg-info bg-opacity-25 text-info">
-                                <h5 class="mb-0">Recent Orders</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-dark table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Order ID</th>
-                                                <th>Date</th>x
-                                                <th>Customer</th>
-                                                <th>Quantity</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="modal-product-orders">
-                                            <tr>
-                                                <td>#ORD-7890</td>
-                                                <td>Apr 15, 2023</td>
-                                                <td>John Doe</td>
-                                                <td>2</td>
-                                                <td>$199.98</td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-7891</td>
-                                                <td>Apr 14, 2023</td>
-                                                <td>Jane Smith</td>
-                                                <td>1</td>
-                                                <td>$99.99</td>
-                                            </tr>
-                                            <tr>
-                                                <td>#ORD-7865</td>
-                                                <td>Apr 12, 2023</td>
-                                                <td>Robert Johnson</td>
-                                                <td>3</td>
-                                                <td>$299.97</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -986,5 +1012,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+
 
 </div>
