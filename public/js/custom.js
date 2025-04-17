@@ -13,7 +13,18 @@ function getYear() {
 }
 
 getYear();
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleTitles = document.querySelectorAll('.collapsible-title');
 
+    toggleTitles.forEach(title => {
+        title.addEventListener('click', () => {
+            const content = title.nextElementSibling;
+            if (content.classList.contains('collapsible-content')) {
+                content.classList.toggle('open');
+            }
+        });
+    });
+});
 // Validate phone number
 function isValidPhone(phone) {
     const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,9}$/;
@@ -196,6 +207,7 @@ if (allProducts) {
     
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
+      
         const paginatedItems = products.slice(start, end);
     
         if (paginatedItems.length === 0) {
@@ -218,6 +230,7 @@ if (allProducts) {
         const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
         applicationTaxRate = taxRate;
         paginatedItems.forEach(product => {
+            if(product.status == 0) return;
             let finalPrice = Number(product.price);
     
            
@@ -257,7 +270,7 @@ if (allProducts) {
     }
     
 
-
+   
 
     function applyFilters(event) {
         event.preventDefault();

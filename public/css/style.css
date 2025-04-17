@@ -30,7 +30,17 @@ body {
 .layout_padding-bottom {
   padding-bottom: 90px;
 }
-
+.collapsible-content {
+  display: none;
+  transition: max-height 0.3s ease-out;
+}
+.collapsible-title{
+  cursor: pointer;
+ 
+}
+.collapsible-content.open {
+  display: block;
+}
 h1,
 h2 {
   font-family: 'Dancing Script', cursive;
