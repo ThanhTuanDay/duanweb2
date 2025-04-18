@@ -7,18 +7,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const productsRaw = data.getAttribute("data-products");
     const products = JSON.parse(productsRaw || "[]");
-    
+
     if (products && products.length > 0) {
         const updatedProducts = products.map(product => {
             const price = parseFloat(product.price);
             let finalPrice = price;
-    
+
             if (settings.enable_taxes) {
                 const taxRate = applicationTaxRate || 0;
-    
+
                 if (settings.tax_calculation_method === 'per_item') {
                     finalPrice = price + (price * taxRate / 100);
-    
+
                     if (settings.tax_rounding === 'round_up') {
                         finalPrice = Math.ceil(finalPrice);
                     } else if (settings.tax_rounding === 'round_down') {
@@ -28,32 +28,38 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             }
-    
+
             return {
                 ...product,
                 final_price: finalPrice,
                 currency: settings.currency || "VND"
             };
         });
-    
+
         localStorage.setItem("store_cart", JSON.stringify(updatedProducts));
     }
-    
+
 
     const pathname = window.location.pathname;
-    if(pathname.includes("/success")){
-      clearCart();
+    if (pathname.includes("/success")) {
+        clearCart();
     }
 });
 function clearCart() {
     cart.clearCart();
 }
 
-
+function addToCartWithQuantity(productId, quantity) {
+    addToCart(null, productId, quantity);
+}
 function addToCart(event, productId, quantity = 1) {
     cart.addToCart(productId, quantity);
-    const cartIcon = event.currentTarget;
-    cartIcon.classList.add('cart-animation');
+    if (event) {
+        const cartIcon = event.currentTarget;
+        if (cartIcon) {
+            cartIcon.classList.add('cart-animation');
+        }
+    }
     setTimeout(() => {
         cartIcon.classList.remove('cart-animation');
     }, 500);
