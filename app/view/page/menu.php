@@ -214,13 +214,13 @@ $products = $productController->getProductsForMenu();
                     
                     <!-- Category Filter -->
                     <div class="filter-section">
-                        <div class="filter-title">
+                        <div class="filter-title collapsible-title">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                             </svg>
                             Categories
                         </div>
-                        <ul class="category-list">
+                        <ul class="category-list collapsible-content">
                             <?php 
                             $selected_categories = isset($_GET['categories']) ? $_GET['categories'] : [];
                             foreach ($categories as $category): 
