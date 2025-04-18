@@ -609,6 +609,27 @@ if (allProducts) {
 
 
 
+
+   document.getElementById("search-btn").addEventListener("click", function (e) {
+    e.preventDefault(); 
+
+    const targetSection = document.getElementById("filter-sidebar");
+    const targetInput = document.getElementById("search-input");
+
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: "smooth" });
+
+    
+      setTimeout(() => {
+        if (targetInput) {
+          targetInput.focus();
+        }
+      }, 500);s
+    }
+  });
+
+  
+
     function renderPagination(totalItems, currentPage) {
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         const paginationContainer = document.querySelector(".pagination");

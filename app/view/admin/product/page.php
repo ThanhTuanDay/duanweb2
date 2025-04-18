@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $status,
             )
         );
+        header("Location: " . $_SERVER['REQUEST_URI']);
     } else {
 
         $oldImage = $_POST['oldProductImage'] ?? '';
@@ -72,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         if ($result) {
             echo "Cập nhật sản phẩm thành công!";
+            header("Location: " . $_SERVER['REQUEST_URI']);
         } else {
             echo "Sản phẩm đã từng bán, không thể cập nhật !";
         }

@@ -4,7 +4,7 @@
             <div class="col-md-4 footer-col">
                 <div class="footer_contact">
                     <h4>
-                        Contact Us
+                        Liên Hệ Với Chúng Tôi
                     </h4>
                     <div class="contact_link_box">
                         <a href="">
