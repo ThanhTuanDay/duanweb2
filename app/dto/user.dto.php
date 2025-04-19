@@ -13,6 +13,7 @@ class UserDto {
     private ?string $verifyToken;
 
     private ?int $isVerified;
+    private ?string $isBlocked;
 
     public function __construct(
         ?string $id=null,
@@ -24,7 +25,8 @@ class UserDto {
         ?string $role = null,
         ?string $created_at = null,
         ?string $verifyToken = null,
-        ?bool $isVerified = null
+        ?bool $isVerified = null,
+        ?bool $isBlocked = null
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -36,13 +38,13 @@ class UserDto {
         $this->created_at = $created_at;
         $this->verifyToken = $verifyToken;
         $this->isVerified  = $isVerified ?? 0;
+        $this ->isBlocked = $isBlocked ?? 0;
     }
 
     // Getters
     public function getId(): string {
         return $this->id;
     }
-
     public function getName(): string {
         return $this->name;
     }
@@ -76,6 +78,10 @@ class UserDto {
 
     public function isVerified(): bool {
         return $this->isVerified;
+    }
+
+    public function isBlocked(): ?bool {
+        return $this->isBlocked;
     }
 
     // Setters
@@ -117,6 +123,10 @@ class UserDto {
 
     public function setIsVerified(bool $is_verified): void {
         $this->isVerified = $is_verified;
+    }
+
+    public function setBlocked(bool $is_blocked): void {
+        $this->isBlocked = $is_blocked;
     }
 }
 

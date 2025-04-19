@@ -240,6 +240,85 @@ class OrderModel
         return $recentStatuses;
     }
 
+    public function getSalesByDate($from, $to, $period = 'weekly')
+    {
+        $results = [];
+        $stmt = $this->conn->prepare("SELECT 
+            DATE(created_at) AS date,
+            SUM(total_price) AS total
+        FROM orders
+        WHERE created_at BETWEEN ? AND ?
+        GROUP BY DATE(created_at)
+    ");
+        $stmt->bind_param("ss", $from, $to);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+
+        $sales = [];
+        while ($row = $res->fetch_assoc()) {
+            $sales[$row['date']] = (float) $row['total'];
+        }
+
+        $date = new DateTime($from);
+        $end = new DateTime($to);
+        $end->setTime(23, 59, 59);
+
+        while ($date <= $end) {
+            $key = $date->format('Y-m-d');
+
+            if ($period === 'yearly') {
+                $monthKey = $date->format('Y-m');
+                if (!isset($results[$monthKey])) {
+                    $results[$monthKey] = 0;
+                }
+                if (isset($sales[$key])) {
+                    $results[$monthKey] += $sales[$key];
+                }
+            } elseif ($period === 'monthly') {
+                $dayKey = $date->format('Y-m-d');
+                $results[$dayKey] = $sales[$dayKey] ?? 0;
+            } else { 
+                $dayKey = $date->format('Y-m-d');
+                $results[$dayKey] = $sales[$dayKey] ?? 0;
+            }
+
+            $date->modify('+1 day');
+        }
+
+       
+        $final = [];
+        foreach ($results as $label => $total) {
+            $final[] = [
+                'date' => $label,
+                'total' => $total
+            ];
+        }
+
+        return $final;
+    }
+
+
+    public function getProductStats($productId): ?array
+    {
+        $sql = "
+            SELECT 
+                IFNULL(SUM(oi.quantity), 0) AS total_sales,
+                IFNULL(SUM(oi.quantity * oi.price), 0) AS revenue,
+                IFNULL(SUM(oi.quantity * oi.price * 0.4), 0) AS profit, 
+                ROUND(IFNULL(SUM(oi.quantity * oi.price * 0.4) / NULLIF(SUM(oi.quantity * oi.price), 0), 0) * 100, 2) AS profit_margin
+            FROM order_items oi
+            JOIN orders o ON o.id = oi.order_id
+            WHERE oi.product_id = ?
+            AND o.status IN ('completed') 
+        ";
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 
     public function updateOrderStatus($orderId, $status, $description = null): bool
     {
@@ -270,11 +349,12 @@ class OrderModel
                 $updateStmt->bind_param("ss", $updatedStatus, $orderId);
                 $updateSuccess = $updateStmt->execute();
                 file_put_contents(__DIR__ . '/order-log', json_encode("UPDATE SUCCESS {$updateSuccess}"), FILE_APPEND);
-
+                if($description == null) {
+                    $description = "Order status changed to $status";
+                }
                 $logSuccess = $this->logOrderStatus($orderId, $updatedStatus, $description);
 
                 return $updateSuccess && $logSuccess;
-
             } catch (Exception $e) {
                 return false;
             }
@@ -284,6 +364,7 @@ class OrderModel
     }
     public function logOrderStatus(string $orderId, string $status, string $description): bool
     {
+      
         $sql = "INSERT INTO order_status (order_id, status, description, created_at)
             VALUES (?, ?, ?, NOW())";
 
@@ -407,4 +488,3 @@ class OrderModel
         return $orderDto;
     }
 }
-?>

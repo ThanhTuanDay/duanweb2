@@ -171,6 +171,63 @@ class ProductModel
     
         return false;
     }
+    public function getMonthlySalesByProduct($productId): array
+    {
+        $sql = "
+            SELECT DATE_FORMAT(o.created_at, '%b') AS month, SUM(oi.quantity) AS total
+            FROM order_items oi
+            JOIN orders o ON oi.order_id = o.id
+            WHERE oi.product_id = ?
+            AND o.status IN ('completed', 'delivered')
+            AND YEAR(o.created_at) = YEAR(CURDATE())
+            GROUP BY month
+            ORDER BY STR_TO_DATE(month, '%b')
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function updateStatusToTrue(string $id)
+    {
+        $id = trim($id);
+        $sql = "UPDATE products SET status = 1 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("s", $id);
+        if ($stmt->execute()) {
+            return $stmt->affected_rows > 0;
+        }
+    
+        return false;
+    }
+
+    public function getProductStats($productId): ?array
+    {
+        $sql = "
+            SELECT 
+                IFNULL(SUM(oi.quantity), 0) AS total_sales,
+                IFNULL(SUM(oi.quantity * oi.price), 0) AS revenue,
+                IFNULL(SUM(oi.quantity * oi.price * 0.4), 0) AS profit, 
+                ROUND(IFNULL(SUM(oi.quantity * oi.price * 0.4) / NULLIF(SUM(oi.quantity * oi.price), 0), 0) * 100, 2) AS profit_margin
+            FROM order_items oi
+            JOIN orders o ON o.id = oi.order_id
+            WHERE oi.product_id = ?
+            AND o.status IN ('completed') 
+        ";
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 
     public function getProductsForMenu($offset = null, $limit = null, $filter): array
     {
@@ -209,13 +266,16 @@ class ProductModel
 
     public function getAllProducts(): array
     {
-        $products = [];
-        $sql = "SELECT * FROM products ORDER BY created_at DESC";
-        $result = $this->conn->query($sql);
-        while ($row = $result->fetch_assoc()) {
-            $products[] = $this->mapToProductDto($row);
-        }
-        return $products;
+        $sql = "
+            SELECT p.*, c.name AS category_name
+            FROM products p
+            JOIN categories c ON p.category_id = c.id
+            ORDER BY p.created_at DESC
+        ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
     public function getProductsByCategoryId($categoryId): array

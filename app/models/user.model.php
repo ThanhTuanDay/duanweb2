@@ -33,7 +33,28 @@ class UserModel
             return null;
         }
     }
-
+    public function getAllUsers(): mixed
+    {
+        $sql = "SELECT * FROM users";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+    public function blockUser($userId): bool
+    {
+        $sql = "UPDATE users SET is_block = 1 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        return $stmt->execute();
+    }
+    public function unBlockUser($userId): bool
+    {
+        $sql = "UPDATE users SET is_block = 0 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $userId);
+        return $stmt->execute();
+    }
     public function getDeliveryAddressesById($userId)
     {
         $sql = "SELECT * FROM user_addresses WHERE user_id = ?";
@@ -199,7 +220,74 @@ class UserModel
         $user->setPassword($newPassword);
         return $this->updateUser($user);
     }
-
+    public function getUserPage($limit, $page): array
+    {
+        $offset = ($page - 1) * $limit;
+        $sql = "SELECT * FROM users LIMIT ?, ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $offset, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+    public function filterUsers($filter, $page, $perPage): array
+    {
+        $sql = "SELECT * FROM users";
+        $params = [];
+        $types = "";
+    
+        // Apply filter conditions
+        if ($filter === 'admin') {
+            $sql .= " WHERE role = ?";
+            $params[] = 'Admin';
+            $types .= "s";
+        } elseif ($filter === 'customer') {
+            $sql .= " WHERE role = ?";
+            $params[] = 'Customer';
+            $types .= "s";
+        } elseif ($filter === 'active') {
+            $sql .= " WHERE is_block = ?";
+            $params[] = 0;
+            $types .= "i";
+        } elseif ($filter === 'inactive') {
+            $sql .= " WHERE is_block = ?";
+            $params[] = 1;
+            $types .= "i";
+        }
+    
+        // Add pagination
+        $offset = ($page - 1) * $perPage;
+        $sql .= " LIMIT ?, ?";
+        $params[] = $offset;
+        $params[] = $perPage;
+        $types .= "ii";
+    
+        $stmt = $this->conn->prepare($sql);
+    
+        if (!$stmt) {
+            error_log("SQL Error: " . $this->conn->error);
+            return [];
+        }
+    
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+    public function searchUsers($keyword): array
+    {
+        $sql = "SELECT * FROM users WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?";
+        $stmt = $this->conn->prepare($sql);
+        $keyword = "%" . $keyword . "%";
+        $stmt->bind_param("sss", $keyword, $keyword, $keyword);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
     public function updatePassword($userDto)
     {
         $sql = "UPDATE users SET password = ? WHERE id = ?";
@@ -220,20 +308,35 @@ class UserModel
         }
         return true;
     }
-
-    public function updateUserInformation($userDto){
+    public function updateUserInformation($userDto)
+    {
         $sql = "UPDATE users SET 
             name = ?, 
             phone = ?, 
             address = ?
-        WHERE id = ? ";
+        WHERE id = ?";
+
+        // Debugging: Log the SQL query and parameters
+        error_log("Executing query: $sql with params: name={$userDto->getName()}, phone={$userDto->getPhone()}, address={$userDto->getAddress()}, id={$userDto->getId()}");
 
         $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            error_log("SQL Error: " . $this->conn->error);
+            return false;
+        }
 
         $name = $userDto->getName();
         $phone = $userDto->getPhone();
         $address = $userDto->getAddress();
         $id = $userDto->getId();
+
+        // Validate input data
+        if (empty($name) || empty($phone) || empty($address) || empty($id)) {
+            error_log("Validation Error: All fields are required.");
+            return false;
+        }
+
         $stmt->bind_param(
             "ssss",
             $name,
@@ -242,10 +345,32 @@ class UserModel
             $id
         );
 
-        return $stmt->execute();
+        if (!$stmt->execute()) {
+            error_log("Execution Error: " . $stmt->error);
+            return false;
+        }
+
+        // Check if any rows were affected
+        if ($stmt->affected_rows === 0) {
+            // Check if the user ID exists
+            $checkSql = "SELECT id FROM users WHERE id = ?";
+            $checkStmt = $this->conn->prepare($checkSql);
+            $checkStmt->bind_param("s", $id);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+
+            if ($checkResult->num_rows === 0) {
+                error_log("No rows were updated because the user ID does not exist.");
+                return false; // User ID does not exist
+            }
+
+            error_log("No rows were updated because the data is unchanged.");
+            return true; // Data is unchanged, but the update is valid
+        }
+
+        return true;
     }
 
-    
     public function updateUser($userDto)
     {
 
@@ -297,16 +422,18 @@ class UserModel
         if ($result && $result->num_rows > 0) {
             $data = $result->fetch_assoc();
             return new UserDto(
-                null,
+                $data['id'],
                 $data['name'],
                 $data['email'],
                 $data['phone'],
                 $data['address'],
                 $data['password'],
+                $data['role'],
+                $data['created_at'],
                 null,
                 null,
-                null,
-               null,
+                isBlocked: $data['is_block']
+
             );
         } else {
             return null;

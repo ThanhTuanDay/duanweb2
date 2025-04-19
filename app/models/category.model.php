@@ -127,6 +127,17 @@ class CategoryModel
         }
         return $categories;
     }
+
+    public function getAllCategoriesWithoutMapping(): array
+    {
+        $sql = "SELECT * FROM categories ORDER BY created_at DESC";
+        $result = $this->conn->query($sql);
+        if (!$result) {
+            die("Query failed: " . $this->conn->error);
+        }
+     
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
     public function getPaginationCategories($page, $perPage): array
     {
 

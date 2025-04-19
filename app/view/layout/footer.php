@@ -84,10 +84,9 @@
 <!-- footer section -->
 
 <!-- jQery -->
+<script src="public/js/navbar.js"></script>
 <script src="public/js/jquery-3.4.1.min.js"></script>
-<script src="public/js/cart.model.js"></script>
-<script src="public/js/cart.controller.js"></script>
-<script src="public/js/cart.js"></script>
+
 <!-- popper js -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
 </script>
@@ -102,10 +101,13 @@
 <!-- nice select -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- custom js -->
 <script src="public/js/custom.js"></script>
-<script src="public/js/navbar.js"></script>
+<script src="public/js/cart.model.js"></script>
+<script src="public/js/cart.controller.js"></script>
+<script src="public/js/cart.js"></script>
+<!-- custom js -->
+
+
 <!-- Google Map -->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
 </script> -->

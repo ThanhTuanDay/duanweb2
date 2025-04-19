@@ -18,7 +18,7 @@
           <a href=" /duanweb2/admin/users/page" class="menu-item">
               <i class="fas fa-users"></i> Users
           </a>
-          <a href="#" class="menu-item">
+          <a href="/duanweb2/admin/settings/page" class="menu-item">
               <i class="fas fa-cog"></i> Settings
           </a>
           <a href="/duanweb2/logout" class="menu-item">

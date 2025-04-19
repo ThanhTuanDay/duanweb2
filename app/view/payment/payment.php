@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['error' => 'Missing amount']);
         exit;
     }
+    $paymentMethod = $data['paymentMethod'] ?? null;
     $amount = (int) $data['amount'];
     $user_id = $data['userId'] ?? null;
     $deliveryAddressId = $data['deliveryAddressId'] ?? null;
@@ -23,7 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-    $response = $paymentController->createMomoPayment($deliveryAddressId,$user_id,$amount, $orderId,$cartItems,$addressInfo,$userInfo, $orderInfo);
+   if($paymentMethod == "momo"){
+        $response = $paymentController->createMomoPayment($deliveryAddressId,$user_id,$amount, $orderId,$cartItems,$addressInfo,$userInfo, $orderInfo);
+    }else if($paymentMethod == "cod"){
+        $response = $paymentController->codPayment($deliveryAddressId,$user_id,$amount, $orderId,$cartItems,$addressInfo,$userInfo, $orderInfo);
+    }
     echo json_encode($response);
     exit;
 }

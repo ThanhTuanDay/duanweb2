@@ -99,12 +99,31 @@ $categoryTotals = json_encode($totals);
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Sales Overview</h5>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-sm btn-outline-primary active">Weekly</button>
-                            <button type="button" class="btn btn-sm btn-outline-primary">Monthly</button>
-                            <button type="button" class="btn btn-sm btn-outline-primary">Yearly</button>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <h5 class="mb-0">Sales Overview</h5>
+                            <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+                                <!-- Date Range Picker -->
+                                <div class="date-range-picker d-flex align-items-center">
+                                    <div class="input-group input-group-sm me-2">
+                                        <span class="input-group-text bg-dark text-light border-secondary">From</span>
+                                        <input type="date" class="form-control form-control-sm" id="dateFrom">
+                                    </div>
+                                    <div class="input-group input-group-sm me-2">
+                                        <span class="input-group-text bg-dark text-light border-secondary">To</span>
+                                        <input type="date" class="form-control form-control-sm" id="dateTo">
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-primary" id="applyDateRange">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>
+                                <!-- Time Period Buttons -->
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary active">Weekly</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">Monthly</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">Yearly</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -117,14 +136,32 @@ $categoryTotals = json_encode($totals);
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Top Categories</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Top Categories</h5>
+                            <!-- Date Range Picker for Categories Chart -->
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="categoryDateRange" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-calendar-alt me-1"></i> Date Range
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark p-3" style="min-width: 300px;">
+                                    <div class="mb-2">
+                                        <label for="categoryDateFrom" class="form-label">From</label>
+                                        <input type="date" class="form-control form-control-sm" id="categoryDateFrom">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="categoryDateTo" class="form-label">To</label>
+                                        <input type="date" class="form-control form-control-sm" id="categoryDateTo">
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="button" class="btn btn-sm btn-primary" id="applyCategoryDateRange">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="chart-container">
-                    
-                            <canvas id="categoryChart">
-
-                            </canvas>
+                            <canvas id="categoryChart"></canvas>
                         </div>
                     </div>
                 </div>
