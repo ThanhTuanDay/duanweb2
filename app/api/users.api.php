@@ -114,7 +114,13 @@ switch ($action) {
             $query = isset($_GET['query']) ? trim($_GET['query']) : '';
         
             // Fetch filtered users
-            $users = $userController->searchUsers($query);
+            if ($query === null || $query === '') {
+                // Fetch all users if query is empty
+                $users = $userController->getAllUsers();
+            } else {
+                // Perform search
+                $users = $userController->searchUsers($query);
+            }
         
             // Return the response as JSON
             header('Content-Type: application/json');

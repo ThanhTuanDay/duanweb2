@@ -111,18 +111,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const userTableBody = document.querySelector("table tbody");
 
   let debounceTimeout;
-
   // Debounced search function
   searchInput.addEventListener("input", function () {
     clearTimeout(debounceTimeout); // Clear the previous timeout
     debounceTimeout = setTimeout(() => {
       const query = searchInput.value.trim();
+      const searchQuery = query === "" ? null : query;
       $.ajax({
         url: "/duanweb2/app/api/users.api.php",
         type: "GET",
         data: {
           action: "search",
-          query: query,
+          query: searchQuery,
         },
         success: function (data) {
           // Clear the table body
