@@ -13,12 +13,179 @@ function getYear() {
 }
 
 getYear();
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleTitles = document.querySelectorAll('.collapsible-title');
 
+    toggleTitles.forEach(title => {
+        title.addEventListener('click', () => {
+            const content = title.nextElementSibling;
+            if (content.classList.contains('collapsible-content')) {
+                content.classList.toggle('open');
+            }
+        });
+    });
+    const customModal = document.getElementById('customProductModal');
+    const closeModalBtn = document.getElementById('closeCustomModal');
+    const modalOverlay = document.querySelector('.custom-modal-overlay');
+
+    // Close modal when clicking the close button or overlay
+    closeModalBtn.addEventListener('click', closeCustomModal);
+    modalOverlay.addEventListener('click', closeCustomModal);
+
+    // Prevent clicks inside the modal from closing it
+    document.querySelector('.custom-modal-container').addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+
+    // Close modal with ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && customModal.classList.contains('active')) {
+            closeCustomModal();
+        }
+    });
+
+    // Custom tabs functionality
+    const tabButtons = document.querySelectorAll('.custom-tab-btn');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Remove active class from all buttons and panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.custom-tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            // Show corresponding tab pane
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+    });
+
+    // Quantity controls
+    document.getElementById('increase-quantity').addEventListener('click', function () {
+        const quantityInput = document.getElementById('product-quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    });
+
+    document.getElementById('decrease-quantity').addEventListener('click', function () {
+        const quantityInput = document.getElementById('product-quantity');
+        const currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    // Ensure quantity is always at least 1
+    document.getElementById('product-quantity').addEventListener('change', function () {
+        if (this.value < 1) {
+            this.value = 1;
+        }
+    });
+
+    // Handle thumbnail clicks
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.addEventListener('click', function () {
+            // Remove active class from all thumbnails
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+
+            // Add active class to clicked thumbnail
+            this.classList.add('active');
+
+            // Update main image
+            const imgUrl = this.getAttribute('data-image-url') || this.querySelector('img').src;
+            document.getElementById('modal-product-image').src = imgUrl;
+
+            // Update zoom result background
+            document.querySelector('.image-zoom-result').style.backgroundImage = `url('${imgUrl}')`;
+        });
+    });
+
+    // Rating selector in review form
+    document.querySelectorAll('.rating-selector i').forEach(star => {
+        star.addEventListener('mouseover', function () {
+            const rating = parseInt(this.getAttribute('data-rating'));
+
+            // Reset all stars
+            document.querySelectorAll('.rating-selector i').forEach(s => {
+                s.className = 'far fa-star';
+            });
+
+            // Fill stars up to the hovered one
+            document.querySelectorAll('.rating-selector i').forEach(s => {
+                if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                    s.className = 'fas fa-star';
+                }
+            });
+        });
+
+        star.addEventListener('click', function () {
+            const rating = parseInt(this.getAttribute('data-rating'));
+
+            // Set the selected rating
+            document.querySelectorAll('.rating-selector i').forEach(s => {
+                if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                    s.className = 'fas fa-star';
+                } else {
+                    s.className = 'far fa-star';
+                }
+            });
+        });
+    });
+
+    // Reset stars when mouse leaves the rating selector
+    document.querySelector('.rating-selector').addEventListener('mouseleave', function () {
+        // Find the selected rating
+        const selectedStars = document.querySelectorAll('.rating-selector i.fas');
+        const rating = selectedStars.length;
+
+        // Reset all stars
+        document.querySelectorAll('.rating-selector i').forEach(s => {
+            s.className = 'far fa-star';
+        });
+
+        // Fill stars up to the selected rating
+        document.querySelectorAll('.rating-selector i').forEach(s => {
+            if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                s.className = 'fas fa-star';
+            }
+        });
+    });
+
+    // Prevent form submission (for demo)
+    document.querySelector('.review-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('Review submitted successfully!');
+        this.reset();
+    });
+});
 // Validate phone number
 function isValidPhone(phone) {
     const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,9}$/;
     return phoneRegex.test(phone);
 }
+document.addEventListener('DOMContentLoaded', function () {
+    // Quantity controls
+    document.getElementById('increase-quantity').addEventListener('click', function () {
+        const quantityInput = document.getElementById('product-quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    });
+
+    document.getElementById('decrease-quantity').addEventListener('click', function () {
+        const quantityInput = document.getElementById('product-quantity');
+        const currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    // Ensure quantity is always at least 1
+    document.getElementById('product-quantity').addEventListener('change', function () {
+        if (this.value < 1) {
+            this.value = 1;
+        }
+    });
+});
 // isotope js
 $(window).on('load', function () {
     $('.filters_menu li').click(function () {
@@ -81,7 +248,7 @@ $(".client_owl-carousel").owlCarousel({
 });
 const dataInput = document.getElementById('product-data') || null;
 let allProducts = null;
-if(dataInput) {
+if (dataInput) {
     const jsonData = document.getElementById('product-data').value || null;
     allProducts = JSON.parse(jsonData || null);
 }
@@ -95,9 +262,9 @@ async function getSettings(cartData = null) {
         taxClasses = data.tax.classes;
         taxRules = data.tax.rules;
         coupons = data.coupons;
-        deliveryFee = parseInt(data.general.delivery_fee)||0;
+        deliveryFee = parseInt(data.general.delivery_fee) || 0;
     }
-    if(cartData){
+    if (cartData) {
         window.cartItems = cartData;
         updateCart(cartData);
     }
@@ -193,18 +360,19 @@ if (allProducts) {
     function renderProducts(products, page = 1, general = {}) {
         const productList = document.getElementById('product-list');
         productList.innerHTML = '';
-    
+
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
+
         const paginatedItems = products.slice(start, end);
-    
+
         if (paginatedItems.length === 0) {
             productList.innerHTML = '<p class="text-center w-100">Không tìm thấy sản phẩm nào.</p>';
             return;
         }
-    
+
         const { enable_taxes, tax_display_option, currency } = settings;
-    
+
         const getApplicableTaxRate = () => {
             const activeRules = taxRules
                 .filter(rule => rule.is_active)
@@ -214,21 +382,22 @@ if (allProducts) {
             }
             return 0;
         };
-    
+
         const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
         applicationTaxRate = taxRate;
         paginatedItems.forEach(product => {
+            if (product.status == 0) return;
             let finalPrice = Number(product.price);
-    
-           
+
+
             if (enable_taxes && tax_display_option === 'including_tax') {
                 const taxAmount = (finalPrice * taxRate) / 100;
                 finalPrice += taxAmount;
             }
-    
+
             const productHTML = `
                 <div class="col-sm-6 col-lg-4 all ${product.category_slug}">
-                    <div class="box">
+                    <div class="box product-box" data-product-id="${product.id}">
                         <div>
                             <div class="img-box">
                                 <img src="${product.image_url}" alt="${product.name}">
@@ -252,11 +421,172 @@ if (allProducts) {
             `;
             productList.innerHTML += productHTML;
         });
-    
+        document.querySelectorAll('.product-box').forEach(box => {
+            box.addEventListener('click', function (e) {
+                if (e.target.tagName === 'A' || e.target.closest('a')) {
+                    return;
+                }
+
+                const productId = this.getAttribute('data-product-id');
+                openCustomModal(productId, products);
+            });
+        });
         renderPagination(products.length, page);
     }
-    
 
+    function openCustomModal(productId, products) {
+        const product = products.find(p => p.id === productId);
+
+        if (!product) return;
+
+        // Set modal content
+        document.getElementById('modal-product-name').textContent = product.name;
+        document.getElementById('modal-product-image').src = product.image_url;
+        document.getElementById('modal-product-image').alt = product.name;
+
+        // Set thumbnails (using the same image for demo, in real app you'd use different images)
+        document.getElementById('thumbnail-1').src = product.image_url;
+        document.getElementById('thumbnail-2').src = product.image_url;
+        document.getElementById('thumbnail-3').src = product.image_url;
+
+        // Calculate price with tax if needed
+        let finalPrice = Number(product.price);
+        if (settings.enable_taxes && settings.tax_display_option === 'including_tax') {
+            const taxAmount = (finalPrice * applicationTaxRate) / 100;
+            finalPrice += taxAmount;
+        }
+
+        document.getElementById('modal-product-price').textContent = `${Number(finalPrice).toLocaleString('vi-VN')}₫`;
+        document.getElementById('modal-product-description').textContent = product.description;
+        document.getElementById('modal-product-category').textContent = product.category_name || 'General';
+        document.getElementById('modal-product-id').textContent = product.id;
+
+        // Reset quantity
+        document.getElementById('product-quantity').value = 1;
+
+        // Set up add to cart button
+        const addToCartBtn = document.getElementById('modal-add-to-cart');
+
+        addToCartBtn.onclick = function () {
+            const quantity = parseInt(document.getElementById('product-quantity').value);
+            addToCartWithQuantity(product.id, quantity);
+            // Close the modal
+            closeCustomModal();
+        };
+
+        // Initialize image zoom
+        initImageZoom();
+
+        // Reset tabs to first tab
+        document.querySelectorAll('.custom-tab-btn').forEach((btn, index) => {
+            btn.classList.toggle('active', index === 0);
+        });
+
+        document.querySelectorAll('.custom-tab-pane').forEach((pane, index) => {
+            pane.classList.toggle('active', index === 0);
+        });
+
+        // Show the modal
+        document.getElementById('customProductModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeCustomModal() {
+        document.getElementById('customProductModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    // Improved image zoom functionality
+    function initImageZoom() {
+        const container = document.querySelector('.image-zoom-container');
+        const img = document.getElementById('modal-product-image');
+        const lens = document.querySelector('.image-zoom-lens');
+        const result = document.querySelector('.image-zoom-result');
+
+        // Wait for the image to load to get correct dimensions
+        img.onload = function () {
+            // Set the background image of the result div
+            result.style.backgroundImage = `url('${img.src}')`;
+
+            // Get dimensions
+            const imgRect = img.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Function to update zoom on mouse move
+            const moveLens = (e) => {
+                e.preventDefault();
+
+                // Get cursor position relative to the page
+                let mouseX = e.clientX;
+                let mouseY = e.clientY;
+
+                // Handle touch events
+                if (e.touches) {
+                    mouseX = e.touches[0].clientX;
+                    mouseY = e.touches[0].clientY;
+                }
+
+                // Get the position of the image
+                const imgRect = img.getBoundingClientRect();
+
+                // Calculate cursor position relative to the image
+                let x = mouseX - imgRect.left;
+                let y = mouseY - imgRect.top;
+
+                // Ensure x and y are within image boundaries
+                x = Math.max(0, Math.min(x, imgRect.width));
+                y = Math.max(0, Math.min(y, imgRect.height));
+
+                // Calculate lens position (centered on cursor)
+                const lensWidth = lens.offsetWidth;
+                const lensHeight = lens.offsetHeight;
+
+                let lensX = x - lensWidth / 2;
+                let lensY = y - lensHeight / 2;
+
+                // Constrain lens to image boundaries
+                lensX = Math.max(0, Math.min(lensX, imgRect.width - lensWidth));
+                lensY = Math.max(0, Math.min(lensY, imgRect.height - lensHeight));
+
+                // Position the lens
+                lens.style.left = `${lensX}px`;
+                lens.style.top = `${lensY}px`;
+                lens.style.display = 'block';
+
+                // Calculate the ratio between result and lens
+                const ratioX = result.offsetWidth / lensWidth;
+                const ratioY = result.offsetHeight / lensHeight;
+
+                // Calculate the background position for the result
+                const resultX = lensX * ratioX;
+                const resultY = lensY * ratioY;
+
+                // Update the background position of the result
+                result.style.backgroundSize = `${imgRect.width * ratioX}px ${imgRect.height * ratioY}px`;
+                result.style.backgroundPosition = `-${resultX}px -${resultY}px`;
+                result.style.display = 'block';
+            };
+
+            // Event listeners for mouse/touch movement
+            container.addEventListener('mousemove', moveLens);
+            container.addEventListener('touchmove', moveLens);
+
+            // Show lens and result when mouse enters the container
+            container.addEventListener('mouseenter', function () {
+                lens.style.opacity = '1';
+                result.style.opacity = '1';
+            });
+
+            // Hide lens and result when mouse leaves the container
+            container.addEventListener('mouseleave', function () {
+                lens.style.opacity = '0';
+                result.style.opacity = '0';
+            });
+        };
+
+        
+        if (img.complete) {
+            img.onload();
+        }
+    }
 
 
     function applyFilters(event) {
@@ -278,6 +608,27 @@ if (allProducts) {
     }
 
 
+
+
+   document.getElementById("search-btn").addEventListener("click", function (e) {
+    e.preventDefault(); 
+
+    const targetSection = document.getElementById("filter-sidebar");
+    const targetInput = document.getElementById("search-input");
+
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: "smooth" });
+
+    
+      setTimeout(() => {
+        if (targetInput) {
+          targetInput.focus();
+        }
+      }, 500);s
+    }
+  });
+
+  
 
     function renderPagination(totalItems, currentPage) {
         const totalPages = Math.ceil(totalItems / itemsPerPage);

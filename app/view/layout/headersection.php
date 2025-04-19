@@ -29,9 +29,6 @@
                     <li class="nav-item <?= $currentPage === 'about' ? 'active' : '' ?>">
                         <a class="nav-link" href="about">About</a>
                     </li>
-                    <li class="nav-item <?= $currentPage === 'book' ? 'active' : '' ?>">
-                        <a class="nav-link" href="book">Book Table</a>
-                    </li>
                 </ul>
                 <div class="user_option">
                     <?php if (Session::get('name')): ?>
@@ -108,12 +105,12 @@
                     <p></p>
 
                     <form class="form-inline">
-                        <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                        <button class="btn  my-2 my-sm-0 nav_search-btn" id='search-btn' type="submit">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
                     </form>
-                    <a href="" class="order_online">
-                        Order Online
+                    <a href="#food-section" class="order_online">
+                        Order Now
                     </a>
                 </div>
             </div>

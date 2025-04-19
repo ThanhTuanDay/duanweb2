@@ -180,6 +180,7 @@ $(document).ready(function () {
                     showCartNotification('Danh mục xóa thành công!', 'success');
 
                     fetchCategories(currentPage);
+                    location.reload();
                 } else {
                     showCartNotification('Danh mục xóa thất bại ', 'error');
                     $('#deleteModal').modal('hide');

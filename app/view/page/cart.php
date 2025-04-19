@@ -936,7 +936,7 @@ $addresses = $userController->getDeliveryAddress();
                 </svg>
                 <h3>Your cart is empty</h3>
                 <p>Looks like you haven't added any items to your cart yet.</p>
-                <a href="#" class="continue-shopping">Continue Shopping</a>
+                <a href="/duanweb2" class="continue-shopping">Continue Shopping</a>
             </div>
         </div>
         <div id="app-data" data-user-id="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>"

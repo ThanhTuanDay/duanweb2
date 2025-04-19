@@ -130,7 +130,7 @@ class UserModel
         $address = $userDto->getAddress();
         $password = $userDto->getPassword();
         $role = $userDto->getRole() == null ? $userDto::ROLE_USER : $userDto->getRole();
-        $is_verified = 0;
+        $is_verified = 1;
 
 
         $stmt->bind_param(
@@ -154,7 +154,7 @@ class UserModel
 
         $userDto->setVerifyToken($token);
 
-        $this->sendVerifyEmail($userDto);
+        // $this->sendVerifyEmail($userDto);
         return $result;
     }
 

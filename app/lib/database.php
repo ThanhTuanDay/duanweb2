@@ -2,11 +2,11 @@
 
     class Database
     {
-        public $host = DB_HOST;
-        public $user = DB_USER;
-        public $pass = DB_PASS;
-        public $dbname = DB_NAME;
-        public $port = DB_PORT;
+        public $host = 'localhost';
+        public $user = 'root';
+        public $pass = 123456;
+        public $dbname = 'duanweb2';
+        public $port = '3306';
 
         public $link;
         public $error;

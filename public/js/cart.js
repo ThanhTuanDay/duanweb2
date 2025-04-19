@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateCart(cart) {
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    console.log(discountAmount);
     const total = subtotal + Math.round(deliveryFee) - discountAmount;
     document.getElementById("delivery-fee").textContent = `${formatCurrency(deliveryFee)}`;
     document.getElementById("subtotal").textContent = `${formatCurrency(subtotal)}`;
