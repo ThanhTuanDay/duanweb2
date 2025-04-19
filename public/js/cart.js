@@ -183,6 +183,12 @@ function applyPromoCode() {
 
 
 function checkout() {
+    if (!isLoggedIn) {
+        alert("Bạn cần đăng nhập để thanh toán.");
+        window.location.href = "/duanweb2/login";
+        return;
+    }
+
     const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
     const cartItems = getUserCart();
     const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
