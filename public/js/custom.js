@@ -13,9 +13,18 @@ function getYear() {
 }
 
 getYear();
+const getApplicableTaxRate = () => {
+    const activeRules = taxRules
+        .filter(rule => rule.is_active)
+        .sort((a, b) => a.priority - b.priority);
+    if (activeRules.length > 0) {
+        return parseFloat(activeRules[0].rate || 0);
+    }
+    return 0;
+};
 document.addEventListener('DOMContentLoaded', function () {
     const toggleTitles = document.querySelectorAll('.collapsible-title');
-
+    
     toggleTitles.forEach(title => {
         title.addEventListener('click', () => {
             const content = title.nextElementSibling;
@@ -213,13 +222,13 @@ $(document).ready(function () {
 });
 
 /** google_map js **/
-function myMap() {
-    var mapProp = {
-        center: new google.maps.LatLng(40.712775, -74.005973),
-        zoom: 18,
-    };
-    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-}
+// function myMap() {
+//     var mapProp = 
+//         center: new google.maps.LatLng(40.712775, -74.005973),
+//         zoom: 18,
+//     };
+//     var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+// }
 
 // client section owl carousel
 $(".client_owl-carousel").owlCarousel({
@@ -373,15 +382,7 @@ if (allProducts) {
 
         const { enable_taxes, tax_display_option, currency } = settings;
 
-        const getApplicableTaxRate = () => {
-            const activeRules = taxRules
-                .filter(rule => rule.is_active)
-                .sort((a, b) => a.priority - b.priority);
-            if (activeRules.length > 0) {
-                return parseFloat(activeRules[0].rate || 0);
-            }
-            return 0;
-        };
+        
 
         const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
         applicationTaxRate = taxRate;

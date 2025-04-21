@@ -18,7 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userInfo = $data['userInfo'] ?? null;
     $orderId = uniqid();
     $orderInfo = "Thanh toán đơn hàng #$orderId";
-
+    $taxFee = $data['taxFee'] ?? 0;
+    $deliveryFee = $data['deliveryFee'] ?? 0;
+    $taxRate = $data['taxRate'] ?? 0;
+    $discountAmount = $data['discountAmount'] ?? 0;
 
     $paymentController = new PaymentController();
 
@@ -27,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if($paymentMethod == "momo"){
         $response = $paymentController->createMomoPayment($deliveryAddressId,$user_id,$amount, $orderId,$cartItems,$addressInfo,$userInfo, $orderInfo);
     }else if($paymentMethod == "cod"){
-        $response = $paymentController->codPayment($deliveryAddressId,$user_id,$amount, $orderId,$cartItems,$addressInfo,$userInfo, $orderInfo);
+        $response = $paymentController->codPayment($deliveryAddressId,$user_id,$amount, $orderId,$cartItems,$addressInfo,$userInfo, $orderInfo, $taxFee, $deliveryFee, $taxRate, $discountAmount);
     }
     echo json_encode($response);
     exit;

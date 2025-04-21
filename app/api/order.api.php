@@ -112,6 +112,52 @@ switch ($action) {
         $stats = $orderController->getProductStats($id);
         echo json_encode(['success' => true, 'data' => $stats]);
         break;
+
+    case 'getTopCustomerByPurchase':
+        $from = $_POST['from'] ?? null;
+        $to = $_POST['to'] ?? null;
+        $limit = $_POST['limit'] ?? 5;
+        
+        $topCustomers = $orderController->getTopCustomerByPurchase($from, $to, $limit);
+        echo json_encode([
+            "success" => true,
+            "data" => $topCustomers
+        ]);
+        break;
+
+    case 'getCustomerOrderDetail':
+        $userId = $_POST['userId'] ?? null;
+        if (!$userId) {
+            echo json_encode(["success" => false, "message" => "Missing user ID"]);
+            exit();
+        }
+
+        $orders = $orderController->getOrdersByUserId($userId);
+        if ($orders === null) {
+            echo json_encode([]);
+            exit;
+        }
+        if ($orders instanceof OrderDto) {
+            $orders = [$orders];
+        }
+        $response = [
+            "success" => true,
+            "orders" => array_map(function ($order) {
+                return [
+                    'id' => $order->getId(),
+                    'user_id' => $order->getUserId(),
+                    'user_name' => $order->getUserName(),
+                    'total' => $order->getTotalPrice(),
+                    'status' => $order->getStatus(),
+                    'created_at' => $order->getCreatedAt(),
+                    'payment_method' => "COD",
+                    'delivery_address' => $order->getDeliveryAddress()
+                ];
+            }, $orders),
+        ];
+
+        echo json_encode($response);
+        break;
     default:
         echo json_encode(["success" => false, "message" => "Unknown action"]);
         break;
