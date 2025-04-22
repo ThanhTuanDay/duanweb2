@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateCart(cart) {
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    console.log(discountAmount);
     const total = subtotal + Math.round(deliveryFee) - discountAmount;
     document.getElementById("delivery-fee").textContent = `${formatCurrency(deliveryFee)}`;
     document.getElementById("subtotal").textContent = `${formatCurrency(subtotal)}`;
@@ -182,6 +183,12 @@ function applyPromoCode() {
 
 
 function checkout() {
+    if (!isLoggedIn) {
+        alert("Bạn cần đăng nhập để thanh toán.");
+        window.location.href = "/duanweb2/login";
+        return;
+    }
+
     const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
     const cartItems = getUserCart();
     const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);

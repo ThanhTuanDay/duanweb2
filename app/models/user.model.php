@@ -130,7 +130,7 @@ class UserModel
         $address = $userDto->getAddress();
         $password = $userDto->getPassword();
         $role = $userDto->getRole() == null ? $userDto::ROLE_USER : $userDto->getRole();
-        $is_verified = 0;
+        $is_verified = 1;
 
 
         $stmt->bind_param(
@@ -154,7 +154,7 @@ class UserModel
 
         $userDto->setVerifyToken($token);
 
-        $this->sendVerifyEmail($userDto);
+        // $this->sendVerifyEmail($userDto);
         return $result;
     }
 
@@ -235,7 +235,7 @@ class UserModel
         $sql = "SELECT * FROM users";
         $params = [];
         $types = "";
-    
+
         // Apply filter conditions
         if ($filter === 'admin') {
             $sql .= " WHERE role = ?";
@@ -254,28 +254,28 @@ class UserModel
             $params[] = 1;
             $types .= "i";
         }
-    
+
         // Add pagination
         $offset = ($page - 1) * $perPage;
         $sql .= " LIMIT ?, ?";
         $params[] = $offset;
         $params[] = $perPage;
         $types .= "ii";
-    
+
         $stmt = $this->conn->prepare($sql);
-    
+
         if (!$stmt) {
             error_log("SQL Error: " . $this->conn->error);
             return [];
         }
-    
+
         if (!empty($params)) {
             $stmt->bind_param($types, ...$params);
         }
-    
+
         $stmt->execute();
         $result = $stmt->get_result();
-    
+
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
     public function searchUsers($keyword): array
@@ -473,6 +473,24 @@ class UserModel
             return null;
         }
     }
+    public function getUserStatisticsOrder(): ?array
+    {
+        $query = "SELECT u.id,u.name,SUM(oi.quantity * oi.price) AS total_spent
+                FROM users  u
+                JOIN 
+                orders as o ON u.id = o.user_id
+                JOIN 
+                order_items oi ON o.id = oi.order_id
+                WHERE  o.status='completed'
+                GROUP BY 
+                    u.id, u.name
+                ORDER BY 
+                    total_spent DESC
+                LIMIT 5;
+                ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
 }
-
-?>
