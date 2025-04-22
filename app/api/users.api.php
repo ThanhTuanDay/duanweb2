@@ -70,6 +70,7 @@ switch ($action) {
         $user = $userController->getUserById($userId);
         if ($user) {
             $response = [
+                'success' => true,
                 'id' => $user->getId(),
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),

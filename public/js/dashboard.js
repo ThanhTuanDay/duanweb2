@@ -52,8 +52,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     loadSalesChart(formatDate(oneWeekAgo), formatDate(today), currentPeriod);
-});
 
+    fetchAndRenderTopCustomers();
+});
+function fetchAndRenderTopCustomers() {
+    const fromInput = document.getElementById("customerDateFrom");
+    const toInput = document.getElementById("customerDateTo");
+    const limitSelect = document.getElementById("customerCount");
+    const applyBtn = document.getElementById("applyCustomerFilter");
+    const tableBody = document.querySelector("#topCustomersTable tbody");
+
+    const from = fromInput.value;
+    const to = toInput.value;
+    const limit = limitSelect.value;
+
+    const formData = new FormData();
+    formData.append("action", "getTopCustomerByPurchase");
+    formData.append("from", from);
+    formData.append("to", to);
+    formData.append("limit", limit);
+
+    fetch("/duanweb2/app/api/order.api.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success && Array.isArray(res.data)) {
+            tableBody.innerHTML = "";
+            res.data.forEach((customer, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h6 class="mb-0">${customer.customer_name}</h6>
+                                    <small class="text-muted">${customer.user_id}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${customer.email ?? 'N/A'}</td>
+                        <td>${customer.total_orders}</td>
+                        <td>${Number(customer.total_spent).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+                        <td>${customer.last_order_date ?? 'N/A'}</td>
+                        <td>
+                            <a href="/duanweb2/admin/customer-order-detail/page?userId=${customer.user_id}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-eye me-1"></i>Details
+                            </a>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        } else {
+            tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No data found</td></tr>`;
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error loading data</td></tr>`;
+    });
+}
 function formatDateTime(date, endOfDay = false) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');

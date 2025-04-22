@@ -6,6 +6,8 @@ const promoCodes = {
     "FREESHIP": { type: "shipping", value: deliveryFee },
     "5DOLLAROFF": { type: "fixed", value: 5 }
 };
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const cartContainer = document.getElementById("cart-container");
     let cartItems = getUserCart();
@@ -104,8 +106,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateCart(cart) {
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    console.log(discountAmount);
-    const total = subtotal + Math.round(deliveryFee) - discountAmount;
+    let taxFee = 0;
+    if(settings){
+        const { enable_taxes } = settings;
+        const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
+        taxFee = subtotal * taxRate / 100;
+
+        document.getElementById("tax-fee").textContent = `${formatCurrency(taxFee)}`;
+        document.getElementById("tax-rate").textContent = `${taxRate}%`;
+    }
+    const total = subtotal + Math.round(deliveryFee) - discountAmount + taxFee  ;
     document.getElementById("delivery-fee").textContent = `${formatCurrency(deliveryFee)}`;
     document.getElementById("subtotal").textContent = `${formatCurrency(subtotal)}`;
     document.getElementById("total").textContent = `${formatCurrency(total)}`;
@@ -114,8 +124,53 @@ function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
 }
 
+function goToPaymentStage() {
+    // Update UI for payment stage
+    document.getElementById('cart-container').classList.add('payment-stage');
+    
+    // Update step indicators
+    document.getElementById('cart-step').classList.remove('active');
+    document.getElementById('payment-step').classList.add('active');
+    
+    // Update quantities for display
+    document.querySelectorAll('.cart-item').forEach(item => {
+        const quantity = item.querySelector('.quantity-input')?.value || 1;
+        const quantityText = item.querySelector('.item-quantity');
+        
+        // If item-quantity element doesn't exist, create it
+        if (!quantityText) {
+            const itemDetails = item.querySelector('.item-details');
+            const priceElement = item.querySelector('.item-price');
+            
+            if (itemDetails && priceElement) {
+                const newQuantityText = document.createElement('div');
+                newQuantityText.className = 'item-quantity';
+                newQuantityText.textContent = `Quantity: ${quantity}`;
+                
+                // Insert after price element
+                priceElement.insertAdjacentElement('afterend', newQuantityText);
+            }
+        } else {
+            quantityText.textContent = `Quantity: ${quantity}`;
+        }
+    });
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
 
 
+function goToCartStage() {
+
+    document.getElementById('cart-container').classList.remove('payment-stage');
+    
+
+    document.getElementById('payment-step').classList.remove('active');
+    document.getElementById('cart-step').classList.add('active');
+    
+
+    window.scrollTo(0, 0);
+}
 
 function applyPromoCode() {
     const promoInput = document.getElementById('promo-input');
@@ -186,19 +241,30 @@ function checkout() {
     const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
     const cartItems = getUserCart();
     const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const total = subtotal + deliveryFee - discountAmount;
+ 
     const selectedAddressRadio = document.querySelector('input[name="address"]:checked');
     const addressLabel = selectedAddressRadio?.nextElementSibling;
     const deliveryAddress = addressLabel?.querySelector('.address-text')?.textContent?.trim() || '';
     const deliveryPhone = addressLabel?.querySelector('.address-phone')?.textContent?.trim() || '';
     const deliveryName = addressLabel?.querySelector('.address-name')?.textContent?.trim() || '';
     const deliveryAddressId = addressLabel?.querySelector('.address-id')?.textContent?.trim() || '';
+    const { enable_taxes, tax_display_option, currency } = settings;
+    const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
+    const taxFee = subtotal * taxRate / 100;
     const userId = document.getElementById('app-data').dataset.userId;
+    const promoInput = document.getElementById('promo-input');
+    const discountCode = promoInput.value.trim().toUpperCase() || null;
+    const total = subtotal + deliveryFee - discountAmount + taxFee;
     const payload = {
         paymentMethod: paymentMethod,
         amount: total,
         deliveryAddressId: deliveryAddressId,
         userId: userId,
+        taxRate: taxRate,
+        taxFee: taxFee,
+        discountAmount: discountAmount,
+        discountCode: discountCode,
+        deliveryFee: deliveryFee,
         cartItems: cartItems.map(item => ({
             id: item.id,
             name: item.name,

@@ -1,6 +1,8 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 class GmailSender
 {
 
@@ -12,12 +14,12 @@ class GmailSender
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = GMAIL_USERNAME;
-            $mail->Password = GMAIL_PASSWORD;
+            $mail->Username = 'nguyenhoanghiep478@gmail.com';
+            $mail->Password = 'gqifrbhuteavupgh';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom(GMAIL_USERNAME, 'Siuuuuu Shop');
+            $mail->setFrom('nguyenhoanghiep478@gmail.com', 'Siuuuuu Shop');
             $mail->addAddress($to);
             $mail->isHTML(true);
             $mail->Subject = $subject;
@@ -75,4 +77,3 @@ class GmailSender
         return bin2hex(random_bytes(32));
     }
 }
-?>

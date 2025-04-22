@@ -66,27 +66,42 @@ class OrderModel
 
     public function createOrder(OrderDto $order): ?string
     {
-        $sql = "INSERT INTO orders (user_id, total_price, status, store_id, created_at, delivery_address_id)
-            VALUES (?, ?, ?, ?, NOW(), ?)";
+        $sql = "INSERT INTO orders (
+                    user_id, total_price, status, store_id, created_at, 
+                    delivery_address_id, tax_fee, delivery_fee, tax_rate, discount_amount
+                ) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)";
+        
         $stmt = $this->conn->prepare($sql);
-
+    
         $userId = $order->getUserId();
         $totalPrice = $order->getTotalPrice();
         $status = $order->getStatus();
         $storeId = $order->getStoreId();
         $deliveryAddressId = $order->getDeliveryAddressId();
-        $stmt->bind_param("sdsss", $userId, $totalPrice, $status, $storeId, $deliveryAddressId);
+        $taxFee = $order->getTaxFee();
+        $deliveryFee = $order->getDeliveryFee();
+        $taxRate = $order->getTaxRate();
+        $discountAmount = $order->getDiscountAmount();
+    
+        $stmt->bind_param("sdsssdddd", 
+            $userId, $totalPrice, $status, $storeId, $deliveryAddressId, 
+            $taxFee, $deliveryFee, $taxRate, $discountAmount
+        );
+    
         $result = $stmt->execute();
-
-        $lastOrder = $this->getLastInsertedOrderByUser($userId);
-        $orderId = $lastOrder['id'];
+    
         if (!$result) {
             return null;
         }
-        file_put_contents(__DIR__ . '/order-log', json_encode($orderId), FILE_APPEND);
+    
+        $lastOrder = $this->getLastInsertedOrderByUser($userId);
+        $orderId = $lastOrder['id'];
+    
         $this->insertOrderItems($orderId, $order->getOrderItems());
+    
         return $orderId;
     }
+    
 
 
     public function getOrderItemsWithProductInfoByOrderId($orderId): array
@@ -196,7 +211,8 @@ class OrderModel
     public function getOrdersByUserId($userId): array
     {
         $orders = [];
-        $sql = "SELECT o.*,a.address,u.name 
+        $sql = "SELECT 
+        o.*,a.address,u.name
         FROM orders as o 
         JOIN user_addresses as a on o.user_id = a.user_id and o.delivery_address_id = a.id 
         JOIN users AS u 
@@ -210,6 +226,20 @@ class OrderModel
             $orders[] = $this->mapToOrderDto($row);
         }
         return $orders;
+    }
+
+    public function getTotalOrderItemsByOrderId($orderId): int
+    {
+        $sql = "SELECT SUM(order_items.id) as total_items FROM order_items WHERE order_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $orderId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $row = $result->fetch_assoc()) {
+            return (int)$row['total_items'];
+        }
+        return 0;
     }
 
     public function getRecentOrderStatuses(int $limit = 5): array
@@ -278,7 +308,7 @@ class OrderModel
             } elseif ($period === 'monthly') {
                 $dayKey = $date->format('Y-m-d');
                 $results[$dayKey] = $sales[$dayKey] ?? 0;
-            } else { 
+            } else {
                 $dayKey = $date->format('Y-m-d');
                 $results[$dayKey] = $sales[$dayKey] ?? 0;
             }
@@ -286,7 +316,7 @@ class OrderModel
             $date->modify('+1 day');
         }
 
-       
+
         $final = [];
         foreach ($results as $label => $total) {
             $final[] = [
@@ -312,7 +342,7 @@ class OrderModel
             WHERE oi.product_id = ?
             AND o.status IN ('completed') 
         ";
-    
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $productId);
         $stmt->execute();
@@ -349,7 +379,7 @@ class OrderModel
                 $updateStmt->bind_param("ss", $updatedStatus, $orderId);
                 $updateSuccess = $updateStmt->execute();
                 file_put_contents(__DIR__ . '/order-log', json_encode("UPDATE SUCCESS {$updateSuccess}"), FILE_APPEND);
-                if($description == null) {
+                if ($description == null) {
                     $description = "Order status changed to $status";
                 }
                 $logSuccess = $this->logOrderStatus($orderId, $updatedStatus, $description);
@@ -362,9 +392,64 @@ class OrderModel
 
         return false;
     }
+
+    public function getTopCustomersByPurchase($from = null, $to = null, $limit = 5)
+    {
+        $sql = "
+            SELECT 
+                u.id AS user_id,
+                u.name AS customer_name,
+                u.email,
+                SUM(o.total_price) AS total_spent,
+                COUNT(o.id) AS total_orders,
+                MAX(o.created_at) AS last_order_date
+            FROM orders o
+            JOIN users u ON o.user_id = u.id
+            WHERE o.status = 'completed'
+        ";
+    
+        $params = [];
+        $types = "";
+    
+        if ($from) {
+            $sql .= " AND o.created_at >= ? ";
+            $params[] = $from;
+            $types .= "s";
+        }
+    
+        if ($to) {
+            $sql .= " AND o.created_at <= ? ";
+            $params[] = $to;
+            $types .= "s";
+        }
+    
+        $sql .= " GROUP BY o.user_id
+                  ORDER BY total_spent DESC
+                  LIMIT ?";
+    
+        $params[] = $limit;
+        $types .= "i";
+    
+        $stmt = $this->conn->prepare($sql);
+    
+
+        $stmt->bind_param($types, ...$params);
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $customers = [];
+        while ($row = $result->fetch_assoc()) {
+            $customers[] = $row;
+        }
+    
+        return $customers;
+    }
+    
+
     public function logOrderStatus(string $orderId, string $status, string $description): bool
     {
-      
+
         $sql = "INSERT INTO order_status (order_id, status, description, created_at)
             VALUES (?, ?, ?, NOW())";
 
@@ -484,7 +569,19 @@ class OrderModel
         if (isset($data['phone'])) {
             $orderDto->setPhone($data['phone']);
         }
-
+        if (isset($data['tax_fee'])) {
+            $orderDto->setTaxFee((float) $data['tax_fee']);
+        }
+        if (isset($data['delivery_fee'])) {
+            $orderDto->setDeliveryFee((float) $data['delivery_fee']);
+        }
+        if (isset($data['tax_rate'])) {
+            $orderDto->setTaxRate((float) $data['tax_rate']);
+        }
+        if (isset($data['discount_amount'])) {
+            $orderDto->setDiscountAmount((float) $data['discount_amount']);
+        }
+        file_put_contents(__DIR__ . '/order-log', json_encode($orderDto), FILE_APPEND);
         return $orderDto;
     }
 }
