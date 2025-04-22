@@ -35,7 +35,7 @@ class UserModel
     }
     public function getAllUsers(): mixed
     {
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM users WHERE role = 'customer'";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -280,7 +280,7 @@ class UserModel
     }
     public function searchUsers($keyword): array
     {
-        $sql = "SELECT * FROM users WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?";
+        $sql = "SELECT * FROM users WHERE role = 'customer' AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)";
         $stmt = $this->conn->prepare($sql);
         $keyword = "%" . $keyword . "%";
         $stmt->bind_param("sss", $keyword, $keyword, $keyword);

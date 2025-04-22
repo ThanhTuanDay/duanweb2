@@ -2,6 +2,7 @@
 require_once (dirname(__DIR__)."../../vendor/autoload.php");
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../../');
 $dotenv->load();
+
 // define("DB_HOST", $_ENV['DB_HOST'] ?? "fast-food-shop-nguyenhoanghiep478-9317.j.aivencloud.com");
 // define("DB_USER", $_ENV['DB_USER']) ?? "avnadmin";
 // define("DB_PASS", $_ENV['DB_PASS']) ?? "AVNS_DJvTceg3EafMDgXGR-A";
@@ -17,3 +18,4 @@ $dotenv->load();
 // define('VERIFY_URL','http://localhost/duanweb2/verify');
 // define('RESET_PASS_URL','http://localhost/duanweb2/resetpassword');
 // define('RESET_PASS_TIME_LIMIT',30*60);
+
