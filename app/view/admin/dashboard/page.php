@@ -190,57 +190,6 @@ $categoryTotals = json_encode($totals);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr>
-                                        <td>#ORD-0025</td>
-                                        <td>John Doe</td>
-                                        <td>May 15, 2023</td>
-                                        <td>$125.99</td>
-                                        <td><span class="badge bg-success">Delivered</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#ORD-0024</td>
-                                        <td>Jane Smith</td>
-                                        <td>May 14, 2023</td>
-                                        <td>$78.50</td>
-                                        <td><span class="badge bg-warning">Processing</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#ORD-0023</td>
-                                        <td>Robert Johnson</td>
-                                        <td>May 14, 2023</td>
-                                        <td>$42.75</td>
-                                        <td><span class="badge bg-info">Shipped</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#ORD-0022</td>
-                                        <td>Emily Davis</td>
-                                        <td>May 13, 2023</td>
-                                        <td>$96.25</td>
-                                        <td><span class="badge bg-danger">Cancelled</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#ORD-0021</td>
-                                        <td>Michael Wilson</td>
-                                        <td>May 12, 2023</td>
-                                        <td>$112.00</td>
-                                        <td><span class="badge bg-success">Delivered</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody> -->
                                     <?php foreach ($recentOrders as $order): ?>
                                         <tr>
                                             <td>#<?= strtoupper(substr($order['id'], 0, 8)) ?></td>
@@ -273,56 +222,6 @@ $categoryTotals = json_encode($totals);
                         <a href="/duanweb2/admin/product/page" class="btn btn-sm btn-primary">View All</a>
                     </div>
                     <div class="card-body">
-                        <!-- <div class="recent-order-item">
-                            <div class="recent-order-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Delicious Burger">
-                            </div>
-                            <div class="recent-order-info">
-                                <h6>Delicious Burger</h6>
-                                <p>Sold: 254 items</p>
-                            </div>
-                            <div class="recent-order-price">$15.99</div>
-                        </div>
-                        <div class="recent-order-item">
-                            <div class="recent-order-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Cheese Pizza">
-                            </div>
-                            <div class="recent-order-info">
-                                <h6>Cheese Pizza</h6>
-                                <p>Sold: 186 items</p>
-                            </div>
-                            <div class="recent-order-price">$18.99</div>
-                        </div>
-                        <div class="recent-order-item">
-                            <div class="recent-order-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="French Fries">
-                            </div>
-                            <div class="recent-order-info">
-                                <h6>French Fries</h6>
-                                <p>Sold: 152 items</p>
-                            </div>
-                            <div class="recent-order-price">$8.50</div>
-                        </div>
-                        <div class="recent-order-item">
-                            <div class="recent-order-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Pasta Carbonara">
-                            </div>
-                            <div class="recent-order-info">
-                                <h6>Pasta Carbonara</h6>
-                                <p>Sold: 134 items</p>
-                            </div>
-                            <div class="recent-order-price">$14.75</div>
-                        </div>
-                        <div class="recent-order-item">
-                            <div class="recent-order-img">
-                                <img src="/placeholder.svg?height=50&width=50" alt="Chocolate Shake">
-                            </div>
-                            <div class="recent-order-info">
-                                <h6>Chocolate Shake</h6>
-                                <p>Sold: 98 items</p>
-                            </div>
-                            <div class="recent-order-price">$6.25</div>
-                        </div> -->
                         <?php foreach ($topProducts as $product): ?>
                             <div class="recent-order-item">
                                 <div class="recent-order-img">
@@ -338,6 +237,88 @@ $categoryTotals = json_encode($totals);
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Customers Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <h5 class="mb-0">Top Customers by Purchase Volume</h5>
+                            <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+                                <!-- Customer Count Selector -->
+                                <div class="input-group input-group-sm me-2" style="width: 150px;">
+                                    <span class="input-group-text bg-dark text-light border-secondary">Show</span>
+                                    <select class="form-select form-select-sm" id="customerCount">
+                                        <option value="5" selected>5 Customers</option>
+                                        <option value="10">10 Customers</option>
+                                        <option value="15">15 Customers</option>
+                                        <option value="20">20 Customers</option>
+                                    </select>
+                                </div>
+
+                                <!-- Date Range Picker for Top Customers -->
+                                <div class="date-range-picker d-flex align-items-center">
+                                    <div class="input-group input-group-sm me-2">
+                                        <span class="input-group-text bg-dark text-light border-secondary">From</span>
+                                        <input type="date" class="form-control form-control-sm" id="customerDateFrom">
+                                    </div>
+                                    <div class="input-group input-group-sm me-2">
+                                        <span class="input-group-text bg-dark text-light border-secondary">To</span>
+                                        <input type="date" class="form-control form-control-sm" id="customerDateTo">
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-primary" id="applyCustomerFilter">
+                                        <i class="fas fa-filter"></i> Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="topCustomersTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer</th>
+                                        <th>Email</th>
+                                        <th>Total Orders</th>
+                                        <th>Total Spent</th>
+                                        <th>Last Order</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Example data rows -->
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                
+                                                <div>
+                                                    <h6 class="mb-0">John Doe</h6>
+                                                    <small class="text-muted">CUST001</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>john.doe@example.com</td>
+                                        <td>24</td>
+                                        <td>$2,845.50</td>
+                                        <td>May 15, 2023</td>
+                                        <td>
+                                            <a href="/duanweb2/admin/cusomer-order-detail/page?userId=ad" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-eye me-1"></i>Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,9 +9,9 @@ require_once(dirname(__DIR__) . '../dto/order.dto.php');
 <?php
 class OrderController{
     private $db;
-    private $momoPayment;
+
     private $orderModel;
-    private $productModel;
+
     public function __construct() {
         $this->db = new Database();
         $this->orderModel = new OrderModel($this->db);
@@ -59,6 +59,10 @@ class OrderController{
 
     public function getProductStats($productId){
         return $this->orderModel->getProductStats($productId);
+    }
+
+    public function getTopCustomerByPurchase($from=null,$to=null,$limit = 5) {
+        return $this->orderModel->getTopCustomersByPurchase($from,$to,$limit);
     }
 }
 

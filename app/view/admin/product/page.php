@@ -700,13 +700,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="inactive">Inactive</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label for="productFeatured" class="form-label">Featured</label>
                             <select class="form-select" id="productFeatured">
                                 <option value="no" selected>No</option>
                                 <option value="yes">Yes</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">Add Product</button>
@@ -791,13 +791,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="inactive">Inactive</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label for="editProductFeatured" class="form-label">Featured</label>
                             <select class="form-select" id="editProductFeatured">
                                 <option value="no">No</option>
                                 <option value="yes" selected>Yes</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
