@@ -24,7 +24,7 @@ const getApplicableTaxRate = () => {
 };
 document.addEventListener('DOMContentLoaded', function () {
     const toggleTitles = document.querySelectorAll('.collapsible-title');
-    
+
     toggleTitles.forEach(title => {
         title.addEventListener('click', () => {
             const content = title.nextElementSibling;
@@ -74,14 +74,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Quantity controls
     document.getElementById('increase-quantity').addEventListener('click', function () {
         const quantityInput = document.getElementById('product-quantity');
-        quantityInput.value = parseInt(quantityInput.value) + 1;
+        quantityInput.value = parseInt(quantityInput.value);
     });
 
     document.getElementById('decrease-quantity').addEventListener('click', function () {
         const quantityInput = document.getElementById('product-quantity');
         const currentValue = parseInt(quantityInput.value);
         if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
+            quantityInput.value = currentValue;
         }
     });
 
@@ -287,6 +287,10 @@ if (allProducts) {
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+        const searchContainer = document.getElementById("search-container")
+        const searchBtn = document.getElementById("search-btn")
+        const searchInput = document.getElementById("search-input-navbar")
+        const searchResults = document.getElementById("search-results")
         const rangeInput = document.querySelectorAll(".range-input input");
         const priceInput = document.querySelectorAll(".price-input input");
         const progress = document.querySelector(".price-progress");
@@ -356,15 +360,89 @@ if (allProducts) {
             // Submit the form
             document.getElementById('filter-form').submit();
         });
+        
 
         // Mobile filter toggle
         document.getElementById('mobile-filter-toggle').addEventListener('click', function () {
             const sidebar = document.getElementById('filter-sidebar');
             sidebar.classList.toggle('active');
         });
+        searchBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            searchContainer.classList.toggle("active")
+
+            if (searchContainer.classList.contains("active")) {
+                setTimeout(() => {
+                    searchInput.focus()
+                }, 300)
+            } else {
+                searchInput.value = ""
+                searchResults.innerHTML = ""
+                searchContainer.classList.remove("has-results")
+            }
+        })
+
+        document.addEventListener("click", (e) => {
+            if (!searchContainer.contains(e.target)) {
+                searchContainer.classList.remove("active")
+                searchInput.value = ""
+                searchResults.innerHTML = ""
+                searchContainer.classList.remove("has-results")
+            }
+        })
+        searchInput.addEventListener("input", function () {
+            const query = this.value.toLowerCase().trim()
+
+            if (query.length < 2) {
+                searchResults.innerHTML = ""
+                searchContainer.classList.remove("has-results")
+                return
+            }
+
+            const filteredProducts = allProducts.filter((product) => product.name.toLowerCase().includes(query))
+
+            if (filteredProducts.length > 0) {
+                searchResults.innerHTML = ""
+
+                filteredProducts.forEach((product) => {
+                    const resultItem = document.createElement("a")
+                    resultItem.href = "#"
+                    resultItem.className = "search-result-item"
+                    resultItem.innerHTML = `
+                            <img src="${product.image_url}" alt="${product.name}" class="search-result-img">
+                            <div class="search-result-info">
+                                <div class="search-result-name">${product.name}</div>
+                                <div class="search-result-price">$${Number(product.price).toFixed(2)}</div>
+                            </div>
+                        `
+
+                    resultItem.addEventListener("click", (e) => {
+                        e.preventDefault()
+                        searchContainer.classList.remove("active")
+                        searchInput.value = ""
+                        searchResults.innerHTML = ""
+                        searchContainer.classList.remove("has-results")
+                        const foodSection = document.getElementById("food-section");
+                        if (foodSection) {
+                          foodSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                        openCustomModal(product.id, allProducts)
+                    })
+
+                    searchResults.appendChild(resultItem)
+                })
+
+                searchContainer.classList.add("has-results")
+            } else {
+                searchResults.innerHTML = '<div class="search-no-results">No products found</div>'
+                searchContainer.classList.add("has-results")
+            }
+        })
 
         renderProducts(allProducts, currentPage);
+
     });
+
 
     function renderProducts(products, page = 1, general = {}) {
         const productList = document.getElementById('product-list');
@@ -382,7 +460,7 @@ if (allProducts) {
 
         const { enable_taxes, tax_display_option, currency } = settings;
 
-        
+
 
         const taxRate = enable_taxes ? getApplicableTaxRate() : 0;
         applicationTaxRate = taxRate;
@@ -583,7 +661,7 @@ if (allProducts) {
             });
         };
 
-        
+
         if (img.complete) {
             img.onload();
         }
@@ -611,25 +689,9 @@ if (allProducts) {
 
 
 
-   document.getElementById("search-btn").addEventListener("click", function (e) {
-    e.preventDefault(); 
 
-    const targetSection = document.getElementById("filter-sidebar");
-    const targetInput = document.getElementById("search-input");
 
-    if (targetSection) {
-      targetSection.scrollIntoView({ behavior: "smooth" });
 
-    
-      setTimeout(() => {
-        if (targetInput) {
-          targetInput.focus();
-        }
-      }, 500);s
-    }
-  });
-
-  
 
     function renderPagination(totalItems, currentPage) {
         const totalPages = Math.ceil(totalItems / itemsPerPage);

@@ -43,11 +43,16 @@ class PaymentController{
         file_put_contents(__DIR__ . '/order-log', $orderDto->getDeliveryFee(), FILE_APPEND);
         
         if(!$this->handleProductSell($items)){
-            return json_encode(['error' => 'Failed to sell product']);
+            return json_encode([
+                'success' => false,
+                'error' => 'Không đủ hàng để bán']);
         }
 
         $orderCreatedId =  $this->preCreateOrder($orderDto);
-        return $orderCreatedId;
+        return json_encode([
+            'success' => true,
+            'orderId' => $orderCreatedId,
+            'message' => 'Đặt hàng thành công. Chờ xác nhận từ người bán']);
     }
 
     private function handleProductSell($items){

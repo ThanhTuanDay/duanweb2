@@ -333,8 +333,12 @@ function codPayment(payload) {
     })
         .then(res => res.json())
         .then(data => {
-
-            window.location.href = '/duanweb2/success?orderId=' + data + "&resultCode=0";
+            data = JSON.parse(data);
+            if(data.success == false){
+                alert(data.error);
+                return;
+            }
+            window.location.href = '/duanweb2/success?orderId=' + data.orderId + "&resultCode=0";
 
         })
         .catch(err => {

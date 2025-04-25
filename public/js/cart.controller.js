@@ -53,6 +53,11 @@ function addToCartWithQuantity(productId, quantity) {
     addToCart(null, productId, quantity);
 }
 function addToCart(event, productId, quantity = 1) {
+    const isLogin = localStorage.getItem('isLogin');
+    if(isLogin === 'false' || isLogin === null) {
+        window.location.href = '/duanweb2/login';
+        return;
+    }
     cart.addToCart(productId, quantity);
     if (event) {
         const cartIcon = event.currentTarget;
@@ -67,7 +72,9 @@ function addToCart(event, productId, quantity = 1) {
 }
 function showCartNotification(message) {
     const container = document.getElementById('cart-notifications-container');
-
+    if(!container) {
+        return;
+    }
     // Create a new notification element
     const notification = document.createElement('div');
     notification.className = 'cart-notification';
@@ -120,3 +127,28 @@ function updateQuantity(productId, quantity) {
 function removeItem(productId) {
     cart.removeFromCart(productId);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.reorder-btn').forEach(button => {
+        button.addEventListener('click', function (e) {
+            const itemsJson = this.getAttribute('data-items');
+            try {
+                const items = JSON.parse(itemsJson);
+
+                for (const item of items) {
+                    if(!cart.isProductExist(item.product_id)){
+
+                       alert('Sản phẩm không còn tồn tại !');
+                       return;
+                    }
+                    const productId = item.product_id;
+                    const quantity = item.quantity || 1; 
+                    addToCart(null, productId, quantity);
+                }
+                window.location.href = '/duanweb2/cart';
+            } catch (e) {
+                console.error('Lỗi khi xử lý dữ liệu reorder:', e);
+            }
+        });
+    });
+});

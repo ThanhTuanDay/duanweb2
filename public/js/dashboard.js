@@ -98,7 +98,7 @@ function fetchAndRenderTopCustomers() {
                         <td>${customer.last_order_date ?? 'N/A'}</td>
                         <td>
                             <a href="/duanweb2/admin/customer-order-detail/page?userId=${customer.user_id}" class="btn btn-sm btn-primary">
-                                <i class="fas fa-eye me-1"></i>Details
+                                <i class="fas fa-eye me-1"></i>Chi tiết
                             </a>
                         </td>
                     </tr>

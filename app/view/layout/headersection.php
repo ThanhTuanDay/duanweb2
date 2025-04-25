@@ -104,11 +104,18 @@
                     <?php endif; ?>
                     <p></p>
 
-                    <form class="form-inline">
-                        <button class="btn  my-2 my-sm-0 nav_search-btn" id='search-btn' type="submit">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </form>
+                    <div class="search-container" id="search-container">
+                        <form class="form-inline">
+                            <button class="search-btn" id="search-btn" type="button">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                            <input type="text" class="search-input" id="search-input-navbar" placeholder="Search for food...">
+                        </form>
+
+                        <div class="search-results" id="search-results">
+                         
+                        </div>
+                    </div>
                     <a href="#food-section" class="order_online">
                         Order Now
                     </a>

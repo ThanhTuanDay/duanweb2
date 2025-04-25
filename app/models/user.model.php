@@ -16,7 +16,7 @@ class UserModel
     }
     public function LoginUser(UserDto $user)
     {
-        $sql = "SELECT * FROM users WHERE email = ? AND password = ? AND is_verified = 1 LIMIT 1";
+        $sql = "SELECT * FROM users WHERE email = ? AND password = ? AND is_verified = 1 And is_block = 0 LIMIT 1";
         $stmt = $this->db->link->prepare($sql);
 
         $email = $user->getEmail();
@@ -29,13 +29,13 @@ class UserModel
         if ($result && $result->num_rows > 0) {
             return $result->fetch_assoc();
         } else {
-            echo "<script>alert('Tài khoản không tồn tại hoặc chưa xác thực');</script>";
+            echo "<script>alert('Tài khoản đã bị khóa');</script>";
             return null;
         }
     }
     public function getAllUsers(): mixed
     {
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM users WHERE role = 'customer'";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -132,7 +132,7 @@ class UserModel
         $role = $userDto->getRole() == null ? $userDto::ROLE_USER : $userDto->getRole();
         $is_verified = 1;
 
-
+        
         $stmt->bind_param(
             "ssssssss",
             $name,
@@ -151,13 +151,22 @@ class UserModel
         }
 
         $stmt->close();
-
+        $userId = $this->getLastInsertedUser()['id'];
+        $this->insertAddress($userId, "Home", $userDto->getAddress(), $userDto->getPhone());
         $userDto->setVerifyToken($token);
 
         // $this->sendVerifyEmail($userDto);
         return $result;
     }
+    public function getLastInsertedUser()
+    {
+        $sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
 
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 
     public function sendVerifyEmail($userDto)
     {
@@ -165,7 +174,7 @@ class UserModel
         $token = $userDto->getVerifyToken();
         $name = $userDto->getName();
         $subject = "Xác thực tài khoản";
-        $url = VERIFY_URL . "?email=$email&token=" . $token;
+        $url = 'http://localhost/duanweb2/verify' . "?email=$email&token=" . $token;
         $template = $this->messageSender->getVerifyTemplate($name, $url);
         $this->messageSender->send($email, $subject, $template);
     }
@@ -202,7 +211,7 @@ class UserModel
         $token = time();
         $this->updateUserVerified($email, $token);
         $subject = "Thay đổi mật khẩu";
-        $verifyUrl = RESET_PASS_URL . '?email=' . $email . '&token=' . $token;
+        $verifyUrl = 'http://localhost/duanweb2/resetpassword' . '?email=' . $email . '&token=' . $token;
         $template = $this->messageSender->getVerifyTemplate($user->getName(), $verifyUrl);
         $this->messageSender->send($email, $subject, $template);
 
@@ -280,7 +289,7 @@ class UserModel
     }
     public function searchUsers($keyword): array
     {
-        $sql = "SELECT * FROM users WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?";
+        $sql = "SELECT * FROM users WHERE role = 'customer' AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)";
         $stmt = $this->conn->prepare($sql);
         $keyword = "%" . $keyword . "%";
         $stmt->bind_param("sss", $keyword, $keyword, $keyword);
@@ -303,7 +312,7 @@ class UserModel
     {
         $token_time = (int) $token;
         $remaining_time = time() - $token_time;
-        if ($remaining_time > RESET_PASS_TIME_LIMIT) {
+        if ($remaining_time > 30*60) {
             return false;
         }
         return true;

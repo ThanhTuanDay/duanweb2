@@ -232,8 +232,9 @@ function attachEditProductEvents() {
             document.getElementById('editProductStock').value = this.dataset.stock;
             document.getElementById('editProductDescription').value = this.dataset.description;
             document.getElementById('editProductStatus').value = this.dataset.status;
-            document.getElementById('editProductFeatured').value = this.dataset.featured ?? 'no';
+            // document.getElementById('editProductFeatured').value = this.dataset.featured ?? 'no';
             document.getElementById('oldProductImage').value = this.dataset.image;
+            document.getElementById('edit-product-image').src = this.dataset.image ;
 
             const currentImg = document.getElementById('current-product-image');
             if (currentImg && this.dataset.image) {
