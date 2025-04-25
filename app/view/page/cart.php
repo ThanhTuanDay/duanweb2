@@ -1729,31 +1729,29 @@ $addresses = $userController->getDeliveryAddress();
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
-                    <a href="book">BOOK TABLE</a>
+                    <a href="homepage">Trang Chủ</a>
+                    <a href="menu">Đồ ăn</a>
+                    <a href="about">Về chúng tôi </a>
+                    <a href="book">Book bàn</a>
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>
         </div>
     </header>
-
     <main class="main-container">
         <div class="container">
             <div class="page-title">
-                <h1>Your Cart</h1>
+                <h1>Giỏ Hàng Của Bạn</h1>
             </div>
 
-            <!-- Checkout Steps -->
             <div class="checkout-steps">
                 <div class="step active" id="cart-step">
                     <div class="step-number">1</div>
-                    <div class="step-label">Cart</div>
+                    <div class="step-label">Giỏ Hàng</div>
                 </div>
                 <div class="step" id="payment-step">
                     <div class="step-number">2</div>
-                    <div class="step-label">Payment</div>
+                    <div class="step-label">Thanh Toán</div>
                 </div>
             </div>
 
@@ -1763,7 +1761,7 @@ $addresses = $userController->getDeliveryAddress();
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
-                        Back to Cart
+                        Quay Lại Giỏ Hàng
                     </button>
                 </div>
 
@@ -1773,9 +1771,9 @@ $addresses = $userController->getDeliveryAddress();
                             <img src="/placeholder.svg?height=80&width=80" alt="Cheeseburger">
                         </div>
                         <div class="item-details">
-                            <div class="item-name">Deluxe Cheeseburger</div>
+                            <div class="item-name">Bánh Cheeseburger Đặc Biệt</div>
                             <div class="item-price">$12.99</div>
-                            <div class="item-quantity">Quantity: 1</div>
+                            <div class="item-quantity">Số Lượng: 1</div>
                             <div class="item-actions">
                                 <div class="quantity-control">
                                     <button class="quantity-btn decrease-btn" onclick="updateQuantity(1, -1)">-</button>
@@ -1789,7 +1787,7 @@ $addresses = $userController->getDeliveryAddress();
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    Remove
+                                    Xóa
                                 </button>
                             </div>
                         </div>
@@ -1800,9 +1798,9 @@ $addresses = $userController->getDeliveryAddress();
                             <img src="/placeholder.svg?height=80&width=80" alt="French Fries">
                         </div>
                         <div class="item-details">
-                            <div class="item-name">Large French Fries</div>
+                            <div class="item-name">Khoai Tây Chiên Lớn</div>
                             <div class="item-price">$4.99</div>
-                            <div class="item-quantity">Quantity: 1</div>
+                            <div class="item-quantity">Số Lượng: 1</div>
                             <div class="item-actions">
                                 <div class="quantity-control">
                                     <button class="quantity-btn decrease-btn" onclick="updateQuantity(2, -1)">-</button>
@@ -1816,7 +1814,7 @@ $addresses = $userController->getDeliveryAddress();
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    Remove
+                                    Xóa
                                 </button>
                             </div>
                         </div>
@@ -1827,9 +1825,9 @@ $addresses = $userController->getDeliveryAddress();
                             <img src="/placeholder.svg?height=80&width=80" alt="Chocolate Shake">
                         </div>
                         <div class="item-details">
-                            <div class="item-name">Chocolate Milkshake</div>
+                            <div class="item-name">Sữa Lắc Sô Cô La</div>
                             <div class="item-price">$5.49</div>
-                            <div class="item-quantity">Quantity: 1</div>
+                            <div class="item-quantity">Số Lượng: 1</div>
                             <div class="item-actions">
                                 <div class="quantity-control">
                                     <button class="quantity-btn decrease-btn" onclick="updateQuantity(3, -1)">-</button>
@@ -1843,7 +1841,7 @@ $addresses = $userController->getDeliveryAddress();
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    Remove
+                                    Xóa
                                 </button>
                             </div>
                         </div>
@@ -1851,50 +1849,49 @@ $addresses = $userController->getDeliveryAddress();
                 </div>
 
                 <div class="cart-summary" id="cart-summary">
-                    <h2 class="summary-title">Order Summary</h2>
+                    <h2 class="summary-title">Tóm Tắt Đơn Hàng</h2>
 
                     <div class="summary-row">
-                        <span>Subtotal</span>
+                        <span>Tổng Tiền Hàng</span>
                         <span id="subtotal">$23.47</span>
                     </div>
 
                     <div class="summary-row">
-                        <span>Delivery Fee</span>
+                        <span>Phí Giao Hàng</span>
                         <span id="delivery-fee">$2.50</span>
                     </div>
 
                     <div class="summary-row">
-                        <span>Tax rate</span>
+                        <span>Thuế suất</span>
                         <span id="tax-rate">$2.50</span>
                     </div>
-                    
+
                     <div class="summary-row">
-                        <span>Tax fee</span>
+                        <span>Phí Thuế</span>
                         <span id="tax-fee">$2.50</span>
                     </div>
 
-                    
-
                     <div class="promo-code">
-                        <div class="promo-title">Promotional Code</div>
+                        <div class="promo-title">Mã Giảm Giá</div>
                         <div class="promo-form">
-                            <input type="text" class="promo-input" id="promo-input" placeholder="Enter code">
-                            <button class="promo-btn" onclick="applyPromoCode()">Apply</button>
+                            <input type="text" class="promo-input" id="promo-input" placeholder="Nhập mã">
+                            <button class="promo-btn" onclick="applyPromoCode()">Áp Dụng</button>
                         </div>
                         <div class="promo-message" id="promo-message"></div>
                     </div>
 
                     <div class="summary-row discount" id="discount-row" style="display: none;">
-                        <span>Discount</span>
+                        <span>Giảm Giá</span>
                         <span id="discount-amount">-$0.00</span>
                     </div>
 
                     <div class="summary-row total">
-                        <span>Total</span>
+                        <span>Tổng Cộng</span>
                         <span id="total">$25.97</span>
                     </div>
+
                     <div class="delivery-address">
-                        <h3 class="address-title">Delivery Address</h3>
+                        <h3 class="address-title">Địa Chỉ Giao Hàng</h3>
 
                         <div class="address-options">
                             <?php foreach ($addresses as $index => $address): ?>
@@ -1920,34 +1917,35 @@ $addresses = $userController->getDeliveryAddress();
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 4v16m8-8H4" />
                                     </svg>
-                                    Add New Address
+                                    Thêm Địa Chỉ Mới
                                 </button>
                             </div>
                         </div>
 
                         <div class="address-form" id="address-form" style="display: none;">
                             <div class="form-group">
-                                <label for="address-name">Address Name</label>
+                                <label for="address-name">Tên Địa Chỉ</label>
                                 <input type="text" id="address-name" class="form-input"
-                                    placeholder="Home, Office, etc.">
+                                    placeholder="Nhà, Văn Phòng, v.v.">
                             </div>
                             <div class="form-group">
-                                <label for="address-full">Full Address</label>
+                                <label for="address-full">Địa Chỉ Đầy Đủ</label>
                                 <textarea id="address-full" class="form-input"
-                                    placeholder="Street, Building, District, City"></textarea>
+                                    placeholder="Đường, Tòa nhà, Quận, Thành phố"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="address-phone">Phone Number</label>
+                                <label for="address-phone">Số Điện Thoại</label>
                                 <input type="text" id="address-phone" class="form-input" placeholder="+84 123 456 789">
                             </div>
                             <div class="form-actions">
-                                <button class="cancel-btn" onclick="hideAddAddressForm()">Cancel</button>
-                                <button class="save-btn" onclick="saveNewAddress()">Save Address</button>
+                                <button class="cancel-btn" onclick="hideAddAddressForm()">Hủy</button>
+                                <button class="save-btn" onclick="saveNewAddress()">Lưu Địa Chỉ</button>
                             </div>
                         </div>
                     </div>
+
                     <div class="payment-methods">
-                        <h3 class="payment-title">Payment Method</h3>
+                        <h3 class="payment-title">Phương Thức Thanh Toán</h3>
 
                         <div class="payment-options">
                             <div class="payment-option">
@@ -1985,20 +1983,18 @@ $addresses = $userController->getDeliveryAddress();
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke="#ffbe33">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 00 00-2 2v6a2 2 0 002 2z" />
                                         </svg>
                                     </div>
-                                    Cash on Delivery
+                                    Thanh Toán Khi Nhận Hàng
                                 </label>
                             </div>
                         </div>
                     </div>
-
-                    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                    <button class="checkout-btn" onclick="checkout()">Tiến Hành Thanh Toán</button>
                 </div>
 
-                <!-- Continue to Payment button (visible only in cart stage) -->
-                <button class="continue-btn" id="continue-btn" onclick="goToPaymentStage()">Continue to Payment</button>
+                <button class="continue-btn" id="continue-btn" onclick="goToPaymentStage()">Tiếp Tục Thanh Toán</button>
             </div>
 
             <div class="empty-cart" id="empty-cart" style="display: none;">
@@ -2006,9 +2002,9 @@ $addresses = $userController->getDeliveryAddress();
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <h3>Your cart is empty</h3>
-                <p>Looks like you haven't added any items to your cart yet.</p>
-                <a href="/duanweb2" class="continue-shopping">Continue Shopping</a>
+                <h3>Giỏ hàng của bạn đang trống</h3>
+                <p>Có vẻ như bạn chưa thêm bất kỳ sản phẩm nào vào giỏ hàng.</p>
+                <a href="/duanweb2" class="continue-shopping">Tiếp Tục Mua Sắm</a>
             </div>
         </div>
         <div id="app-data" data-user-id="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>"
@@ -2016,7 +2012,6 @@ $addresses = $userController->getDeliveryAddress();
             style="display: none;">
         </div>
     </main>
-
 
 </body>
 

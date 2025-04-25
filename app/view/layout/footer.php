@@ -34,8 +34,7 @@
                         Feane
                     </a>
                     <p>
-                        Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
-                    </p>
+                        Cần thiết, khiến đây trở thành trình tạo thực sự đầu tiên trên Internet. Nó sử dụng một từ điển gồm hơn 200 từ tiếng Latin, kết hợp với </p>
                     <div class="footer_social">
                         <a href="">
                             <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -57,21 +56,21 @@
             </div>
             <div class="col-md-4 footer-col">
                 <h4>
-                    Opening Hours
+                    Mở Theo giờ
                 </h4>
                 <p>
-                    Everyday
+                    Mỗi ngày
                 </p>
                 <p>
-                    10.00 Am -10.00 Pm
+                    10.00 Sáng -10.00 Tối
                 </p>
             </div>
         </div>
         <div class="footer-info">
             <p>
-                &copy; <span id="displayYear"></span> All Rights Reserved By
-                <a href="https://html.design/">Free Html Templates</a><br><br>
-                &copy; <span id="displayYear"></span> Distributed By
+                &copy; <span id="displayYear"></span> Mọi quyền được bảo lưu bởi
+                <a href="https://html.design/">Mẫu HTML miễn phí</a><br><br>
+                &copy; <span id="displayYear"></span>Phân phối bởi
                 <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
             </p>
         </div>
@@ -101,6 +100,9 @@
 <!-- nice select -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
+<script>
+    const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+</script>
 <script src="public/js/custom.js"></script>
 <script src="public/js/cart.model.js"></script>
 <script src="public/js/cart.controller.js"></script>

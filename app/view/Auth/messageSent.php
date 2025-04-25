@@ -217,10 +217,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
-                    <a href="book">BOOK TABLE</a>
+                    <a href="homepage">Trang Chủ</a>
+                    <a href="menu">Đồ ăn</a>
+                    <a href="about">Về chúng tôi </a>
+                    <a href="book">Book bàn</a>
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>
@@ -271,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         let timeLeft = 60;
         let countdownInterval;
 
-        resendLink.addEventListener('click', function (e) {
+        resendLink.addEventListener('click', function(e) {
             e.preventDefault();
 
             if (!email) {
@@ -280,12 +280,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             fetch('messageSent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'email=' + encodeURIComponent(email)
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'email=' + encodeURIComponent(email)
+                })
                 .then(response => response.json())
                 .then(data => {
                     alert('resend successful ');
@@ -300,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             timeLeft = 60;
             timer.textContent = timeLeft;
 
-            countdownInterval = setInterval(function () {
+            countdownInterval = setInterval(function() {
                 timeLeft--;
                 timer.textContent = timeLeft;
 

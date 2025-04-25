@@ -7,32 +7,32 @@ include dirname(__FILE__) . '/../layout/headersection.php';
 ?>
 </div>
 <section class="about_section layout_padding">
-      <div class="container  ">
+    <div class="container  ">
 
-          <div class="row">
-              <div class="col-md-6 ">
-                  <div class="img-box">
-                      <img src="images/about-img.png" alt="">
-                  </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="detail-box">
-                      <div class="heading_container">
-                          <h2>
-                              We Are Feane
-                          </h2>
-                      </div>
-                      <p>
-                          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-                          in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-                          are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-                          the middle of text. All
-                      </p>
-                      <a href="">
-                          Read More
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="img-box">
+                    <img src="images/about-img.png" alt="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <h2>
+                            Chúng Tôi Là Feane
+                        </h2>
+                    </div>
+                    <p>
+                        Có rất nhiều biến thể của các đoạn văn bản Lorem Ipsum có sẵn, nhưng đa số đã bị thay đổi
+                        theo một số hình thức, bằng cách thêm các yếu tố hài hước hoặc các từ ngẫu nhiên nghe không hề có nghĩa.
+                        Nếu bạn định sử dụng một đoạn Lorem Ipsum, bạn cần đảm bảo rằng không có bất kỳ điều gì đáng xấu hổ
+                        ẩn chứa ở giữa đoạn văn bản. Tất cả
+                    </p>
+                    <a href="">
+                        Đọc Thêm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

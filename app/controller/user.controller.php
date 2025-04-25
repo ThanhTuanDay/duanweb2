@@ -61,6 +61,9 @@ class UserController {
     public function updatePassword($userDto){
         return $this->userModel->updatePassword($userDto);
     }
+    public function getUserStatistics(): array{
+        return $this->userModel->getUserStatisticsOrder();
+    }
     
 }
 

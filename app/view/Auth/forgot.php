@@ -223,15 +223,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">Trang Chủ</a>
+                    <a href="menu">Đồ ăn</a>
+                    <a href="about">Về chúng tôi </a>
+                    <a href="book">Book bàn</a>
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>
         </div>
     </header>
-
     <main class="auth-container">
         <div class="auth-box">
             <div class="icon-container">
