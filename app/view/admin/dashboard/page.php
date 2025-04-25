@@ -192,7 +192,7 @@ $categoryTotals = json_encode($totals);
                                         <tr>
                                             <td>#<?= strtoupper(substr($order['id'], 0, 8)) ?></td>
                                             <td><?= htmlspecialchars($order['user_id']) ?></td>
-                                          
+                                            <!-- Có thể thay bằng tên nếu em join users -->
                                             <td><?= date('M d, Y', strtotime($order['created_at'])) ?></td>
                                             <td><?= number_format($order['total_price'], 2) ?> Vnđ</td>
                                             <td>
@@ -201,7 +201,7 @@ $categoryTotals = json_encode($totals);
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="/duanweb2/admin/order-detail/page?id=<?= $order['id'] ?>"
+                                                <a href="order-detail.php?id=<?= $order['id'] ?>"
                                                     class="btn btn-sm btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
