@@ -15,6 +15,11 @@ class OrderDto implements JsonSerializable
     private ?string $userName;
     private ?string $userEmail;
     private ?string $phone;
+    private ?float $taxFee;
+    private ?float $deliveryFee;
+    private ?float $taxRate;
+    private ?float $discountAmount;
+
     public function __construct(
         ?string $id = null,
         ?string $user_id = null,
@@ -28,7 +33,11 @@ class OrderDto implements JsonSerializable
         ?string $paymentMethod = null,
         ?string $userName = null,
         ?string $userEmail = null,
-        ?string $phone = null
+        ?string $phone = null,
+        ?float $taxFee = null,
+        ?float $deliveryFee = null,
+        ?float $taxRate = null,
+        ?float $discountAmount = null
     ) {
         $this->id = $id;
         $this->user_id = $user_id;
@@ -43,6 +52,10 @@ class OrderDto implements JsonSerializable
         $this->userName = $userName;
         $this->userEmail = $userEmail;
         $this->phone = $phone;
+        $this->taxFee = $taxFee;
+        $this->deliveryFee = $deliveryFee;
+        $this->taxRate = $taxRate;
+        $this->discountAmount = $discountAmount;
     }
 
     // Getters
@@ -101,6 +114,22 @@ class OrderDto implements JsonSerializable
     {
         return $this->deliveryAddress;
     }
+    public function getTaxFee(): ?float
+    {
+        return $this->taxFee;
+    }
+    public function getDeliveryFee(): ?float
+    {
+        return $this->deliveryFee;
+    }
+    public function getTaxRate(): ?float
+    {
+        return $this->taxRate;
+    }
+    public function getDiscountAmount(): ?float
+    {
+        return $this->discountAmount;
+    }
 
     // Setters
     public function setId(string $id): void
@@ -158,6 +187,22 @@ class OrderDto implements JsonSerializable
     public function setPhone(string $phone){
         $this->phone = $phone;
     }
+    public function setTaxFee(float $taxFee): void
+    {
+        $this->taxFee = $taxFee;
+    }
+    public function setDeliveryFee(float $deliveryFee): void
+    {
+        $this->deliveryFee = $deliveryFee;
+    }
+    public function setTaxRate(float $taxRate): void
+    {
+        $this->taxRate = $taxRate;
+    }
+    public function setDiscountAmount(float $discountAmount): void
+    {
+        $this->discountAmount = $discountAmount;
+    }
     public function jsonSerialize(): array
     {
         return [
@@ -170,7 +215,14 @@ class OrderDto implements JsonSerializable
             'delivery_address' => $this->deliveryAddress,
             'user_name' => $this->userName ?? null,
             "user_email" => $this->userEmail ?? null,
-            "user_phone" => $this->phone ?? null 
+            "user_phone" => $this->phone ?? null ,
+            'order_items' => array_map(function ($item) {
+                return $item->jsonSerialize();
+            }, $this->orderItems),
+            'tax_fee' => $this->taxFee,
+            'delivery_fee' => $this->deliveryFee,
+            'tax_rate' => $this->taxRate,
+            'discount_amount' => $this->discountAmount,
         ];
     }
 }

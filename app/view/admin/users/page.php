@@ -397,8 +397,8 @@ $users = $userController->getUsersPaginated($perPage, $page);
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
                                 aria-labelledby="filterDropdown">
                                 <li><a class="dropdown-item filter-option" href="#" data-filter="admin">Admin</a></li>
-                                <li><a class="dropdown-item filter-option" href="#"
-                                        data-filter="customer">Customer</a></li>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="customer">Customer</a>
+                                </li>
                                 <li><a class="dropdown-item filter-option" href="#" data-filter="active">Active</a></li>
                                 <li><a class="dropdown-item filter-option" href="#" data-filter="inactive">Inactive</a>
                                 </li>
@@ -424,7 +424,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $user): ?>
+                        <?php foreach ($allusers as $user): ?>
                             <tr>
                                 <td><?= $user['id'] ?></td>
                                 <td>
@@ -452,13 +452,19 @@ $users = $userController->getUsersPaginated($perPage, $page);
                                             data-address="<?= $user['address'] ?>">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#viewUserModal" data-user-id="<?= $user['id'] ?>"
-                                            onclick="blockUser(this)">
-
-                                            <i class="fa fa-ban"></i></button>
-                                        <button class="btn btn-sm btn-success" data-user-id="<?= $user['id'] ?>"
-                                            onclick="unBlockUser(this)"><i class="fa fa-lock-open"></i></button>
+                                        <?php if ($user['is_block'] === 0): ?>
+                                            <!-- Lock Button -->
+                                            <button class="btn btn-sm btn-danger" data-user-id="<?= $user['id'] ?>"
+                                                onclick="blockUser(this)">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                        <?php else: ?>
+                                            <!-- Unlock Button -->
+                                            <button class="btn btn-sm btn-success" data-user-id="<?= $user['id'] ?>"
+                                                onclick="unBlockUser(this)">
+                                                <i class="fa fa-lock-open"></i>
+                                            </button>
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>
@@ -496,7 +502,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
 </div>
 
 <!-- Edit User Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -524,7 +530,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveUserChanges">Save Changes</button>
+                <button type="button" class="btn btn-primary"  id="saveUserChanges">Save Changes</button>
             </div>
         </div>
     </div>

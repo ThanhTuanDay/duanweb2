@@ -6,6 +6,10 @@ class CartModel {
         this.storeKey = `store_cart`;
     }
 
+    isProductExist(productId) {
+        const storeCart = this.getStoreCart();
+        return storeCart.some(product => product.id === productId);
+    }
 
     getStoreCart() {
         const cart = localStorage.getItem(this.storeKey);
@@ -13,6 +17,10 @@ class CartModel {
     }
 
     getCart() {
+        const reorderItem = localStorage.getItem("reorderItem");
+        if(reorderItem){
+            return JSON.parse(reorderItem);
+        }
         const cart = localStorage.getItem(this.key);
         return cart ? JSON.parse(cart) : [];
     }

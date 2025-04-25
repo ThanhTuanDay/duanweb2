@@ -3,11 +3,11 @@
 class MomoPaymentModel
 {
     private $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-    private $partnerCode = MOMO_PARTNER_CODE;
-    private $accessKey = MOMO_ACCESS_KEY;
-    private $secretKey = MOMO_SECRET_KEY;
-    private $ipnUrl = MOMO_IPN_URL;
-    private $redirectUrl = MOMO_REDIRECT_URL;
+    private $partnerCode = 'MOMO';
+    private $accessKey = 'F8BBA842ECF85';
+    private $secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
+    private $ipnUrl = 'http://localhost/duanweb2/ipn';
+    private $redirectUrl = 'http://localhost/duanweb2/success';
 
     public function createPayment($orderId, $amount,$items,$deliveryInfo,$userInfo, $orderInfo)
     {

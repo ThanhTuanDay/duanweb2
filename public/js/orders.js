@@ -36,6 +36,7 @@ function renderOrders(orders) {
                 <td>${order.user_name}</td>
                 <td>${formattedDate}</td>
                 <td>${formattedTotal}</td>
+                <td>${order.delivery_address}</td>
                 <td>${order.payment_method}</td>
                 <td><span class="badge ${statusInfo.badge}">${statusInfo.text}</span></td>
                 <td>
@@ -89,9 +90,9 @@ function reloadData(){
 $('#search-input-id').on('input', function () {
     const keyword = $(this).val().trim().toLowerCase();
     console.log(keyword)
-    const filtered = allOrders.filter(order => order.id.toLowerCase().startsWith(keyword));
+    const filtered = allOrders.filter(order => order.id.toLowerCase().startsWith(keyword) || order.user_name.toLowerCase().startsWith(keyword) );
 
-    if (filtered.length !== currentFilterOrder.length) {
+    if (currentFilterOrder == null || filtered.length !== currentFilterOrder.length) {
         currentFilterOrder = filtered;
         paginateOrders(1);
     }
@@ -361,6 +362,7 @@ $('#filterOrdersModal .btn-primary').on('click', function () {
     const priceMax = parseFloat($('#priceMax').val()) || Infinity;
     const orderName = $('#orderNameFilter').val().trim().toLowerCase();
     const customerName = $('#customerNameFilter').val().trim().toLowerCase();
+    const deliveryAddress = $('#deliveryAddressFilter').val().trim().toLowerCase();
     const dateFrom = $('#filterDateFrom').val();
     const dateTo = $('#filterDateTo').val();
 
@@ -384,12 +386,13 @@ $('#filterOrdersModal .btn-primary').on('click', function () {
         const matchCustomer = !customerName || order.user_name.toLowerCase().includes(customerName);
         const matchStatus = statuses.length === 0 || statuses.includes(order.status.toLowerCase());
         const matchPayment = payments.length === 0 || payments.includes(order.payment_method.toLowerCase());
+        const matchDeliveryAddress = !deliveryAddress || order.delivery_address.toLowerCase().startsWith(deliveryAddress);
         const createdAt = new Date(order.created_at);
         const matchDate =
             (!dateFrom || createdAt >= new Date(dateFrom)) &&
             (!dateTo || createdAt <= new Date(dateTo + 'T23:59:59'));
 
-        return matchPrice && matchOrderName && matchCustomer && matchStatus && matchPayment && matchDate;
+        return matchPrice && matchOrderName && matchCustomer && matchStatus && matchPayment && matchDate && matchDeliveryAddress;
     });
 
     currentFilterOrder = filteredOrders;
@@ -401,7 +404,7 @@ $('#filterOrdersModal .btn-primary').on('click', function () {
 $('#filterOrdersModal .btn-outline-primary').on('click', function () {
     $('#filterOrdersModal input').val('');
     $('#filterOrdersModal input[type="checkbox"]').prop('checked', true);
-    currentFilterOrder = [];
+    currentFilterOrder = allOrders;
     paginateOrders(1);
 });
 function printOrder(orderId) {

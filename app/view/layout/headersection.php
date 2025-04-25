@@ -21,13 +21,13 @@
                     ?>
 
                     <li class="nav-item <?= $currentPage === 'homepage' || $currentPage === '' ? 'active' : '' ?>">
-                        <a class="nav-link" href="homepage">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="homepage">Trang chủ <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item <?= $currentPage === 'menu' ? 'active' : '' ?>">
-                        <a class="nav-link" href="menu">Menu</a>
+                        <a class="nav-link" href="menu">Đồ ăn</a>
                     </li>
                     <li class="nav-item <?= $currentPage === 'about' ? 'active' : '' ?>">
-                        <a class="nav-link" href="about">About</a>
+                        <a class="nav-link" href="about">Về chúng tôi</a>
                     </li>
                 </ul>
                 <div class="user_option">
@@ -39,7 +39,7 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         <a href="logout" class="user_link" style="color: red;">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất 
                         </a>
                         <a class="cart_link" href="cart">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -104,13 +104,20 @@
                     <?php endif; ?>
                     <p></p>
 
-                    <form class="form-inline">
-                        <button class="btn  my-2 my-sm-0 nav_search-btn" id='search-btn' type="submit">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </form>
+                    <div class="search-container" id="search-container">
+                        <form class="form-inline">
+                            <button class="search-btn" id="search-btn" type="button">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                            <input type="text" class="search-input" id="search-input-navbar" placeholder="Search for food...">
+                        </form>
+
+                        <div class="search-results" id="search-results">
+                         
+                        </div>
+                    </div>
                     <a href="#food-section" class="order_online">
-                        Order Now
+                       Đặt hàng ngay bây giờ 
                     </a>
                 </div>
             </div>

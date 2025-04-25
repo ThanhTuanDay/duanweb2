@@ -10,7 +10,7 @@ include dirname(__FILE__) . '/../layout/headersection.php';
     <div class="container">
         <div class="heading_container">
             <h2>
-                Book A Table
+                Đặt Bàn
             </h2>
         </div>
         <div class="row">
@@ -18,18 +18,18 @@ include dirname(__FILE__) . '/../layout/headersection.php';
                 <div class="form_container">
                     <form action="">
                         <div>
-                            <input type="text" class="form-control" placeholder="Your Name" />
+                            <input type="text" class="form-control" placeholder="Tên Của Bạn" />
                         </div>
                         <div>
-                            <input type="text" class="form-control" placeholder="Phone Number" />
+                            <input type="text" class="form-control" placeholder="Số Điện Thoại" />
                         </div>
                         <div>
-                            <input type="email" class="form-control" placeholder="Your Email" />
+                            <input type="email" class="form-control" placeholder="Địa Chỉ Email" />
                         </div>
                         <div>
                             <select class="form-control nice-select wide">
                                 <option value="" disabled selected>
-                                    How many persons?
+                                    Bao nhiêu người?
                                 </option>
                                 <option value="">
                                     2
@@ -50,7 +50,7 @@ include dirname(__FILE__) . '/../layout/headersection.php';
                         </div>
                         <div class="btn_box">
                             <button>
-                                Book Now
+                                Đặt Ngay
                             </button>
                         </div>
                     </form>

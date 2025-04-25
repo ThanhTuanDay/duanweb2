@@ -38,14 +38,21 @@ class PaymentController{
         return $this->momoPayment->createPayment($orderCreatedId,$amount,$items,  $deliveryInfo,$userInfo,$orderInfo);
     }
 
-    public function codPayment($deliveryAddressId,$user_id,$amount, $orderId,$items,$deliveryInfo,$userInfo, $orderInfo){
-        $orderDto= new OrderDto(null,$user_id,$amount,OrderStatus::Pending,"ee70a51b-0c45-11f0-ab99-6ef87da1f643",null,$deliveryAddressId,$items);
+    public function codPayment($deliveryAddressId,$user_id,$amount, $orderId,$items,$deliveryInfo,$userInfo, $orderInfo, $taxFee=null, $deliveryFee=null, $taxRate=null, $discountAmount=null){
+        $orderDto= new OrderDto(null,$user_id,$amount,OrderStatus::Pending,"ee70a51b-0c45-11f0-ab99-6ef87da1f643",null,$deliveryAddressId,$items,null,"cod",$userInfo['name'],null,$userInfo['phone'],$taxFee,$deliveryFee,$taxRate,$discountAmount);
+        file_put_contents(__DIR__ . '/order-log', $orderDto->getDeliveryFee(), FILE_APPEND);
+        
         if(!$this->handleProductSell($items)){
-            return json_encode(['error' => 'Failed to sell product']);
+            return json_encode([
+                'success' => false,
+                'error' => 'Không đủ hàng để bán']);
         }
 
         $orderCreatedId =  $this->preCreateOrder($orderDto);
-        return $orderCreatedId;
+        return json_encode([
+            'success' => true,
+            'orderId' => $orderCreatedId,
+            'message' => 'Đặt hàng thành công. Chờ xác nhận từ người bán']);
     }
 
     private function handleProductSell($items){
