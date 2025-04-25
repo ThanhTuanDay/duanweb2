@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             alert('$result');
           </script>";
     }
-
 }
 
 ?>
@@ -287,10 +286,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
-                    <a href="book">BOOK TABLE</a>
+                    <a href="homepage">Trang Chủ</a>
+                    <a href="menu">Đồ ăn</a>
+                    <a href="about">Về chúng tôi </a>
+                    <a href="book">Book bàn</a>
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>
@@ -370,7 +369,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const strengthText = document.getElementById('strength-text');
         const strengthMeter = document.querySelector('.strength-meter-fill');
 
-        passwordInput.addEventListener('input', function () {
+        passwordInput.addEventListener('input', function() {
             const password = this.value;
             let strength = 0;
 
@@ -399,7 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const form = document.querySelector('form');
         const confirmPassword = document.getElementById('confirm-password');
 
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             if (passwordInput.value !== confirmPassword.value) {
                 e.preventDefault();
                 alert('Passwords do not match!');
@@ -409,14 +408,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 <script>
-
     const passwordField = document.getElementById('new-password');
     const passwordToggle = document.getElementById('password-toggle');
     const passwordConfirmField = document.getElementById('password-confirm');
     const passwordConfirmToggle = document.getElementById('password-toggle-1');
     const eyeIcon = document.getElementById('eye-icon');
     const eyeIcon1 = document.getElementById('eye-icon-1');
-    passwordToggle.addEventListener('click', function () {
+    passwordToggle.addEventListener('click', function() {
 
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
@@ -434,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
 
-    passwordConfirmToggle.addEventListener('click', function () {
+    passwordConfirmToggle.addEventListener('click', function() {
 
         if (passwordConfirmField.type === 'password') {
             passwordConfirmField.type = 'text';
