@@ -153,6 +153,15 @@ switch ($action) {
             exit;
         }
         break;
+    case 'getUserStaticOrder':
+        $data= $userController->getUserStatistics();
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'users' => $data,
+         
+        ]);
+
     default:
         break;
 }

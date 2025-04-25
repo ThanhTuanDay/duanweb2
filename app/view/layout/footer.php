@@ -101,6 +101,9 @@
 <!-- nice select -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
+<script>
+    const isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+</script>
 <script src="public/js/custom.js"></script>
 <script src="public/js/cart.model.js"></script>
 <script src="public/js/cart.controller.js"></script>
