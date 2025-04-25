@@ -1889,6 +1889,7 @@ $addresses = $userController->getDeliveryAddress();
                         <span>Tổng Cộng</span>
                         <span id="total">$25.97</span>
                     </div>
+
                     <div class="delivery-address">
                         <h3 class="address-title">Địa Chỉ Giao Hàng</h3>
 
@@ -1942,6 +1943,7 @@ $addresses = $userController->getDeliveryAddress();
                             </div>
                         </div>
                     </div>
+
                     <div class="payment-methods">
                         <h3 class="payment-title">Phương Thức Thanh Toán</h3>
 
@@ -1981,8 +1983,35 @@ $addresses = $userController->getDeliveryAddress();
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke="#ffbe33">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2
+                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 00 00-2 2v6a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    Thanh Toán Khi Nhận Hàng
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()">Tiến Hành Thanh Toán</button>
+                </div>
 
+                <button class="continue-btn" id="continue-btn" onclick="goToPaymentStage()">Tiếp Tục Thanh Toán</button>
+            </div>
+
+            <div class="empty-cart" id="empty-cart" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <h3>Giỏ hàng của bạn đang trống</h3>
+                <p>Có vẻ như bạn chưa thêm bất kỳ sản phẩm nào vào giỏ hàng.</p>
+                <a href="/duanweb2" class="continue-shopping">Tiếp Tục Mua Sắm</a>
+            </div>
+        </div>
+        <div id="app-data" data-user-id="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>"
+            data-products='<?= isset($products) ? json_encode($products, JSON_HEX_APOS | JSON_HEX_QUOT) : "null" ?>'
+            style="display: none;">
+        </div>
+    </main>
 
 </body>
 
