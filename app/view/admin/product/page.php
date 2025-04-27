@@ -496,9 +496,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Products Management</h2>
+        <h2>Quản lí sản phẩm</h2>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-            <i class="fas fa-plus me-2"></i> Add New Product
+            <i class="fas fa-plus me-2"></i> Thêm sản phẩm mới
         </button>
     </div>
 
@@ -506,7 +506,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0">All Products</h5>
+                    <h5 class="mb-0">Tất cả sản phẩm</h5>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex justify-content-md-end">
@@ -517,7 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="dropdown">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="filterDropdown"
                             >
-                                Filter
+                                Lọc
                             </button>
                             
                         </div>
@@ -531,13 +531,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Loại</th>
+                            <th>Giá</th>
+                            <th>Tồn kho</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -556,13 +556,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td><?= $product['stock'] ?></td>
                                 <td>
                                     <?php if ((int) $product['stock'] === 0): ?>
-                                        <span class="badge bg-danger">Out of Stock</span>
+                                        <span class="badge bg-danger">Hết hàng</span>
                                     <?php elseif ((int) $product['status'] === 0): ?>
-                                        <span class="badge bg-danger">Inactive</span>
+                                        <span class="badge bg-danger">Không hoạt động</span>
                                     <?php elseif ((int) $product['stock'] < 10): ?>
-                                        <span class="badge bg-warning">Low Stock</span>
+                                        <span class="badge bg-warning">Sắp hết hàng</span>
                                     <?php else: ?>
-                                        <span class="badge bg-success">Active</span>
+                                        <span class="badge bg-success">Hoạt động</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -624,10 +624,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </ul>
                     <div class="pagination-options">
                         <select class="form-select form-select-sm" id="pagination-size">
-                            <option value="10">10 per page</option>
-                            <option value="25">25 per page</option>
-                            <option value="50">50 per page</option>
-                            <option value="100">100 per page</option>
+                            <option value="10">10 mỗi trang</option>
+                            <option value="25">25 mỗi trang</option>
+                            <option value="50">50 mỗi trang</option>
+                            <option value="100">100 mỗi trang</option>
                         </select>
                     </div>
                 </div>
@@ -642,7 +642,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm mới</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -650,12 +650,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="productName" class="form-label">Product Name</label>
+                            <label for="productName" class="form-label">Tên sản phẩm</label>
                             <input type="text" class="form-control" id="productName" name="productName"
                                 placeholder="Enter product name">
                         </div>
                         <div class="col-md-6">
-                            <label for="productCategory" class="form-label">Category</label>
+                            <label for="productCategory" class="form-label">Loại</label>
                             <select class="form-select" id="productCategory" name="productCategory">
                                 <?php foreach ($categories as $category): ?>
                                     <option value="<?= htmlspecialchars($category->getId()) ?>">
@@ -667,26 +667,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="productPrice" class="form-label">Price</label>
+                            <label for="productPrice" class="form-label">Giá</label>
                             <div class="input-group">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">VNĐ</span>
                                 <input type="number" class="form-control" id="productPrice" name="productPrice"
                                     placeholder="0.00" step="0.01">
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="productStock" class="form-label">Stock Quantity</label>
+                            <label for="productStock" class="form-label">SỐ lượng nhập</label>
                             <input type="number" class="form-control" id="productStock" name="productStock"
                                 placeholder="Enter quantity">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="productDescription" class="form-label">Description</label>
+                        <label for="productDescription" class="form-label">Mô tả</label>
                         <textarea class="form-control" id="productDescription" name="productDescription" rows="3"
                             placeholder="Enter product description"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="productImage" class="form-label">Product Image</label>
+                        <label for="productImage" class="form-label">Ảnh sản phẩm</label>
                         <input type="file" class="form-control" id="productImage" name="productImage" accept="image/*">
                         <div class="mt-2">
                             <img id="previewImage" src="" alt="Preview Image" style="max-width: 150px; display: none; border-radius: 8px; border: 1px solid #ddd;">
@@ -694,10 +694,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="productStatus" class="form-label">Status</label>
+                            <label for="productStatus" class="form-label">Trạng thái</label>
                             <select class="form-select" id="productStatus" name="productStatus">
-                                <option value="active" selected>Active</option>
-                                <option value="inactive">Inactive</option>
+                                <option value="active" selected>Hoạt động</option>
+                                <option value="inactive">Không hoạt động</option>
                             </select>
                         </div>
                         <!-- <div class="col-md-6">
@@ -709,12 +709,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div> -->
                     </div>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Add Product</button>
+                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 <!-- <button type="submit" class="btn btn-primary">Add Product</button> -->
             </div>
         </div>
@@ -726,7 +726,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                <h5 class="modal-title" id="editProductModalLabel">Sủa sản phẩm</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -735,12 +735,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="row mb-3">
                         <input type="hidden" id="editProductId" name="productId">
                         <div class="col-md-6">
-                            <label for="editProductName" class="form-label">Product Name</label>
+                            <label for="editProductName" class="form-label">Tên sản phẩm</label>
                             <input type="text" class="form-control" id="editProductName" name="productName"
                                 value="Delicious Burger">
                         </div>
                         <div class="col-md-6">
-                            <label for="editProductCategory" class="form-label">Category</label>
+                            <label for="editProductCategory" class="form-label">Loại</label>
                             <select class="form-select" id="editProductCategory" name="productCategory">
                                 <option>Select category</option>
                                 <?php foreach ($categories as $category): ?>
@@ -753,42 +753,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="editProductPrice" class="form-label">Price</label>
+                            <label for="editProductPrice" class="form-label">Giá</label>
                             <div class="input-group">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">VNĐ</span>
                                 <input type="number" class="form-control" id="editProductPrice" value="15.99"
                                     step="0.01" name="productPrice">
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="editProductStock" class="form-label">Stock Quantity</label>
+                            <label for="editProductStock" class="form-label">Số lượng nhập</label>
                             <input type="number" class="form-control" id="editProductStock" value="45"
                                 name="productStock">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="editProductDescription" class="form-label">Description</label>
+                        <label for="editProductDescription" class="form-label">Mô tả</label>
                         <textarea class="form-control" id="editProductDescription" name="productDescription"
                             rows="3">Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque</textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="editProductImage" class="form-label">Product Image</label>
+                        <label for="editProductImage" class="form-label">Hình ảnh sản phẩm</label>
                         <div class="d-flex align-items-center mb-2">
                             <div class="product-img me-3">
                                 <img id="current-product-image" src="/placeholder.svg?height=60&width=60"
                                     alt="Current Image">
                             </div>
-                            <span>Current Image</span>
+                            <span>Hình ảnh hiện tại</span>
                         </div>
                         <input type="file" class="form-control" id="editProductImage" name="productImage">
                         <input type="hidden" id="oldProductImage" name="oldProductImage">
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="editProductStatus" class="form-label">Status</label>
+                            <label for="editProductStatus" class="form-label">Trạng thái</label>
                             <select class="form-select" id="editProductStatus" name="productStatus">
-                                <option value="active" selected>Active</option>
-                                <option value="inactive">Inactive</option>
+                                <option value="active" selected>Hoạt động</option>
+                                <option value="inactive">Không hoạt động</option>
                             </select>
                         </div>
                         <!-- <div class="col-md-6">
@@ -799,11 +799,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </select>
                         </div> -->
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
 
             </div>
         </div>
@@ -813,20 +813,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="filterProductsModalLabel">Filter Products</h5>
+                <h5 class="modal-title" id="filterProductsModalLabel">Lọc sản phẩm</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
                     <!-- Product ID / Name -->
                     <div class="mb-3">
-                        <label for="productIdOrName" class="form-label">Product ID / Name</label>
+                        <label for="productIdOrName" class="form-label">Id sản phẩm / Tên</label>
                         <input type="text" class="form-control" id="productIdOrName" placeholder="Search by ID or name...">
                     </div>
 
                     <!-- Category -->
                     <div class="mb-3">
-                        <label for="productCategoryFilter" class="form-label">Category</label>
+                        <label for="productCategoryFilter" class="form-label">Loại</label>
                         <select class="form-select" id="productCategoryFilter">
                             <option value="">All Categories</option>
                             <!-- Inject category options dynamically -->
@@ -835,7 +835,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Price Range -->
                     <div class="mb-3">
-                        <label class="form-label">Price Range</label>
+                        <label class="form-label">Khoảng giá</label>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group mb-2">
@@ -854,7 +854,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Stock Range -->
                     <div class="mb-3">
-                        <label class="form-label">Stock Range</label>
+                        <label class="form-label">Khoảng tồn kho</label>
                         <div class="row">
                             <div class="col-md-6">
                                 <input type="number" class="form-control mb-2" id="stockMin" placeholder="Min Stock">
@@ -867,26 +867,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Status -->
                     <div class="mb-3">
-                        <label class="form-label">Status</label>
+                        <label class="form-label">Trạng thái</label>
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="statusActive" checked>
-                            <label class="form-check-label" for="statusActive">Active</label>
+                            <label class="form-check-label" for="statusActive">Hoạt động</label>
                         </div>
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="statusInactive" checked>
-                            <label class="form-check-label" for="statusInactive">Inactive</label>
+                            <label class="form-check-label" for="statusInactive">Không hoạt động</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="statusOutOfStock" checked>
-                            <label class="form-check-label" for="statusOutOfStock">Out of Stock</label>
+                            <label class="form-check-label" for="statusOutOfStock">Hết hàng</label>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-outline-primary" id="resetProductFilters">Reset Filters</button>
-                <button type="button" class="btn btn-primary" id="applyProductFilters">Apply Filters</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-outline-primary" id="resetProductFilters">Làm mới</button>
+                <button type="button" class="btn btn-primary" id="applyProductFilters">Áp dụng lọc</button>
             </div>
         </div>
     </div>
@@ -898,7 +898,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header">
-                <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
+                <h5 class="modal-title" id="productDetailModalLabel">Chi tiết sản phẩm</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -910,23 +910,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 class="img-fluid rounded">
                         </div>
                         <div class="product-status mb-3">
-                            <span class="badge bg-success" id="modal-product-status">In Stock</span>
+                            <span class="badge bg-success" id="modal-product-status">Tồn khos</span>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h4 id="modal-product-name">Product Name</h4>
+                        <h4 id="modal-product-name">Tên sản phẩm</h4>
                         <p class="text-muted" id="modal-product-id">#12345</p>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="detail-item">
-                                    <span class="detail-label">Category:</span>
+                                    <span class="detail-label">Loại:</span>
                                     <span class="detail-value" id="modal-product-category">Category A</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="detail-item">
-                                    <span class="detail-label">Price:</span>
+                                    <span class="detail-label">Giá:</span>
                                     <span class="detail-value" id="modal-product-price">$99.99</span>
                                 </div>
                             </div>
@@ -936,7 +936,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="col-md-6">
                                 <div class="detail-item">
-                                    <span class="detail-label">Inventory:</span>
+                                    <span class="detail-label">Kho:</span>
                                     <span class="detail-value" id="modal-product-inventory">125 units</span>
                                 </div>
                             </div>
@@ -945,7 +945,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <div class="detail-item">
-                                    <span class="detail-label">Description:</span>
+                                    <span class="detail-label">Mô tả:</span>
                                     <p class="detail-value" id="modal-product-description">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl
                                         eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget
@@ -963,31 +963,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-md-6">
                         <div class="card bg-dark border-primary mb-3">
                             <div class="card-header bg-primary bg-opacity-25 text-primary">
-                                <h5 class="mb-0">Sales Performance</h5>
+                                <h5 class="mb-0">Hiệu suất bán</h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6 mb-3">
                                         <div class="detail-item">
-                                            <span class="detail-label">Total Sales:</span>
-                                            <h4 class="detail-value" id="modal-product-total-sales">1,245 units</h4>
+                                            <span class="detail-label">Tổng bán:</span>
+                                            <h4 class="detail-value" id="modal-product-total-sales">1,245 đơn vị</h4>
                                         </div>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <div class="detail-item">
-                                            <span class="detail-label">Revenue:</span>
+                                            <span class="detail-label">Thu nhập:</span>
                                             <h4 class="detail-value" id="modal-product-revenue">$12,450</h4>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="detail-item">
-                                            <span class="detail-label">Profit:</span>
+                                            <span class="detail-label">Lợi nhuận:</span>
                                             <h4 class="detail-value text-success" id="modal-product-profit">$4,980</h4>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="detail-item">
-                                            <span class="detail-label">Profit Margin:</span>
+                                            <span class="detail-label">Mức lợi nhuận:</span>
                                             <h4 class="detail-value text-success" id="modal-product-margin">40%</h4>
                                         </div>
                                     </div>
@@ -998,7 +998,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-md-6">
                         <div class="card bg-dark border-warning mb-3">
                             <div class="card-header bg-warning bg-opacity-25 text-warning">
-                                <h5 class="mb-0">Monthly Sales Trend</h5>
+                                <h5 class="mb-0">Biểu đồ bán ra theo tháng</h5>
                             </div>
                             <div class="card-body">
                                 <canvas id="productSalesChart" height="200"></canvas>
@@ -1009,7 +1009,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>

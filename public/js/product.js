@@ -194,7 +194,7 @@ function attachViewProductEvents() {
                 }
 
                 // document.getElementById('modal-product-sku').textContent = `SKU-${productId}${Math.floor(Math.random() * 1000)}`;
-                document.getElementById('modal-product-inventory').textContent = `${productStock} units`;
+                document.getElementById('modal-product-inventory').textContent = `${productStock} đơn vị`;
 
 
                 productDetailModal.show();
@@ -211,7 +211,7 @@ async function loadProductStats(productId) {
 
         if (result.success && result.data) {
             const stats = result.data;
-            document.getElementById('modal-product-total-sales').textContent = `${Number(stats.total_sales).toLocaleString()} units`;
+            document.getElementById('modal-product-total-sales').textContent = `${Number(stats.total_sales).toLocaleString()} đơn vị`;
             document.getElementById('modal-product-revenue').textContent = `$${Number(stats.revenue).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
             document.getElementById('modal-product-profit').textContent = `$${Number(stats.profit).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
             document.getElementById('modal-product-margin').textContent = `${stats.profit_margin}%`;
