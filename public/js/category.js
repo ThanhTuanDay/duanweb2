@@ -209,6 +209,7 @@ $(document).ready(function () {
         formData.append('description', updatedData.description);
         formData.append('status', updatedData.status);
         formData.append('image', updatedData.images_files);
+        formData.append('currentImage', $('#currentImage').attr('src'));
         formData.append('action', 'updateCategory');
         $.ajax({
             url: '/duanweb2/app/api/category.api.php',

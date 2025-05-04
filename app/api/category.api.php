@@ -53,58 +53,44 @@ switch ($action) {
         echo json_encode($response);
         break;
     case 'updateCategory':
-        // $categoryData = $_POST['formData'];
-        // $data = [
-        //     'id' => $categoryData['id'],
-        //     'name' => $categoryData['name'],
-        //     'description' => $categoryData['description'],
-        //     'status' => $categoryData['status'],
-        // ];
+        $imagePath = $_POST['currentImage'] ?? '';
 
-        if (!isset($_FILES['image'])) {
-            $response[] = [
-                'success' => false,
-                'message' => 'UpdateCategory fail!'
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $image = $_FILES['image'];
+            $uploadDir = __DIR__ . '/../../public/images/categories/';
 
-            ];
-        }
-        $image = $_FILES['image'];
-        $uploadDir = __DIR__ . '/../../public/images/categories/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true); 
+            }
 
-        file_put_contents(__DIR__ . '/category-api.txt', json_encode($uploadDir), FILE_APPEND);
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true); // tạo folder nếu chưa tồn tại
+            $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+            $rawName = $_POST['name'] ?? 'image';
+            $safeName = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $rawName))));
+            $filename = $safeName . '.' . $ext;
+            $targetPath = $uploadDir . $filename;
+
+            move_uploaded_file($image['tmp_name'], $targetPath);
+
+            $imagePath = '/duanweb2/public/images/categories/' . $filename;
         }
 
-        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $rawName = $_POST['name'] ?? 'image';
-        $safeName = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $rawName))));
-        $filename = $safeName . '.' . $ext;
-        $targetPath = $uploadDir . $filename;
-        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
-        $targetPath = '/duanweb2/public/images/categories/' . $filename;
         $categoryDto = new CategoryDto(
             $_POST['id'],
             $_POST['name'],
             $_POST['description'],
             $_POST['status'],
-            $targetPath
+            $imagePath
         );
 
-
-
         $updateCategoryItem = $categoryController->updateCategory($categoryDto);
-        $response = [];
 
-        $response[] = [
+        $response = [[
             'success' => $updateCategoryItem,
             'message' => 'UpdateCategory success'
-        ];
+        ]];
 
         header('Content-Type: application/json');
-
         echo json_encode($response);
-
         break;
     case 'deleteCategory':
 
@@ -171,7 +157,7 @@ switch ($action) {
         $response = [];
         if ($createCategoryItem) {
             $response[] = [
-                'success' =>true,
+                'success' => true,
                 'message' => 'CreateCategory success'
             ];
         } else {
