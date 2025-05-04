@@ -1732,7 +1732,7 @@ $addresses = $userController->getDeliveryAddress();
                     <a href="homepage">HOME</a>
                     <a href="menu">MENU</a>
                     <a href="about">ABOUT</a>
-                    <a href="book">BOOK TABLE</a>
+             
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>

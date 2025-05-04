@@ -289,12 +289,17 @@ if (allProducts) {
     document.addEventListener('DOMContentLoaded', function () {
         const searchContainer = document.getElementById("search-container")
         const searchBtn = document.getElementById("search-btn")
+        const searchBtn1 = document.getElementById("search-btn1")
         const searchInput = document.getElementById("search-input-navbar")
         const searchResults = document.getElementById("search-results")
         const rangeInput = document.querySelectorAll(".range-input input");
         const priceInput = document.querySelectorAll(".price-input input");
         const progress = document.querySelector(".price-progress");
         const priceGap = 50000;
+        searchBtn1.addEventListener("click", (e) => {
+            document.getElementById("food-section").scrollIntoView({ behavior: "smooth" });
+            document.getElementById("search-input").focus()
+        })
 
         priceInput.forEach(input => {
             input.addEventListener("input", e => {

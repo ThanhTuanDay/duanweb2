@@ -283,7 +283,7 @@ if ($resultCode == "0") {
                     <a href="homepage">HOME</a>
                     <a href="menu">MENU</a>
                     <a href="about">ABOUT</a>
-                    <a href="book">BOOK TABLE</a>
+                 
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>
@@ -314,7 +314,7 @@ if ($resultCode == "0") {
 
                     <div class="order-info">
                         <span class="order-info-label">Payment Method:</span>
-                        <span class="order-info-value">MoMo</span>
+                        <span class="order-info-value">Cash on delivery</span>
                     </div>
 
                     <div class="order-info">

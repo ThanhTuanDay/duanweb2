@@ -106,7 +106,10 @@
 
                     <div class="search-container" id="search-container">
                         <form class="form-inline">
-                            <button class="search-btn" id="search-btn" type="button">
+                            <button class="search-btn" style="display:none" id="search-btn" type="button">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                            <button class="search-btn" id="search-btn1" type="button">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                             <input type="text" class="search-input" id="search-input-navbar" placeholder="Search for food...">
