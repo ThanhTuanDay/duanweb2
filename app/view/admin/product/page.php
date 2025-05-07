@@ -18,7 +18,7 @@ $categories = $categoryController->getAllCategory();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['productName'] ?? '';
     $categoryId = $_POST['productCategory'] ?? '';
-    $price = (float) $_POST['productPrice'] ?? 0;
+    $price = isset($_POST['productPrice']) ? (float) str_replace('.', '', $_POST['productPrice']) : 0;
     $stock = $_POST['productStock'] ?? 0;
     $description = $_POST['productDescription'] ?? '';
     $status = $_POST['productStatus'] ?? 'inactive';
@@ -552,7 +552,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </td>
                                 <td><?= htmlspecialchars($product['name']) ?></td>
                                 <td><?= htmlspecialchars($product['category_name']) ?></td>
-                                <td>$<?= number_format($product['price'], 2) ?></td>
+                                <td><?= number_format($product['price']) ?></td>
                                 <td><?= $product['stock'] ?></td>
                                 <td>
                                     <?php if ((int) $product['stock'] === 0): ?>
@@ -670,8 +670,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="productPrice" class="form-label">Giá</label>
                             <div class="input-group">
                                 <span class="input-group-text">VNĐ</span>
-                                <input type="number" class="form-control" id="productPrice" name="productPrice"
-                                    placeholder="0.00" step="0.01">
+                                <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="0">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -756,8 +755,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="editProductPrice" class="form-label">Giá</label>
                             <div class="input-group">
                                 <span class="input-group-text">VNĐ</span>
-                                <input type="number" class="form-control" id="editProductPrice" value="15.99"
-                                    step="0.01" name="productPrice">
+                                <input type="text" class="form-control" id="editProductPrice" name="productPrice" placeholder="0.00">
+
                             </div>
                         </div>
                         <div class="col-md-6">

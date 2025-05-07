@@ -71,6 +71,12 @@ function renderProducts(products, page = 1) {
     const paginated = products.slice(start, end);
 
     paginated.forEach(product => {
+
+        const rawPrice = parseFloat(product.price);
+        const formattedPrice = rawPrice.toLocaleString('de-DE', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
         const actionButton = (product.status === "0" || product.status === 0)
             ? `<button class="btn btn-success btn-open-product" data-id="${product.id}" data-name="${product.name}">
            <i class="fas fa-undo"></i>
@@ -84,7 +90,7 @@ function renderProducts(products, page = 1) {
             <td><div class="product-img"><img src="${product.image_url || '/placeholder.svg'}" alt="${product.name}"></div></td>
             <td>${product.name}</td>
             <td>${product.category_name}</td>
-            <td>${parseFloat(product.price).toFixed(0)} VNĐ</td>
+            <td>${formattedPrice} VNĐ</td>
             <td>${product.stock}</td>
             <td>
                 ${product.stock == 0 ? '<span class="badge bg-danger">Out of Stock</span>' :
@@ -160,7 +166,12 @@ function attachViewProductEvents() {
                 let productId = row.cells[0].textContent;
                 const productName = row.cells[2].textContent;
                 const productCategory = row.cells[3].textContent;
-                const productPrice = row.cells[4].textContent;
+                const rawPrice = parseFloat(row.cells[4].textContent);
+                const formattedPrice = rawPrice.toLocaleString('de-DE', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+                const productPrice = formattedPrice;
                 const productStock = row.cells[5].textContent;
                 const productStatus = row.cells[6].textContent;
                 const productStatusClass = row.cells[6].querySelector('.badge').classList[1];
@@ -225,17 +236,23 @@ function attachEditProductEvents() {
 
     editButtons.forEach(btn => {
         btn.addEventListener('click', function () {
+
+            const rawPrice = parseFloat(this.dataset.price);
+            const formattedPrice = rawPrice.toLocaleString('de-DE', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
             document.getElementById('editProductId').value = this.dataset.id;
             document.getElementById('editProductName').value = this.dataset.name;
             document.getElementById('editProductCategory').value = this.dataset.category;
-            document.getElementById('editProductPrice').value = this.dataset.price;
+            document.getElementById('editProductPrice').value = formattedPrice;
             document.getElementById('editProductStock').value = this.dataset.stock;
             document.getElementById('editProductDescription').value = this.dataset.description;
             document.getElementById('editProductStatus').value = this.dataset.status;
             // document.getElementById('editProductFeatured').value = this.dataset.featured ?? 'no';
             document.getElementById('oldProductImage').value = this.dataset.image;
-            document.getElementById('edit-product-image').src = this.dataset.image ;
-
+            document.getElementById('editProductImage').src = this.dataset.image;
+                
             const currentImg = document.getElementById('current-product-image');
             if (currentImg && this.dataset.image) {
                 currentImg.src = this.dataset.image;
@@ -479,3 +496,21 @@ async function createProductSalesChart(productId) {
         console.error("Error loading chart data:", error);
     }
 }
+
+document.getElementById('productPrice').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+    if (value) {
+        e.target.value = parseInt(value).toLocaleString('de-DE');
+    } else {
+        e.target.value = '';
+    }
+});
+
+document.getElementById('editProductPrice').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+    if (value) {
+        e.target.value = parseInt(value).toLocaleString('de-DE');
+    } else {
+        e.target.value = '';
+    }
+});
