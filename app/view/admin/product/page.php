@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Cập nhật sản phẩm thành công!";
             header("Location: " . $_SERVER['REQUEST_URI']);
         } else {
-            echo "Sản phẩm đã từng bán, không thể cập nhật !";
+            echo "<script>alert('Sản phẩm đã từng bán, không thể cập nhật !');</script>";
         }
     }
 

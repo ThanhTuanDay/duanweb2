@@ -329,7 +329,8 @@ function attachOpenProductEvents() {
                         alert("Sản phẩm đã được mở lại!");
                         loadProducts();
                     } else {
-                        alert("Không thể mở lại sản phẩm!");
+                        alert("Sản phẩm đã được mở lại!");
+                        location.reload();
                     }
                 })
                 .catch(err => {
@@ -498,19 +499,25 @@ async function createProductSalesChart(productId) {
 }
 
 document.getElementById('productPrice').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\./g, '').replace(/[^0-9]/g, '');
-    if (value) {
-        e.target.value = parseInt(value).toLocaleString('de-DE');
+    const raw = e.target.value;
+    const digitsOnly = raw.replace(/\./g, '').replace(/\D/g, '');
+
+    if (digitsOnly) {
+        const formatted = new Intl.NumberFormat('de-DE').format(digitsOnly);
+        e.target.value = formatted;
     } else {
         e.target.value = '';
     }
 });
 
 document.getElementById('editProductPrice').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\./g, '').replace(/[^0-9]/g, '');
-    if (value) {
-        e.target.value = parseInt(value).toLocaleString('de-DE');
+    const raw = e.target.value;
+    const digitsOnly = raw.replace(/\./g, '').replace(/\D/g, '');
+
+    if (digitsOnly) {
+        const formatted = new Intl.NumberFormat('de-DE').format(digitsOnly);
+        e.target.value = formatted;
     } else {
         e.target.value = '';
     }
-});
+});z

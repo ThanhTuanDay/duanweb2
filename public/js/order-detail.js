@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!userData.success) return alert("User not found");
 
 
-    const formatCurrency = (amount) => Number(amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    const formatCurrency = (amount) => Number(amount).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 
 
     document.querySelector('h2 span.text-primary').textContent = `#${order.id}`;

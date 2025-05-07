@@ -326,7 +326,7 @@ if ($resultCode == "0") {
 
                     <div class="order-info">
                         <span class="order-info-label">Total Amount:</span>
-                        <span class="order-info-value"><?= htmlspecialchars($order->getTotalPrice()) ?> VNĐ</span>
+                        <span class="order-info-value"><?= htmlspecialchars($order->getTotalPrice()) ?>đ</span>
                     </div>
 
                     <div class="order-info">
