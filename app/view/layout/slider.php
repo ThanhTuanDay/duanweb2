@@ -10,11 +10,10 @@
                                        Fast Food Restaurant
                                    </h1>
                                    <p>
-                                       Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                                   </p>
+                                   Không gian hiện đại, thực đơn phong phú, phục vụ chuyên nghiệp — nơi lý tưởng để thưởng thức ẩm thực và thư giãn cùng người thân, bạn bè.                                   </p>
                                    <div class="btn-box">
                                        <a href="#food-section" class="btn1">
-                                           Order Now
+                                       ĐẶT HÀNG NGAY
                                        </a>
                                    </div>
                                </div>
@@ -31,11 +30,10 @@
                                        Fast Food Restaurant
                                    </h1>
                                    <p>
-                                       Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                                   </p>
+                                   Không gian hiện đại, thực đơn phong phú, phục vụ chuyên nghiệp — nơi lý tưởng để thưởng thức ẩm thực và thư giãn cùng người thân, bạn bè.                                   </p>
                                    <div class="btn-box">
                                        <a href="#food-section" class="btn1">
-                                           Order Now
+                                       ĐẶT HÀNG NGAY
                                        </a>
                                    </div>
                                </div>
@@ -52,11 +50,10 @@
                                        Fast Food Restaurant
                                    </h1>
                                    <p>
-                                       Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                                   </p>
+                                   Không gian hiện đại, thực đơn phong phú, phục vụ chuyên nghiệp — nơi lý tưởng để thưởng thức ẩm thực và thư giãn cùng người thân, bạn bè.                                   </p>
                                    <div class="btn-box">
                                        <a href="#food-section" class="btn1">
-                                           Order Now
+                                       ĐẶT HÀNG NGAY
                                        </a>
                                    </div>
                                </div>

@@ -61,10 +61,10 @@ $(document).ready(function () {
                             data-description="${category.description}"
                             data-image="${category.images_url}"
                             data-status="${category.status}">
-                        <i class="fas fa-plus me-2"></i> Edit Category
+                        <i class="fas fa-plus me-2"></i>Sửa
                     </button>
                     <button class="btn btn-danger delete_category"      data-name="${category.name}" data-id="${category.id}" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                        Delete 
+                        Xóa 
                     </button>
                         </div>
                     </div>
@@ -85,31 +85,31 @@ $(document).ready(function () {
         return `  <form>
                     <input type="hidden" name="id" value=${categoryItem.id} />
                     <div class="mb-3">
-                        <label for="editCategoryName" class="form-label">Category Name</label>
+                        <label for="editCategoryName" class="form-label">Tên loại</label>
                         <input type="text" name="name" class="form-control" id="editCategoryName" value="${categoryItem.name}">
                     </div>
                     <div class="mb-3">
-                        <label for="editCategoryDescription" class="form-label">Description</label>
+                        <label for="editCategoryDescription" class="form-label">Mô tả</label>
                           <input type="hidden" name="description" id="editCategoryHiddenDescription" value="${description}" />
                             <textarea class="form-control editCategoryDescription" id="editCategoryDescription" rows="3">${description}</textarea>
 
                     </div>
                     <div class="mb-3">
-                        <label for="editCategoryImage" class="form-label">Category Image</label>
+                        <label for="editCategoryImage" class="form-label">Hình ảnh</label>
                         <div class="d-flex align-items-center mb-2">
                             <div class="category-img me-3">
                                 <img id="currentImage" src="${categoryItem.image}?height=60&width=60" alt="Current Image">
                                  <input type="hidden" name="images_url" id="fileInput" value="${categoryItem.image}" />
                             </div>
-                            <span>Current Image</span>
+                            <span>Hình ảnh hiện tại</span>
                         </div>
                         <input type="file" class="form-control custom-cursor-on-hover" value="${categoryItem.image}" id="editCategoryImage">
                     </div>
                     <div class="mb-3">
-                        <label for="editCategoryStatus" class="form-label">Status</label>
+                        <label for="editCategoryStatus" class="form-label">Trạng thái</label>
                         <select class="form-select" name="status" id="editCategoryStatus">
-                            <option value="1" ${categoryItem.status == 1 && 'selected'} >Active</option>
-                            <option value="0" ${categoryItem.status == 0 && 'selected'}>Inactive</option>
+                            <option value="1" ${categoryItem.status == 1 && 'selected'} >Hoạt động</option>
+                            <option value="0" ${categoryItem.status == 0 && 'selected'}>Không hoạt động</option>
                         </select>
                     </div>
                 </form>`

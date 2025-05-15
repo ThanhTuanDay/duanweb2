@@ -19,17 +19,14 @@ include dirname(__FILE__) . '/../layout/headersection.php';
                   <div class="detail-box">
                       <div class="heading_container">
                           <h2>
-                              We Are Feane
+                              Chúng tôi là Feane
                           </h2>
                       </div>
                       <p>
-                          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-                          in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-                          are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-                          the middle of text. All
+                      Không gian hiện đại, thực đơn phong phú, phục vụ chuyên nghiệp — nơi lý tưởng để thưởng thức ẩm thực và thư giãn cùng người thân, bạn bè.
                       </p>
                       <a href="">
-                          Read More
+                          Đọc thêm 
                       </a>
                   </div>
               </div>

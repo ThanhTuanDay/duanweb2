@@ -530,7 +530,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Mã sản phẩm</th>
                             <th>Ảnh</th>
                             <th>Tên sản phẩm</th>
                             <th>Loại</th>

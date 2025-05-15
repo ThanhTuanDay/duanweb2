@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feane - Register</title>
+    <title>Feane - Đăng ký</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
@@ -299,12 +299,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">TRANG CHỦ</a>
+                    <a href="menu">THỰC ĐƠN</a>
+                    <a href="about">THÔNG TIN</a>
                    
                 </div>
-                <a href="#" class="btn-order">Order Online</a>
+                <a href="#" class="btn-order">ĐẶT HÀNG NGAY</a>
             </nav>
         </div>
     </header>
@@ -312,14 +312,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <main class="auth-container">
         <div class="auth-box">
             <div class="auth-header">
-                <h2>Register</h2>
-                <p>Create your account to order delicious food</p>
+                <h2>Đăng ký</h2>
+                <p>Tạo tài khoản để có thể đặt hàng</p>
             </div>
 
             <form action="register" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email"
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Nhập email của bạn"
                         required>
                     <?php if (!is_null($mail_error)): ?>
                         <div class="form-error-server">
@@ -330,21 +330,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name"
+                    <label for="name">Tên đầy đủ</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Nhập họ tên của bạn"
                         required>
                     <div class="form-error" id="full-name-error">Tên không được chứa kí tự đặc biệt</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Adress</label>
-                    <input type="text" id="address" name="address" class="form-control" placeholder="Enter your adress"
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" id="address" name="address" class="form-control" placeholder="Nhập địa chỉchỉ của bạn"
                         required>
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number"
+                    <label for="phone">Số điện thoại</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Nhập số điện thoại của bạn"
                         required>
                     <?php if (!is_null($phone_error)): ?>
                         <div class="form-error-server">
@@ -355,10 +355,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <div class="password-field">
                         <input type="password" id="password" name="password" class="form-control"
-                            placeholder="Enter your password" required>
+                            placeholder="Nhập mật khẩu của bạn" required>
                         <button type="button" class="password-toggle" id="password-toggle"
                             aria-label="Toggle password visibility">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -373,10 +373,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="confirm-password">Confirm Password</label>
+                    <label for="confirm-password">Xác nhận mật khẩu</label>
                     <div class="password-field">
                         <input type="password" id="confirm-password" name="confirm-password" class="form-control"
-                            placeholder="Enter your password" required>
+                            placeholder="Nhập lại mật khẩu của bạn" required>
                         <button type="button" class="password-toggle" id="password-toggle-1"
                             aria-label="Toggle password visibility">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -393,15 +393,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="terms">
                     <input type="checkbox" id="terms" >
-                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
-                            Policy</a></label>
+                    <label for="terms">Tôi đồng ý với <a href="#">điều khoản dịch vụ</a> và <a href="#">chính sách bảo mật
+                           </a></label>
                 </div>
 
-                <button type="submit" class="btn-submit">Create Account</button>
+                <button type="submit" class="btn-submit">Tạo tài khoản</button>
             </form>
 
             <div class="auth-footer">
-                Already have an account? <a href="login">Login</a>
+                Bạn đã có tài khoản? <a href="login">Đăng nhập</a>
             </div>
         </div>
     </main>

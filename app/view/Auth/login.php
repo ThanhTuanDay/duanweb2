@@ -286,11 +286,11 @@ if (Session::get('name')) {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">TRANG CHỦ</a>
+                    <a href="menu">THỰC ĐƠN</a>
+                    <a href="about">THÔNG TIN </a>
                 </div>
-                <a href="#" class="btn-order">Order Online</a>
+                <a href="#" class="btn-order">ĐẶT HÀNG NGAY</a>
             </nav>
         </div>
     </header>
@@ -298,22 +298,22 @@ if (Session::get('name')) {
     <main class="auth-container">
         <div class="auth-box">
             <div class="auth-header">
-                <h2>Login</h2>
-                <p>Welcome back! Please login to your account</p>
+                <h2>Đăng nhập</h2>
+                <p>Vui lòng đăng nhập tài khoản của bạn</p>
             </div>
 
             <form action="login" method="post">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="username" name="username" class="form-control"
-                        placeholder="Enter your email" required>
+                        placeholder="Nhập email của bạn" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <div class="password-field">
                         <input type="password" id="password" name="password" class="form-control"
-                            placeholder="Enter your password" required>
+                            placeholder="Nhập mật khẩu của bạn" required>
                         <button type="button" class="password-toggle" id="password-toggle"
                             aria-label="Toggle password visibility">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -330,16 +330,16 @@ if (Session::get('name')) {
                 <div class="form-footer">
                     <div class="remember-me">
                         <input type="checkbox" id="remember">
-                        <label for="remember">Remember me</label>
+                        <label for="remember">Nhớ mật khẩu</label>
                     </div>
-                    <a href="forgot" class="forgot-password">Forgot Password?</a>
+                    <a href="forgot" class="forgot-password">Quên mật khẩu?</a>
                 </div>
 
-                <button type="submit" class="btn-submit">Login</button>
+                <button type="submit" class="btn-submit">Đăng nhập</button>
             </form>
 
             <div class="auth-footer">
-                Don't have an account? <a href="register">Register</a>
+                Bạn chưa có tài khoản? <a href="register">Đăng ký</a>
             </div>
         </div>
     </main>

@@ -372,9 +372,9 @@
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Orders Management</h2>
+        <h2>Quản lí đơn hàng</h2>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exportOrdersModal">
-            <i class="fas fa-file-export me-2"></i> Export Orders
+            <i class="fas fa-file-export me-2"></i> Xuất thông tin
         </button>
     </div>
 
@@ -382,7 +382,7 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0">All Orders</h5>
+                    <h5 class="mb-0">Tất cả đơn hàng</h5>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex justify-content-md-end">
@@ -392,7 +392,7 @@
                         </div>
                         <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
                             data-bs-target="#filterOrdersModal">
-                            <i class="fas fa-filter me-2"></i> Filter
+                            <i class="fas fa-filter me-2"></i> Lọc
                         </button>
                     </div>
                 </div>
@@ -407,10 +407,11 @@
                     <div class="col-md-6 d-flex justify-content-md-end align-items-center">
                         <div class="me-3">
                             <select id="per-page-select" class="form-select form-select-sm">
-                                <option value="10">10 per page</option>
-                                <option value="25">25 per page</option>
-                                <option value="50">50 per page</option>
-                                <option value="100">100 per page</option>
+                                <option value="5">5 đơn hàng mỗi trang</option>
+                                <option value="10">10 đơn hàng mỗi trang</option>
+                                <option value="25">25 đơn hàng mỗi trang</option>
+                                <option value="50">50 đơn hàng mỗi trang</option>
+                                <option value="100">100 đơn hàng mỗi trang</option>
                             </select>
                         </div>
                         <div>
@@ -429,14 +430,14 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Date</th>
-                            <th>Total</th>
-                            <th>Delivery Address</th>
-                            <th>Payment Method</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Ngày</th>
+                            <th>Tổng tiền</th>
+                            <th>Địa chỉ giao hàng</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -461,7 +462,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Order Statistics</h5>
+                    <h5 class="mb-0">Thống kê đơn hàng</h5>
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
@@ -488,7 +489,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Recent Activities</h5>
+                    <h5 class="mb-0">Hoạt động gần đây</h5>
                 </div>
                 <div class="card-body">
                     <div class="order-timeline">
@@ -549,10 +550,10 @@
                         </div>
                         <div class="mb-3">
                             <p><strong>Email:</strong> <span id="customer-email"></span></p>
-                            <p><strong>Phone:</strong> <span id="customer-phone"></span></p>
+                            <p><strong>Số điện thoại:</strong> <span id="customer-phone"></span></p>
                         </div>
                         <div class="delivery-address">
-                            <h6><i class="fas fa-map-marker-alt"></i> Delivery Address</h6>
+                            <h6><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</h6>
                             <p>
                                 <br<br>
                             </p>
@@ -562,19 +563,19 @@
                                 <i class="fab fa-cc-visa"></i>
                             </div>
                             <div class="payment-details">
-                                <h6>Payment Method</h6>
+                                <h6>Phương thức thanh toán</h6>
                                 <p></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="mb-0">Order Status</h6>
+                            <h6 class="mb-0">Trạng thái đơn hàng</h6>
                             <span class="badge bg-success"></span>
                         </div>
                         <div class="mb-3">
-                            <p><strong>Order Date:</strong> <span id="order-date"></span></p>
-                            <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+                            <p><strong>Ngày đặt hàng:</strong> <span id="order-date"></span></p>
+                            <p><strong>Mã đơn hàng:</strong> <span id="order-id"></span></p>
                         </div>
                         <div class="order-timeline">
                             <!-- <div class="timeline-item">
@@ -836,7 +837,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="filterOrdersModalLabel">Filter Orders</h5>
+                <h5 class="modal-title" id="filterOrdersModalLabel">Lọc đơn hàng</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -844,7 +845,7 @@
                 <form>
                     <!-- Price Range Filter -->
                     <div class="mb-3">
-                        <label class="form-label">Price Range</label>
+                        <label class="form-label">Khoảng giá</label>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group mb-2">
@@ -863,39 +864,39 @@
 
                     <!-- Order ID/Name Filter -->
                     <div class="mb-3">
-                        <label for="orderNameFilter" class="form-label">Order ID/Name</label>
+                        <label for="orderNameFilter" class="form-label">Mã đơn hàng/Tên khách hàng</label>
                         <input type="text" class="form-control" id="orderNameFilter"
                             placeholder="Search by order ID or name...">
                     </div>
 
                     <!-- Customer Name Filter -->
                     <div class="mb-3">
-                        <label for="customerNameFilter" class="form-label">Customer Name</label>
+                        <label for="customerNameFilter" class="form-label">Tên khách hàng</label>
                         <input type="text" class="form-control" id="customerNameFilter"
                             placeholder="Search by customer name...">
                     </div>
                     <!-- Delivery Address Filter -->
                     <div class="mb-3">
-                        <label for="customerNameFilter" class="form-label">Delivery Address</label>
+                        <label for="customerNameFilter" class="form-label">Địa chỉ giao hàng</label>
                         <input type="text" class="form-control" id="deliveryAddressFilter"
                             placeholder="Search by customer name...">
                     </div>
 
                     <!-- Order Status Filter -->
                     <div class="mb-3">
-                        <label class="form-label">Order Status</label>
+                        <label class="form-label">Trạng thái đơn hàng</label>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="checkbox" id="statusPending" checked>
                                     <label class="form-check-label" for="statusPending">
-                                        <span class="order-status status-pending"></span> Pending
+                                        <span class="order-status status-pending"></span> Đang xử lí 
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="statusProcessing" checked>
                                     <label class="form-check-label" for="statusProcessing">
-                                        <span class="order-status status-processing"></span> Delivering
+                                        <span class="order-status status-processing"></span> Đang giao hàng
                                     </label>
                                 </div>
                             </div>
@@ -903,13 +904,13 @@
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="checkbox" id="statusCompleted" checked>
                                     <label class="form-check-label" for="statusCompleted">
-                                        <span class="order-status status-completed"></span> Completed
+                                        <span class="order-status status-completed"></span> Đã hoàn thành
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="statusCancelled" checked>
                                     <label class="form-check-label" for="statusCancelled">
-                                        <span class="order-status status-cancelled"></span> Cancelled
+                                        <span class="order-status status-cancelled"></span> Đã hủy 
                                     </label>
                                 </div>
                             </div>
@@ -918,17 +919,17 @@
 
                     <!-- Date Range Filter -->
                     <div class="mb-3">
-                        <label class="form-label">Order Date</label>
+                        <label class="form-label">Ngày đặt hàng</label>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-2">
-                                    <label for="filterDateFrom" class="form-label">From</label>
+                                    <label for="filterDateFrom" class="form-label">Từ</label>
                                     <input type="date" class="form-control" id="filterDateFrom">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-2">
-                                    <label for="filterDateTo" class="form-label">To</label>
+                                    <label for="filterDateTo" class="form-label">Đến</label>
                                     <input type="date" class="form-control" id="filterDateTo">
                                 </div>
                             </div>
@@ -937,7 +938,7 @@
 
                     <!-- Payment Method Filter -->
                     <div class="mb-3">
-                        <label class="form-label">Payment Method</label>
+                        <label class="form-label">Phương thức thanh toán</label>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-check mb-2">
@@ -963,7 +964,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="paymentCash" checked>
                                     <label class="form-check-label" for="paymentCash">
-                                        Cash on Delivery
+                                        Thanh toán khi nhận hàng
                                     </label>
                                 </div>
                             </div>
@@ -972,9 +973,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-outline-primary">Reset Filters</button>
-                <button type="button" class="btn btn-primary">Apply Filters</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-outline-primary">Làm mới</button>
+                <button type="button" class="btn btn-primary">Lọc</button>
             </div>
         </div>
     </div>

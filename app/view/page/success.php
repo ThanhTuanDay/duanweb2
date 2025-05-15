@@ -280,12 +280,12 @@ if ($resultCode == "0") {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">TRANG CHỦ</a>
+                    <a href="menu">THỰC ĐƠN</a>
+                    <a href="about">THÔNG TIN</a>
                  
                 </div>
-                <a href="#" class="btn-order">Order Online</a>
+                <a href="#" class="btn-order">ĐẶT HÀNG NGAY</a>
             </nav>
         </div>
     </header>
@@ -298,48 +298,50 @@ if ($resultCode == "0") {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h1 class="success-title">Payment Successful!</h1>
+                <h1 class="success-title">Thanh toán thành công!</h1>
                 <p class="success-message">
-                    Thank you for your order. Your payment has been processed successfully.
-                    We'll start preparing your delicious meal right away!
+                    
+                    Cảm ơn bạn đã đặt hàng. Thanh toán của bạn đã được xử lý thành công.
+                    Chúng tôi sẽ bắt đầu chuẩn bị bữa ăn ngon cho bạn ngay!
                 </p>
 
                 <div class="order-details">
                     <div class="order-number">Order#<?= htmlspecialchars($order->getId()) ?></div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Date:</span>
+                        <span class="order-info-label">Thời gian đặt hàng:</span>
                         <span class="order-info-value"><?= htmlspecialchars($order->getCreatedAt()) ?></span>
                     </div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Payment Method:</span>
-                        <span class="order-info-value">Cash on delivery</span>
+                        <span class="order-info-label">Phương thức thanh toán:</span>
+                        <span class="order-info-value">Thanh toán khi nhận hàng</span>
                     </div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Delivery Address:</span>
+                        <span class="order-info-label">Địa chỉ giao hàng:</span>
                         <span class="order-info-value"><?= htmlspecialchars($order->getDeliveryAddress()) ?></span>
                     </div>
 
                     <div class="divider"></div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Total Amount:</span>
-                        <span class="order-info-value"><?= htmlspecialchars($order->getTotalPrice()) ?>đ</span>
+                        <span class="order-info-label">Thành tiền:</span>
+                        <span class="order-info-value"> <?= number_format($order->getTotalPrice(), 0, '', '.') ?> VND
+                        </span>
                     </div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Estimated Delivery:</span>
-                        <span class="order-info-value">30-45 minutes</span>
+                        <span class="order-info-label">Thời gian giao hàng:</span>
+                        <span class="order-info-value">30-45 phút </span>
                     </div>
                 </div>
 
-                <a href="homepage" class="return-home">Return to Home</a>
+                <a href="homepage" class="return-home">Quay lại trang chủ</a>
 
                 <div class="additional-actions">
-                    <a href="#" class="action-link">View Order Details</a>
-                    <a href="#" class="action-link">Need Help?</a>
+                    <a href="#" class="action-link">Chi tiết đơn hàng</a>
+                    <a href="#" class="action-link">Hỗ trợ</a>
                 </div>
             </div>
         </div>

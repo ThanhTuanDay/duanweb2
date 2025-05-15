@@ -19,7 +19,7 @@ $orders = $paymentController->getOrdersByUserId($userId);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feane - My Orders</title>
+    <title>Feane - Đơn hàng của tôi</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
@@ -654,12 +654,12 @@ $orders = $paymentController->getOrdersByUserId($userId);
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">TRANG CHỦ</a>
+                    <a href="menu">THỰC ĐƠN</a>
+                    <a href="about">THÔNG TIN</a>
                     
                 </div>
-                <a href="#" class="btn-order">Order Online</a>
+                <a href="#" class="btn-order">ĐẶT HÀNG NGAY</a>
             </nav>
         </div>
     </header>
@@ -667,8 +667,8 @@ $orders = $paymentController->getOrdersByUserId($userId);
     <main class="main-container">
         <div class="container">
             <div class="page-title">
-                <h1>My Orders</h1>
-                <p>View and track your order history</p>
+                <h1>Đơn hàng của tôi</h1>
+                <p>Xem và theo dõi đơn hàng của bạn</p>
             </div>
 
             <div class="orders-container">
@@ -707,27 +707,27 @@ $orders = $paymentController->getOrdersByUserId($userId);
                                     <?php endforeach; ?>
                                 </div>
                                 <div class="order-total">
-                                    <div class="total-label">Total Amount</div>
+                                    <div class="total-label">Thành tiền</div>
                                     <div class="total-amount"><?= number_format($order->getTotalPrice(), 2) ?> VND</div>
                                 </div>
                             </div>
 
                             <div class="order-actions">
                                 <button class="order-action-btn primary"
-                                    onclick="openOrderDetails('<?= $order->getId() ?>')">View Details</button>
+                                    onclick="openOrderDetails('<?= $order->getId() ?>')">Xem chi tiết</button>
                                 <button class="order-action-btn secondary reorder-btn"
                                     data-order-id="<?= $order->getId() ?>"
                                     data-items='<?= json_encode($items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
-                                    Reorder
+                                    Đặt hàng lại
                                 </button>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="empty-orders">
-                        <h3>No Orders Yet</h3>
-                        <p>You haven't placed any orders yet.</p>
-                        <a href="menu" class="browse-menu">Browse Menu</a>
+                        <h3>Bạn chưa có đơn hàng</h3>
+                        <p>Bạn chưa có đơn hàng nào trước đây</p>
+                        <a href="menu" class="browse-menu">Quay về TRANG CHỦ</a>
                     </div>
                 <?php endif; ?>
                 <!-- <div class="order-card">

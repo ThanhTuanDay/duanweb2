@@ -371,7 +371,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
 <!-- Main Content -->
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Users Management</h2>
+        <h2>Quản lí người dùng</h2>
         <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="fas fa-plus me-2"></i> Add New User
                 </button> -->
@@ -381,7 +381,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h5 class="mb-0">All Users</h5>
+                    <h5 class="mb-0">Tất cả người dùng</h5>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex justify-content-md-end">
@@ -392,15 +392,15 @@ $users = $userController->getUsersPaginated($perPage, $page);
                         <div class="dropdown">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="filterDropdown"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Filter
+                                Lọc
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
                                 aria-labelledby="filterDropdown">
-                                <li><a class="dropdown-item filter-option" href="#" data-filter="admin">Admin</a></li>
-                                <li><a class="dropdown-item filter-option" href="#" data-filter="customer">Customer</a>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="admin">Quản trị viên</a></li>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="customer">Khách hàng</a>
                                 </li>
-                                <li><a class="dropdown-item filter-option" href="#" data-filter="active">Active</a></li>
-                                <li><a class="dropdown-item filter-option" href="#" data-filter="inactive">Inactive</a>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="active">Hoạt động</a></li>
+                                <li><a class="dropdown-item filter-option" href="#" data-filter="inactive">Không hoạt động </a>
                                 </li>
                             </ul>
                         </div>
@@ -413,14 +413,14 @@ $users = $userController->getUsersPaginated($perPage, $page);
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>User</th>
+                            <th>Mã người dùng</th>
+                            <th>Người dùng</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Joined Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Số điện thoại</th>
+                            <th>Vai trò</th>
+                            <th>Ngày tham gia</th>
+                            <th>Trạng thái</th>
+                            <th>Sửa/Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -440,9 +440,9 @@ $users = $userController->getUsersPaginated($perPage, $page);
                                 <td><?= $user['role'] ?></td>
                                 <td><?= $user['created_at'] ?></td>
                                 <?php if ($user['is_block'] === 0): ?>
-                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td><span class="badge bg-success">Hoạt động</span></td>
                                 <?php else: ?>
-                                    <td><span class="badge bg-danger">Inactive</span></td>
+                                    <td><span class="badge bg-danger">Không hoạt động</span></td>
                                 <?php endif; ?>
                                 <td>
                                     <div class="action-btns d-flex">
@@ -479,7 +479,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
                     <!-- Previous Button -->
                     <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?pagination=<?= max(1, $page - 1) ?>&per_page=<?= $perPage ?>"
-                            tabindex="-1" aria-disabled="<?= $page <= 1 ? 'true' : 'false' ?>">Previous</a>
+                            tabindex="-1" aria-disabled="<?= $page <= 1 ? 'true' : 'false' ?>">Trước </a>
                     </li>
 
                     <!-- Page Numbers -->
@@ -493,7 +493,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
                     <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
                         <a class="page-link"
                             href="?pagination=<?= min($totalPages, $page + 1) ?>&per_page=<?= $perPage ?>"
-                            aria-disabled="<?= $page >= $totalPages ? 'true' : 'false' ?>">Next</a>
+                            aria-disabled="<?= $page >= $totalPages ? 'true' : 'false' ?>">Sau</a>
                     </li>
                 </ul>
             </nav>
@@ -506,7 +506,7 @@ $users = $userController->getUsersPaginated($perPage, $page);
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <h5 class="modal-title" id="editUserModalLabel">Sửa thông tin</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -514,23 +514,23 @@ $users = $userController->getUsersPaginated($perPage, $page);
                 <form>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="editName" class="form-label">Name</label>
+                            <label for="editName" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editName" name="name">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="editAddress" class="form-label">Address</label>
+                        <label for="editAddress" class="form-label">Địa chỉ</label>
                         <input type="text" class="form-control" id="editAddress" name="address">
                     </div>
                     <div class="mb-3">
-                        <label for="editPhone" class="form-label">Phone</label>
+                        <label for="editPhone" class="form-label">Số điện thoại</label>
                         <input type="tel" class="form-control" id="editPhone" name="phone">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary"  id="saveUserChanges">Save Changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary"  id="saveUserChanges">Lưu thay đổi</button>
             </div>
         </div>
     </div>

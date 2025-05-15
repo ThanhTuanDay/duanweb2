@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feane - Forgot Password</title>
+    <title>Feane - Quên mật khẩu?</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
@@ -223,11 +223,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">TRANG CHỦ</a>
+                    <a href="menu">THỰC ĐƠN</a>
+                    <a href="about">THÔNG TIN</a>
                 </div>
-                <a href="#" class="btn-order">Order Online</a>
+                <a href="#" class="btn-order">ĐẶT HÀNG NGAY</a>
             </nav>
         </div>
     </header>
@@ -242,22 +242,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="auth-header">
-                <h2>Forgot Password</h2>
-                <p>Enter your email address and we'll send you a link to reset your password.</p>
+                <h2>Quên mật khẩu?</h2>
+                <p>Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn liên kết để đặt lại mật khẩu.</p>
             </div>
 
             <form action="forgot" method="post">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email"
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Nhập email của bạn"
                         required>
                 </div>
 
-                <button type="submit" class="btn-submit">Reset Password</button>
+                <button type="submit" class="btn-submit">Đặt lại mật khẩu</button>
             </form>
 
             <div class="auth-footer">
-                Remembered your password? <a href="login">Back to Login</a>
+                Bạn đã nhớ mật khẩu? <a href="login">Quay lại</a>
             </div>
         </div>
     </main>

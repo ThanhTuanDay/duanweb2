@@ -38,7 +38,7 @@ $products = $productController->getProductsForMenu();
                                 <span>20%</span> Off
                             </h6>
                             <a href="#food-section">
-                                Order Now <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                            ĐẶT HÀNG NGAY <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
                                     xml:space="preserve">
@@ -110,7 +110,7 @@ $products = $productController->getProductsForMenu();
                                 <span>15%</span> Off
                             </h6>
                             <a href="#food-section">
-                                Order Now <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                            ĐẶT HÀNG NGAY <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
                                     xml:space="preserve">
@@ -181,7 +181,7 @@ $products = $productController->getProductsForMenu();
 <section class="food_section layout_padding-bottom" id="food-section">
     <div class="container">
         <div class="heading_container heading_center">
-            <h2>Our Menu</h2>
+            <h2>Thực đơn</h2>
         </div>
         
         <!-- Mobile filter toggle button -->
@@ -202,13 +202,13 @@ $products = $productController->getProductsForMenu();
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
-                            Search Products
+                            Tìm kiếm sản phẩm
                         </div>
                         <div class="search-box">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
-                            <input type="text" name="search" id="search-input" placeholder="Search by name..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+                            <input type="text" name="search" id="search-input" placeholder="Tìm kiếm tên sản phẩm" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
                         </div>
                     </div>
                     
@@ -218,7 +218,7 @@ $products = $productController->getProductsForMenu();
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                             </svg>
-                            Categories
+                            Loại sản phẩm
                         </div>
                         <ul class="category-list collapsible-content">
                             <?php 
@@ -249,7 +249,7 @@ $products = $productController->getProductsForMenu();
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Price Range
+                            Khoảng giá
                         </div>
                         <div class="price-range">
                             <div class="price-slider">
@@ -261,11 +261,11 @@ $products = $productController->getProductsForMenu();
                             </div>
                             <div class="price-input">
                                 <div class="field">
-                                    <label>Min Price</label>
+                                    <label>Giá thấp nhất</label>
                                     <input id="min-input" type="number" name="min_price" class="min-input" value="<?= isset($_GET['min_price']) ? intval($_GET['min_price']) : 0 ?>">
                                 </div>
                                 <div class="field">
-                                    <label>Max Price</label>
+                                    <label>Giá cao nhất</label>
                                     <input id="max-input" type="number" name="max_price" class="max-input" value="<?= isset($_GET['max_price']) ? intval($_GET['max_price']) : 1000000 ?>">
                                 </div>
                             </div>
@@ -276,8 +276,8 @@ $products = $productController->getProductsForMenu();
                     
                 </form>
                 <div class="filter-buttons">
-                        <button onclick="applyFilters(event)" class="filter-btn apply-btn">Apply Filters</button>
-                        <button type="button" class="filter-btn reset-btn" id="reset-filters">Reset</button>
+                        <button onclick="applyFilters(event)" class="filter-btn apply-btn">Lọc</button>
+                        <button type="button" class="filter-btn reset-btn" id="reset-filters">Làm mới</button>
                     </div>
             </div>
             
@@ -397,7 +397,7 @@ $products = $productController->getProductsForMenu();
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star-half-alt"></i>
               </div>
-              <span class="rating-count">(24 reviews)</span>
+              <span class="rating-count">(24 đánh giá)</span>
             </div>
             
             <div class="product-price" id="modal-product-price"></div>
@@ -408,16 +408,16 @@ $products = $productController->getProductsForMenu();
             
             <div class="product-meta">
               <div class="meta-item">
-                <span class="meta-label">Product ID:</span>
+                <span class="meta-label">ID sản phẩm:</span>
                 <span class="meta-value" id="modal-product-id"></span>
               </div>
               <div class="meta-item">
-                <span class="meta-label">Availability:</span>
-                <span class="meta-value in-stock">In Stock</span>
+                <span class="meta-label">Tình trạng:</span>
+                <span class="meta-value in-stock">Còn hàng</span>
               </div>
               <div class="meta-item">
-                <span class="meta-label">Preparation Time:</span>
-                <span class="meta-value">15-20 minutes</span>
+                <span class="meta-label">Thời gian chuẩn bị:</span>
+                <span class="meta-value">15-20 phút</span>
               </div>
             </div>
             
@@ -434,12 +434,12 @@ $products = $productController->getProductsForMenu();
               
               <button class="add-to-cart-btn" id="modal-add-to-cart">
                 <i class="fas fa-shopping-cart"></i>
-                Add to Cart
+                Thêm vào giỏ hàng
               </button>
             </div>
             
             <div class="product-share">
-              <span class="share-label">Share:</span>
+              <span class="share-label">Chia sẻ:</span>
               <div class="share-buttons">
                 <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost/duanweb2/homepage" target="_blank" class="share-btn facebook">
                   <i class="fab fa-facebook-f"></i>
@@ -789,20 +789,14 @@ $products = $productController->getProductsForMenu();
                 <div class="detail-box">
                     <div class="heading_container">
                         <h2>
-                            We Are Feane
+                            Chúng tôi là Feane
                         </h2>
                     </div>
                     <p>
-                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                        alteration
-                        in some form, by injected humour, or randomised words which don't look even slightly believable.
-                        If you
-                        are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing
-                        hidden in
-                        the middle of text. All
+                        Không gian hiện đại, thực đơn phong phú, phục vụ chuyên nghiệp — nơi lý tưởng để thưởng thức ẩm thực và thư giãn cùng người thân, bạn bè.
                     </p>
                     <a href="">
-                        Read More
+                        Đọc thêm 
                     </a>
                 </div>
             </div>

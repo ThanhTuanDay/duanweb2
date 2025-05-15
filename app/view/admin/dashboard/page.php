@@ -179,12 +179,12 @@ $categoryTotals = json_encode($totals);
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Order ID</th>
+                                        <th>Mã đơn hàng</th>
                                         <th>Khách hàng</th>
                                         <th>Ngày</th>
                                         <th>Số tiền</th>
                                         <th>Trạng thái</th>
-                                        <th>Hành động</th>
+                                        <th>Chi tiết</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -21,13 +21,13 @@
                     ?>
 
                     <li class="nav-item <?= $currentPage === 'homepage' || $currentPage === '' ? 'active' : '' ?>">
-                        <a class="nav-link" href="homepage">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="homepage">TRANG CHỦ <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item <?= $currentPage === 'menu' ? 'active' : '' ?>">
-                        <a class="nav-link" href="menu">Menu</a>
+                        <a class="nav-link" href="menu">THỰC ĐƠN</a>
                     </li>
                     <li class="nav-item <?= $currentPage === 'about' ? 'active' : '' ?>">
-                        <a class="nav-link" href="about">About</a>
+                        <a class="nav-link" href="about">THÔNG TIN</a>
                     </li>
                 </ul>
                 <div class="user_option">
@@ -39,7 +39,7 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         <a href="logout" class="user_link" style="color: red;">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất
                         </a>
                         <a class="cart_link" href="cart">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <a href="#food-section" class="order_online">
-                        Order Now
+                        ĐẶT HÀNG NGAY
                     </a>
                 </div>
             </div>

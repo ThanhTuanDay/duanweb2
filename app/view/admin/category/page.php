@@ -348,9 +348,9 @@
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Categories Management</h2>
+        <h2>Quản lí phân loại </h2>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-            <i class="fas fa-plus me-2"></i> Add New Category
+            <i class="fas fa-plus me-2"></i> Thêm loại mới
         </button>
     </div>
 
@@ -484,37 +484,37 @@
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <h5 class="modal-title" id="addCategoryModalLabel">Thêm loại mới </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="categoryName" class="form-label">Category Name</label>
+                        <label for="categoryName" class="form-label">Tên loại </label>
                         <input type="text" class="form-control" name="name" id="categoryName" value="" placeholder="Enter category name">
                     </div>
                     <div class="mb-3">
-                        <label for="categoryDescription" class="form-label">Description</label>
+                        <label for="categoryDescription" class="form-label">Mô tả</label>
                         <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description"></textarea>
                         <input type="hidden" class="form-control" name="description" id="categoryDescriptionHidden" value="">
                     </div>
                     <div class="mb-3">
-                        <label for="categoryImage" class="form-label">Category Image</label>
+                        <label for="categoryImage" class="form-label">Hình ảnh </label>
                         <input type="file" class="form-control" id="categoryImage">
                         <input type="hidden" class="form-control" name="images_url" id="img_url" value="" placeholder="Enter category name">
                     </div>
                     <div class="mb-3">
-                        <label for="categoryStatus" class="form-label">Status</label>
+                        <label for="categoryStatus" class="form-label">Trạng thái </label>
                         <select class="form-select" name='status' id="categoryStatus">
-                            <option value="1" selected>Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="1" selected>Hoạt động </option>
+                            <option value="0">Không hoạt động </option>
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="saveBtnCreateCategory">Add Category</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveBtnCreateCategory">Thêm loại</button>
             </div>
         </div>
     </div>
@@ -525,15 +525,15 @@
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
             <div class="modal-header">
-                <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                <h5 class="modal-title" id="editCategoryModalLabel">Sửa</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" id="saveBtnEditCategory" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" id="saveBtnEditCategory" class="btn btn-primary">Lưu thay đổi</button>
             </div>
         </div>
     </div>
@@ -543,13 +543,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-dark">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Xác nhận xóa </h5>
             </div>
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveDeleteCategory">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveDeleteCategory">Xác nhận </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
             </div>
         </div>
     </div>
