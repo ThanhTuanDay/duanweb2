@@ -194,7 +194,7 @@ $categoryTotals = json_encode($totals);
                                             <td><?= htmlspecialchars($order['user_id']) ?></td>
                                           
                                             <td><?= date('M d, Y', strtotime($order['created_at'])) ?></td>
-                                            <td><?= number_format($order['total_price'], 2) ?> Vnđ</td>
+                                            <td><?= number_format($order['total_price'], 0, '', '.') ?> VND</td>
                                             <td>
                                                 <span class="badge <?= getStatusBadgeClass($order['status']) ?>">
                                                     <?= ucfirst($order['status']) ?>
@@ -217,7 +217,7 @@ $categoryTotals = json_encode($totals);
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Top sản phẩm</h5>
-                        <a href="/duanweb2/admin/product/page" class="btn btn-sm btn-primary">View All</a>
+                        <a href="/duanweb2/admin/product/page" class="btn btn-sm btn-primary">Xem tất cả</a>
                     </div>
                     <div class="card-body">
                         <?php foreach ($topProducts as $product): ?>
@@ -228,10 +228,11 @@ $categoryTotals = json_encode($totals);
                                 </div>
                                 <div class="recent-order-info">
                                     <h6><?= htmlspecialchars($product['name']) ?></h6>
-                                    <p>Bán: <?= number_format($product['total_sold']) ?> items</p>
+                                    <p>Bán: <?= number_format($product['total_sold']) ?> sản phẩm</p>
                                 </div>
                                 <div class="recent-order-price">
-                                    <?= number_format($product['price'], 2) ?> Vnđ
+                                <?= number_format($product['price'],0 , ',', '.') ?> VND    
+
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -305,7 +306,7 @@ $categoryTotals = json_encode($totals);
                                         </td>
                                         <td>john.doe@example.com</td>
                                         <td>24</td>
-                                        <td>$2,845.50</td>
+                                        <td>2,845.50 VND</td>
                                         <td>May 15, 2023</td>
                                         <td>
                                             <a href="/duanweb2/admin/cusomer-order-detail/page?userId=ad" class="btn btn-sm btn-primary">

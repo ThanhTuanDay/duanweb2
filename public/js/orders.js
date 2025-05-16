@@ -28,14 +28,15 @@ function renderOrders(orders) {
     $.each(orders, function (index, order) {
         const statusInfo = statusMap[order.status] || { text: order.status, badge: "bg-secondary" };
         const formattedDate = new Date(order.created_at).toLocaleDateString("vi-VN");
-        const formattedTotal = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.total);
+        const formattedTotal = new Intl.NumberFormat('vi-VN', { style: 'decimal' }).format(order.total) + ' VND';
+
 
         const row = `
             <tr>
                 <td>#${order.id}</td>
                 <td>${order.user_name}</td>
                 <td>${formattedDate}</td>
-                <td>${formattedTotal}</td>
+                <td>${formattedTotal} </td>
                 <td>${order.delivery_address}</td>
                 <td>${order.payment_method}</td>
                 <td><span class="badge ${statusInfo.badge}">${statusInfo.text}</span></td>

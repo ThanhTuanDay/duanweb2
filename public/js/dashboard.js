@@ -95,7 +95,7 @@ function fetchAndRenderTopCustomers() {
                         </td>
                         <td>${customer.email ?? 'N/A'}</td>
                         <td>${customer.total_orders}</td>
-                        <td>${Number(customer.total_spent).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                        <td>${Number(customer.total_spent).toLocaleString('vi-VN') + ' VND'}</td>
                         <td>${customer.last_order_date ?? 'N/A'}</td>
                         <td>
                             <a href="/duanweb2/admin/customer-order-detail/page?userId=${customer.user_id}" class="btn btn-sm btn-primary">
@@ -295,3 +295,5 @@ if (dataDiv) {
 //         cutout: '70%'
 //     }
 // });
+
+/* <td>${Number(customer.total_spent).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td> */

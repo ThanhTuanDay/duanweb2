@@ -708,7 +708,7 @@ $orders = $paymentController->getOrdersByUserId($userId);
                                 </div>
                                 <div class="order-total">
                                     <div class="total-label">Thành tiền</div>
-                                    <div class="total-amount"><?= number_format($order->getTotalPrice(), 2) ?> VND</div>
+                                    <div class="total-amount"><?= number_format($order->getTotalPrice(), 0, ',', '.') ?> VND</div>
                                 </div>
                             </div>
 
@@ -1052,30 +1052,30 @@ $orders = $paymentController->getOrdersByUserId($userId);
                 </div>
                 <div class="modal-body">
                     <div class="order-info-section">
-                        <h3 class="section-title">Order Information</h3>
+                        <h3 class="section-title">Thông tin đơn hàng </h3>
                         <div class="info-grid">
                             <div class="info-item">
-                                <div class="info-label">Order Date</div>
+                                <div class="info-label">Ngày đặt hàng </div>
                                 <div class="info-value"><?= date("F j, Y - g:i A", strtotime($order->getCreatedAt())) ?>
                                 </div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">Status</div>
+                                <div class="info-label">Trạng thái </div>
                                 <div class="info-value"><?= ucfirst($order->getStatus()) ?></div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">Payment Method</div>
-                                <div class="info-value">MoMo</div>
+                                <div class="info-label">Phương thức thanh toán </div>
+                                <div class="info-value">Thanh toán khi nhận hàng</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">Delivery Address</div>
+                                <div class="info-label">Địa chỉ giao hàng </div>
                                 <div class="info-value"><?= htmlspecialchars($order->getDeliveryAddress()) ?></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="order-items-list">
-                        <h3 class="section-title">Order Items</h3>
+                        <h3 class="section-title">Sản phẩm </h3>
                         <?php foreach ($items as $item): ?>
                             <div class="order-item">
                                 <div class="item-image">
@@ -1086,8 +1086,9 @@ $orders = $paymentController->getOrdersByUserId($userId);
                                     <div class="item-title"><?= htmlspecialchars($item['name']) ?></div>
                                     <div class="item-variant">Phần</div>
                                     <div class="item-price">
-                                        <div class="price-amount">$<?= number_format($item['price'], 2) ?></div>
-                                        <div class="price-quantity">Quantity: <?= $item['quantity'] ?></div>
+                                        <div class="price-amount"><?= number_format($item['price'], 0, ',', '.') ?> VND</div>
+
+                                        <div class="price-quantity">Số lượng : <?= $item['quantity'] ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -1095,19 +1096,19 @@ $orders = $paymentController->getOrdersByUserId($userId);
                     </div>
 
                     <div class="order-summary-section">
-                        <h3 class="section-title">Order Summary</h3>
+                        <h3 class="section-title">Hóa đơn</h3>
                         <div class="summary-row">
-                            <div class="summary-label">Total</div>
-                            <div class="summary-value summary-total">$<?= number_format($order->getTotalPrice(), 0) ?></div>
+                            <div class="summary-label">Thành tiền</div>
+                            <div class="summary-value summary-total"><?= number_format($item['price'], 0, ',', '.') ?> VND</div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-btn btn-secondary" onclick="closeOrderDetails('<?= $modalId ?>')">Close</button>
+                    <button class="modal-btn btn-secondary" onclick="closeOrderDetails('<?= $modalId ?>')">Đóng </button>
                     <button class="modal-btn btn-primary reorder-btn"
                         data-order-id="<?= $order->getId() ?>"
                         data-items='<?= json_encode($items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
-                        Reorder
+                        Đặt hàng lại 
                     </button>
                 </div>
             </div>

@@ -493,7 +493,7 @@ if (allProducts) {
                                     ${product.description}
                                 </p>
                                 <div class="options">
-                                    <h6>${Number(finalPrice).toLocaleString('vi-VN')}₫</h6>
+                                    <h6>${Number(finalPrice).toLocaleString('vi-VN')} VND</h6>
                                     <a href="javascript:void(0)" onclick="addToCart(event,'${product.id}')">
                                         🛒
                                     </a>
@@ -540,7 +540,7 @@ if (allProducts) {
             finalPrice += taxAmount;
         }
 
-        document.getElementById('modal-product-price').textContent = `${Number(finalPrice).toLocaleString('vi-VN')}₫`;
+        document.getElementById('modal-product-price').textContent = `${Number(finalPrice).toLocaleString('vi-VN')} VND`;
         document.getElementById('modal-product-description').textContent = product.description;
         document.getElementById('modal-product-category').textContent = product.category_name || 'General';
         document.getElementById('modal-product-id').textContent = product.id;
@@ -737,3 +737,19 @@ if (allProducts) {
     }
 
 }
+
+function formatMoneyInput(input) {
+    input.addEventListener('input', function (e) {
+        // Xóa dấu chấm và ký tự không phải số
+        let value = e.target.value.replace(/\./g, '').replace(/\D/g, '');
+
+        // Định dạng lại
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        e.target.value = value;
+    });
+}
+
+// Gán sự kiện cho cả 2 input
+formatMoneyInput(document.getElementById('min-input'));
+formatMoneyInput(document.getElementById('max-input'));

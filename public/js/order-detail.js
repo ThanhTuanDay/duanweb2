@@ -34,15 +34,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
 
-    document.getElementById('customer-name').innerHTML = `<strong>Customer:</strong> ${userData.name}`;
+    document.getElementById('customer-name').innerHTML = `<strong>Tên khách hàng:</strong> ${userData.name}`;
     document.getElementById('customer-email').innerHTML = `<strong>Email:</strong> ${userData.email}`;
-    document.getElementById('customer-phone').innerHTML = `<strong>Phone:</strong> ${userData.phone}`;
-    document.getElementById('customer-id').innerHTML = `<strong>Customer ID:</strong> ${userData.id}`;
+    document.getElementById('customer-phone').innerHTML = `<strong>Số điện thoại:</strong> ${userData.phone}`;
+    document.getElementById('customer-id').innerHTML = `<strong>ID khách hàng:</strong> ${userData.id}`;
 
 
     document.querySelectorAll('.address-card').forEach(card => {
         card.innerHTML = `
-            <h6><i class="fas fa-shipping-fast"></i> ${card.innerText.includes("Billing") ? 'Billing Address' : 'Shipping Address'}</h6>
+            <h6><i class="fas fa-shipping-fast"></i> ${card.innerText.includes("Billing") ? 'Địa chỉ thanh toán' : 'Địa chỉ giao hàng'}</h6>
             <p>${userData.name}</p>
             <p>${userData.address}</p>
             <p class="mb-0">${userData.phone}</p>`;

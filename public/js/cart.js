@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="item-details">
                 <div class="item-name">${item.name}</div>
-                <div class="item-price">${formatCurrency(item.price)}</div>
+                <div class="item-price">${formatCurrency(item.price)} </div>
                 <div class="item-actions">
                     <div class="quantity-control">
                         <button class="quantity-btn decrease-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
@@ -121,7 +121,9 @@ function updateCart(cart) {
     document.getElementById("total").textContent = `${formatCurrency(total)}`;
 }
 function formatCurrency(amount) {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+return new Intl.NumberFormat("vi-VN", {
+        style: "decimal"
+    }).format(amount) + " VND";
 }
 
 function goToPaymentStage() {
@@ -213,11 +215,11 @@ function applyPromoCode() {
             promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Free shipping applied</span>`;
         } else if (matchedCoupon.discount_type === "fixed") {
             discountAmount = parseFloat(matchedCoupon.discount_amount);
-            promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ₫${Number(discountAmount).toLocaleString('vi-VN')} discount applied</span>`;
+            promoMessage.innerHTML = `<span class="promo-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> VND${Number(discountAmount).toLocaleString('vi-VN')} discount applied</span>`;
         }
 
         document.getElementById('discount-row').style.display = "flex";
-        document.getElementById('discount-amount').textContent = `-${Number(discountAmount).toLocaleString('vi-VN')}₫`;
+        document.getElementById('discount-amount').textContent = `-${Number(discountAmount).toLocaleString('vi-VN')} VND`;
 
         updateCart(cartItems);
     } else {

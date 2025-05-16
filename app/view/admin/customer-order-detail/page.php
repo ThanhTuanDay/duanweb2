@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Customer Order History</h2>
+        <h2>Lịch sử đơn hàng người dùng</h2>
         <a href="/duanweb2/admin/dashboard/page" class="btn btn-outline-primary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            <i class="fas fa-arrow-left me-2"></i>Quay lại bảng điều khiển 
         </a>
     </div>
 
@@ -32,25 +32,25 @@
                     <div class="row g-3">
                         <div class="col-6">
                             <div class="p-3 border rounded bg-light">
-                                <h6 class="mb-1">Total Orders</h6>
+                                <h6 class="mb-1">Số lượng đơn hàng</h6>
                                 <h4 class="mb-0">24</h4>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="p-3 border rounded bg-light">
-                                <h6 class="mb-1">Total Spent</h6>
+                                <h6 class="mb-1">Tổng tiêu dùng</h6>
                                 <h4 class="mb-0">$2,845.50</h4>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="p-3 border rounded bg-light">
-                                <h6 class="mb-1">Avg. Order Value</h6>
+                                <h6 class="mb-1">Tiêu dùng trung bình </h6>
                                 <h4 class="mb-0">$118.56</h4>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="p-3 border rounded bg-light">
-                                <h6 class="mb-1">Last Order</h6>
+                                <h6 class="mb-1">Lần đặt hàng cuối cùng</h6>
                                 <h4 class="mb-0">May 15, 2023</h4>
                             </div>
                         </div>
@@ -63,20 +63,20 @@
     <!-- Order History -->
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Order History</h5>
+            <h5 class="mb-0">Lịch sử đơn hàng</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
+                            <th>ID đơn hàng</th>
+                            <th>Thời gian</th>
                             <th>Items</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Payment Method</th>
-                            <th>Actions</th>
+                            <th>Thành tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>

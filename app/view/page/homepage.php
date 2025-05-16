@@ -261,13 +261,15 @@ $products = $productController->getProductsForMenu();
                             </div>
                             <div class="price-input">
                                 <div class="field">
-                                    <label>Giá thấp nhất</label>
-                                    <input id="min-input" type="number" name="min_price" class="min-input" value="<?= isset($_GET['min_price']) ? intval($_GET['min_price']) : 0 ?>">
-                                </div>
-                                <div class="field">
-                                    <label>Giá cao nhất</label>
-                                    <input id="max-input" type="number" name="max_price" class="max-input" value="<?= isset($_GET['max_price']) ? intval($_GET['max_price']) : 1000000 ?>">
-                                </div>
+    <label>Giá thấp nhất</label>
+    <input id="min-input" type="text" name="min_price" class="min-input" 
+        value="<?= isset($_GET['min_price']) ? number_format(intval($_GET['min_price']), 0, '', '.') : '0' ?>">
+</div>
+<div class="field">
+    <label>Giá cao nhất</label>
+    <input id="max-input" type="text" name="max_price" class="max-input" 
+        value="<?= isset($_GET['max_price']) ? number_format(intval($_GET['max_price']), 0, '', '.') : '1.000.000' ?>">
+</div>
                             </div>
                         </div>
                     </div>

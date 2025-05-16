@@ -70,7 +70,7 @@ function renderCustomerProfile(user, orders) {
     document.querySelector('.fa-envelope').parentElement.innerHTML = `<i class="fas fa-envelope me-2"></i>` + user.email;
     document.querySelector('.fa-phone').parentElement.innerHTML = `<i class="fas fa-phone me-2"></i>` + user.phone || 'No phone';
     document.querySelector('.fa-map-marker-alt').parentElement.innerHTML = `<i class="fas fa-map-marker-alt me-2"></i>` + user.address || 'No address';
-    document.querySelector('.fa-calendar-alt').parentElement.innerHTML = `<i class="fas fa-calendar-alt me-2"></i> Member since: ${user.created_at}`;
+    document.querySelector('.fa-calendar-alt').parentElement.innerHTML = `<i class="fas fa-calendar-alt me-2"></i>Ngày đăng ký: ${user.created_at}`;
 
     const totalOrders = orders.length;
     const totalSpent = orders.reduce((sum, o) => sum + parseFloat(o.total), 0);
@@ -78,13 +78,13 @@ function renderCustomerProfile(user, orders) {
     const lastOrder = orders[0]?.created_at || "N/A";
 
     document.querySelectorAll('.p-3 h4')[0].textContent = totalOrders;
-    document.querySelectorAll('.p-3 h4')[1].textContent = `$${totalSpent.toFixed(2)}`;
-    document.querySelectorAll('.p-3 h4')[2].textContent = `$${avgOrder.toFixed(2)}`;
+    document.querySelectorAll('.p-3 h4')[1].textContent = `${totalSpent.toLocaleString('vi-VN')} VND`;
+    document.querySelectorAll('.p-3 h4')[2].textContent = `${avgOrder.toLocaleString('vi-VN')} VND`;
     document.querySelectorAll('.p-3 h4')[3].textContent = formatDateDisplay(lastOrder);
 }
 function renderOrderHistory(orders) {
     const tbody = document.querySelector("table.table tbody");
-    tbody.innerHTML = "";
+    tbody.innerHTML = "";   
 
     orders.forEach(order => {
         const tr = document.createElement("tr");
@@ -92,12 +92,13 @@ function renderOrderHistory(orders) {
             <td>#${order.id}</td>
             <td>${formatDateDisplay(order.created_at)}</td>
             <td>${order.item_count}</td>
-            <td>$${parseFloat(order.total).toFixed(2)}</td>
+            <td>${parseFloat(order.total).toLocaleString('vi-VN')} VND</td>
+
             <td><span class="badge bg-${getStatusColor(order.status)}">${capitalize(order.status)}</span></td>
             <td>${order.payment_method}</td>
             <td>
                 <a href="/duanweb2/admin/order-detail/page?id=${order.id}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-eye"></i> View
+                    <i class="fas fa-eye"></i> Chi tiết
                 </a>
             </td>
         `;
@@ -106,7 +107,7 @@ function renderOrderHistory(orders) {
 }
 function formatDateDisplay(dateStr) {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString('vi-VN', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function getStatusColor(status) {
