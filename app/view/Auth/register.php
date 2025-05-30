@@ -22,11 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($Controller_register->isEmailExists($email)) {
         $mail_error = "Email đã tồn tại!";
-
-    } elseif
-    ($Controller_register->isPhoneExist($phone)) {
+    } elseif ($Controller_register->isPhoneExist($phone)) {
         $phone_error = "Số điện thoại đã được dùng";
-
     } elseif ($password !== $confirm_password) {
         $error = "Mật khẩu xác nhận không khớp!";
     } else {
@@ -299,10 +296,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
-                    <a href="book">BOOK TABLE</a>
+                    <a href="homepage">Trang Chủ</a>
+                    <a href="menu">Đồ ăn</a>
+                    <a href="about">Về chúng tôi </a>
+                    <a href="book">Book bàn</a>
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
             </nav>
@@ -392,7 +389,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="terms">
-                    <input type="checkbox" id="terms" >
+                    <input type="checkbox" id="terms">
                     <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
                             Policy</a></label>
                 </div>
@@ -414,7 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     const passwordConfirmToggle = document.getElementById('password-toggle-1');
     const eyeIcon = document.getElementById('eye-icon');
 
-    passwordToggle.addEventListener('click', function () {
+    passwordToggle.addEventListener('click', function() {
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
             eyeIcon.innerHTML = `
@@ -428,7 +425,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 `;
         }
     });
-    passwordConfirmToggle.addEventListener('click', function () {
+    passwordConfirmToggle.addEventListener('click', function() {
         if (passwordConfirmField.type === 'password') {
             passwordConfirmField.type = 'text';
             eyeIcon.innerHTML = `
@@ -443,7 +440,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     });
 
-    document.querySelector("form").addEventListener("submit", function (e) {
+    document.querySelector("form").addEventListener("submit", function(e) {
         e.preventDefault();
 
         // Lấy giá trị
@@ -479,7 +476,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             document.getElementById("phone-error").style.display = "block";
             isValid = false;
         }
-      
+
         // Mật khẩu khớp nhau
         if (password.value !== confirmPassword.value) {
             document.getElementById("confirm-password-error").style.display = "block";

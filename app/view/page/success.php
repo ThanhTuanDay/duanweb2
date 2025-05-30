@@ -7,7 +7,7 @@ require(dirname(__DIR__) . "../../controller/payment.controller.php");
 $orderId = $_GET['orderId'] ?? null;
 $resultCode = $_GET['resultCode'] ?? null;
 
-if (!$orderId ) {
+if (!$orderId) {
     http_response_code(400);
     echo "Invalid payment data";
     exit;
@@ -280,9 +280,9 @@ if ($resultCode == "0") {
             <nav class="navbar">
                 <a href="#" class="logo">Feane</a>
                 <div class="nav-links">
-                    <a href="homepage">HOME</a>
-                    <a href="menu">MENU</a>
-                    <a href="about">ABOUT</a>
+                    <a href="homepage">Trang chủ</a>
+                    <a href="menu">Đồ ăn</a>
+                    <a href="about">Về chúng tôi</a>
                     <a href="book">BOOK TABLE</a>
                 </div>
                 <a href="#" class="btn-order">Order Online</a>
@@ -298,10 +298,11 @@ if ($resultCode == "0") {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h1 class="success-title">Payment Successful!</h1>
+                <h1 class="success-title">Thanh toán thành công!</h1>
                 <p class="success-message">
-                    Thank you for your order. Your payment has been processed successfully.
-                    We'll start preparing your delicious meal right away!
+
+                    Cảm ơn bạn đã đặt hàng. Thanh toán của bạn đã được xử lý thành công.
+                    Chúng tôi sẽ bắt đầu chuẩn bị bữa ăn ngon cho bạn ngay!
                 </p>
 
                 <div class="order-details">
@@ -313,33 +314,33 @@ if ($resultCode == "0") {
                     </div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Payment Method:</span>
+                        <span class="order-info-label">Phương thức thanh toán:</span>
                         <span class="order-info-value">MoMo</span>
                     </div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Delivery Address:</span>
+                        <span class="order-info-label">Địa chỉ giao hànghàng:</span>
                         <span class="order-info-value"><?= htmlspecialchars($order->getDeliveryAddress()) ?></span>
                     </div>
 
                     <div class="divider"></div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Total Amount:</span>
+                        <span class="order-info-label">Tổng tiền:</span>
                         <span class="order-info-value"><?= htmlspecialchars($order->getTotalPrice()) ?> VNĐ</span>
                     </div>
 
                     <div class="order-info">
-                        <span class="order-info-label">Estimated Delivery:</span>
-                        <span class="order-info-value">30-45 minutes</span>
+                        <span class="order-info-label">Dự tính giao hàng:</span>
+                        <span class="order-info-value">30-45 phút</span>
                     </div>
                 </div>
 
-                <a href="homepage" class="return-home">Return to Home</a>
+                <a href="homepage" class="return-home">Trở lại trang chủ</a>
 
                 <div class="additional-actions">
-                    <a href="#" class="action-link">View Order Details</a>
-                    <a href="#" class="action-link">Need Help?</a>
+                    <a href="#" class="action-link">Chi tiết đặt hàng</a>
+                    <a href="#" class="action-link">Cần giúp đỡ gì ?</a>
                 </div>
             </div>
         </div>
