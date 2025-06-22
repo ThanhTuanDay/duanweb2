@@ -16,7 +16,7 @@ class UserModel
     }
     public function LoginUser(UserDto $user)
     {
-        $sql = "SELECT * FROM users WHERE email = ? AND password = ? AND is_verified = 1 LIMIT 1";
+        $sql = "SELECT * FROM users WHERE email = ? AND password = ? AND is_verified = 1 And is_block = 0 LIMIT 1";
         $stmt = $this->db->link->prepare($sql);
 
         $email = $user->getEmail();
@@ -29,7 +29,7 @@ class UserModel
         if ($result && $result->num_rows > 0) {
             return $result->fetch_assoc();
         } else {
-            echo "<script>alert('Tài khoản không tồn tại hoặc chưa xác thực');</script>";
+            echo "<script>alert('Tài khoản đã bị khóa');</script>";
             return null;
         }
     }
