@@ -74,14 +74,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Quantity controls
     document.getElementById('increase-quantity').addEventListener('click', function () {
         const quantityInput = document.getElementById('product-quantity');
-        quantityInput.value = parseInt(quantityInput.value) + 1;
+        quantityInput.value = parseInt(quantityInput.value) ;
     });
 
     document.getElementById('decrease-quantity').addEventListener('click', function () {
         const quantityInput = document.getElementById('product-quantity');
         const currentValue = parseInt(quantityInput.value);
         if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
+            quantityInput.value = currentValue ;
         }
     });
 

@@ -37,7 +37,7 @@ $products = $productController->getProductsForMenu();
                             <h6>
                                 <span>20%</span> Off
                             </h6>
-                            <a href="">
+                            <a href="#food-section">
                                 Order Now <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
@@ -109,7 +109,7 @@ $products = $productController->getProductsForMenu();
                             <h6>
                                 <span>15%</span> Off
                             </h6>
-                            <a href="">
+                            <a href="#food-section">
                                 Order Now <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
@@ -255,7 +255,7 @@ $products = $productController->getProductsForMenu();
                 <button class="quantity-btn minus" id="decrease-quantity">
                   <i class="fas fa-minus"></i>
                 </button>
-                <input type="number" id="product-quantity" value="1" min="1" max="99">
+                <input type="number" id="product-quantity" value="1" min="1" max="20">
                 <button class="quantity-btn plus" id="increase-quantity">
                   <i class="fas fa-plus"></i>
                 </button>
