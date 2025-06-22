@@ -18,7 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         Session::set('user_id', $data['id']);
         Session::set('email', $data['email']);
         Session::set('phone', $data['phone']);
-        header("Location:/duanweb2/homepage");
+        // Đổi từ header sang JavaScript để set localStorage
+        echo "
+            <script>
+            localStorage.setItem('isLogin', 'true');
+            window.location.href = '/duanweb2/homepage';
+        </script>";
     }
 }
 
@@ -27,7 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (Session::get('name')) {
     header("Location:/duanweb2/homepage");
 } else {
-    "<script>window.location.href='/duanweb2/login'</script>";
+    "
+    <script>
+   
+    window.location.href='/duanweb2/login'
+    </script>
+    ";
 }
 ?>
 
@@ -337,7 +347,7 @@ if (Session::get('name')) {
     const passwordToggle = document.getElementById('password-toggle');
     const eyeIcon = document.getElementById('eye-icon');
 
-    passwordToggle.addEventListener('click', function () {
+    passwordToggle.addEventListener('click', function() {
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
             eyeIcon.innerHTML = `

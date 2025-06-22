@@ -1,5 +1,9 @@
 <?php
 require(dirname(__File__) . "/../../lib/session.php");
 Session::destroy(true);
-header('Location: login');
+
+ echo "<script>
+ localStorage.removeItem('isLogin');
+ window.location.href = '/duanweb2/homepage';
+</script>";
 exit();

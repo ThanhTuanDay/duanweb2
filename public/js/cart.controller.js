@@ -53,6 +53,11 @@ function addToCartWithQuantity(productId, quantity) {
     addToCart(null, productId, quantity);
 }
 function addToCart(event, productId, quantity = 1) {
+    const isLogin = localStorage.getItem('isLogin');
+    if(isLogin === 'false' || isLogin === null) {
+        window.location.href = '/duanweb2/login';
+        return;
+    }
     cart.addToCart(productId, quantity);
     if (event) {
         const cartIcon = event.currentTarget;
