@@ -6,15 +6,15 @@
          <img src="/placeholder.svg?height=40&width=40" alt="Admin">
          <div class="dropdown">
              <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                 Admin User
+                 Admin
              </button>
              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
                  <!-- <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li> -->
-                 <li><a class="dropdown-item" href="/duanweb2/admin/settings/page"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                 <li><a class="dropdown-item" href="/duanweb2/admin/settings/page"><i class="fas fa-cog me-2"></i> Cài đặt</a></li>
                  <li>
                      <hr class="dropdown-divider">
                  </li>
-                 <li><a class="dropdown-item" href="/duanweb2/logout"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                 <li><a class="dropdown-item" href="/duanweb2/logout"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
              </ul>
          </div>
      </div>
