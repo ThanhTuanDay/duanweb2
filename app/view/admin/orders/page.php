@@ -433,6 +433,7 @@
                             <th>Customer</th>
                             <th>Date</th>
                             <th>Total</th>
+                            <th>Delivery Address</th>
                             <th>Payment Method</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -871,6 +872,12 @@
                     <div class="mb-3">
                         <label for="customerNameFilter" class="form-label">Customer Name</label>
                         <input type="text" class="form-control" id="customerNameFilter"
+                            placeholder="Search by customer name...">
+                    </div>
+                    <!-- Delivery Address Filter -->
+                    <div class="mb-3">
+                        <label for="customerNameFilter" class="form-label">Delivery Address</label>
+                        <input type="text" class="form-control" id="deliveryAddressFilter"
                             placeholder="Search by customer name...">
                     </div>
 
