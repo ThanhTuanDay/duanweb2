@@ -43,12 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const pathname = window.location.pathname;
     if (pathname.includes("/success")) {
         clearCart();
-        if(localStorage.getItem("reorderItem")){
-            localStorage.removeItem("reorderItem");
-        }else{
-            clearCart();
-        }
-       
     }
 });
 function clearCart() {
