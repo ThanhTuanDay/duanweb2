@@ -289,7 +289,7 @@ if (allProducts) {
     document.addEventListener('DOMContentLoaded', function () {
         const searchContainer = document.getElementById("search-container")
         const searchBtn = document.getElementById("search-btn")
-        const searchInput = document.getElementById("search-input")
+        const searchInput = document.getElementById("search-input-navbar")
         const searchResults = document.getElementById("search-results")
         const rangeInput = document.querySelectorAll(".range-input input");
         const priceInput = document.querySelectorAll(".price-input input");

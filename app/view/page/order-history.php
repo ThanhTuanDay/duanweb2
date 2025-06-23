@@ -675,7 +675,7 @@ $orders = $paymentController->getOrdersByUserId($userId);
                 <?php if (!empty($orders)): ?>
                     <?php foreach ($orders as $order):
                         $items = $paymentController->getOrderItemsByOrderId($order->getId());
-                        ?>
+                    ?>
                         <div class="order-card">
                             <div class="order-header">
                                 <div>
@@ -684,11 +684,11 @@ $orders = $paymentController->getOrdersByUserId($userId);
                                     </div>
                                 </div>
                                 <span class="order-status <?= match ($order->getStatus()) {
-                                    'completed' => 'status-delivered',
-                                    'delivering', 'preparing' => 'status-processing',
-                                    'cancelled' => 'status-cancelled',
-                                    default => ''
-                                } ?>">
+                                                                'completed' => 'status-delivered',
+                                                                'delivering', 'preparing' => 'status-processing',
+                                                                'cancelled' => 'status-cancelled',
+                                                                default => ''
+                                                            } ?>">
                                     <?= ucfirst($order->getStatus()) ?>
                                 </span>
                             </div>
@@ -715,7 +715,11 @@ $orders = $paymentController->getOrdersByUserId($userId);
                             <div class="order-actions">
                                 <button class="order-action-btn primary"
                                     onclick="openOrderDetails('<?= $order->getId() ?>')">View Details</button>
-                                <button class="order-action-btn secondary">Reorder</button>
+                                <button class="order-action-btn secondary reorder-btn"
+                                    data-order-id="<?= $order->getId() ?>"
+                                    data-items='<?= json_encode($items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
+                                    Reorder
+                                </button>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -1094,13 +1098,17 @@ $orders = $paymentController->getOrdersByUserId($userId);
                         <h3 class="section-title">Order Summary</h3>
                         <div class="summary-row">
                             <div class="summary-label">Total</div>
-                            <div class="summary-value summary-total">$<?= number_format($order->getTotalPrice(),0) ?></div>
+                            <div class="summary-value summary-total">$<?= number_format($order->getTotalPrice(), 0) ?></div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="modal-btn btn-secondary" onclick="closeOrderDetails('<?= $modalId ?>')">Close</button>
-                    <button class="modal-btn btn-primary">Reorder</button>
+                    <button class="modal-btn btn-primary reorder-btn"
+                        data-order-id="<?= $order->getId() ?>"
+                        data-items='<?= json_encode($items, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>'>
+                        Reorder
+                    </button>
                 </div>
             </div>
         </div>
@@ -1108,7 +1116,6 @@ $orders = $paymentController->getOrdersByUserId($userId);
 
 
     <script>
-
         function openOrderDetails(orderId) {
             const modalId = 'orderDetailsModal_' + orderId;
             const modal = document.getElementById(modalId);
@@ -1127,7 +1134,7 @@ $orders = $paymentController->getOrdersByUserId($userId);
         }
 
         // Close modal when clicking outside of it
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             const modal = document.getElementById('orderDetailsModal');
             if (event.target === modal) {
                 closeOrderDetails();

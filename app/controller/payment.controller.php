@@ -49,7 +49,10 @@ class PaymentController{
         }
 
         $orderCreatedId =  $this->preCreateOrder($orderDto);
-        return $orderCreatedId;
+        return json_encode([
+            'success' => true,
+            'orderId' => $orderCreatedId,
+            'message' => 'Đặt hàng thành công. Chờ xác nhận từ người bán']);
     }
 
     private function handleProductSell($items){

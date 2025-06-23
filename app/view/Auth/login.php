@@ -18,9 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         Session::set('user_id', $data['id']);
         Session::set('email', $data['email']);
         Session::set('phone', $data['phone']);
-        // Đổi từ header sang JavaScript để set localStorage
         echo "
-            <script>
+        <script>
             localStorage.setItem('isLogin', 'true');
             window.location.href = '/duanweb2/homepage';
         </script>";
@@ -30,7 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 if (Session::get('name')) {
-    header("Location:/duanweb2/homepage");
+    echo "
+    <script>
+        localStorage.setItem('isLogin', 'true');
+        window.location.href = '/duanweb2/homepage';
+    </script>";
 } else {
     "
     <script>

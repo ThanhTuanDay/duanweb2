@@ -109,7 +109,7 @@
                             <button class="search-btn" id="search-btn" type="button">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
-                            <input type="text" class="search-input" id="search-input" placeholder="Search for food...">
+                            <input type="text" class="search-input" id="search-input-navbar" placeholder="Search for food...">
                         </form>
 
                         <div class="search-results" id="search-results">

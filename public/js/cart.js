@@ -332,7 +332,7 @@ function codPayment(payload) {
                 alert(data.error);
                 return;
             }
-            window.location.href = '/duanweb2/success?orderId=' + data + "&resultCode=0";
+            window.location.href = '/duanweb2/success?orderId=' + data.orderId + "&resultCode=0";
 
         })
         .catch(err => {
