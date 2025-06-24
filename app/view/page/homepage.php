@@ -441,7 +441,7 @@ $products = $productController->getProductsForMenu();
             <div class="product-share">
               <span class="share-label">Share:</span>
               <div class="share-buttons">
-                <a href="#" class="share-btn facebook">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost/duanweb2/homepage" target="_blank" class="share-btn facebook">
                   <i class="fab fa-facebook-f"></i>
                 </a>
                 <a href="#" class="share-btn twitter">

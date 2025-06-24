@@ -47,10 +47,14 @@ class Session
         return self::get("adminlogin") == true;
     }
 
-    public static function destroy($isLogout=false)
+    public static function destroy($isLogout = false)
     {
         if ($isLogout) {
-            $redirectPage ="homepage" ;
+            echo "<script>
+    localStorage.removeItem('isLogin');
+    window.location.href = '/duanweb2/homepage';
+    </script>";
+            $redirectPage = "homepage";
             $alert = "bạn đã đăng xuất";
         } else {
             $redirectPage = "login";
@@ -60,7 +64,7 @@ class Session
         session_start();
         $_SESSION = [];
         session_destroy();
-    
+
         echo "<script>
                 alert('$alert')
                 window.location.href = '$redirectPage';
