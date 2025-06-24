@@ -90,9 +90,9 @@ function reloadData(){
 $('#search-input-id').on('input', function () {
     const keyword = $(this).val().trim().toLowerCase();
     console.log(keyword)
-    const filtered = allOrders.filter(order => order.id.toLowerCase().startsWith(keyword));
+    const filtered = allOrders.filter(order => order.id.toLowerCase().startsWith(keyword) || order.user_name.toLowerCase().startsWith(keyword) );
 
-    if (filtered.length !== currentFilterOrder.length) {
+    if (currentFilterOrder == null || filtered.length !== currentFilterOrder.length) {
         currentFilterOrder = filtered;
         paginateOrders(1);
     }
